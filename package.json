@@ -1,18 +1,15 @@
 {
-  "name": "lightning-dashboard",
+  "name": "lightning",
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "node app",
-    "dev": "nodemon app",
-    "webpack": "webpack"
+    "start": "node app"
   },
-  "description": "LND Dashboard",
+  "description": "Lightning",
   "author": {
-    "name": "Siroos Ghanavati"
+    "name": "margaret"
   },
   "dependencies": {
-    "admin-lte": "^2.4.8",
     "body-parser": "^1.15.0",
     "compression": "^1.7.1",
     "cookie-parser": "^1.4.0",
@@ -27,8 +24,5 @@
     "serve-favicon": "^2.3.0",
     "websocket": "^1.0.25",
     "ws": "^5.1.1"
-  },
-  "devDependencies": {
-    "prettier": "^1.14.2"
   }
 }
