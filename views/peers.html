@@ -27,18 +27,19 @@
         <div class="col-xs-12">
 
             <div class="box">
-                <div class="box-header">
-                    <h3 class="box-title">Data Table With Full Features</h3>
-                </div>
                 <!-- /.box-header -->
                 <div class="box-body table-responsive">
                     <table id="example1" class="table table-bordered table-striped">
                         <thead>
                             <tr>
-                                <th>Id</th>
                                 <th>Pub key</th>
                                 <th>Host</th>
                                 <th>Ping time</th>
+                                <th>Inbound</th>
+                                <th>Bytes Out</th>
+                                <th>Bytes In</th>
+                                <th>Sats Out</th>
+                                <th>Sats In</th>
                                 <th>Address</th>
                                 <th style="display:none"></th>
                                 <th style="display:none"></th>
@@ -48,7 +49,6 @@
                             <% if(viewdata.listPeers.status =='success') { %>
                             <% viewdata.listPeers.data.peers.forEach(function (peer) { %>
                             <tr>
-                                <td><%= Number(peer.peer_id) %></td>
                                 <td>
                                     <div class="input-group input-group-sm" style="width:100%;">
                                         <input class="form-control" readonly="readonly" type="text" value="<%= peer.pub_key %>">
@@ -58,6 +58,11 @@
                                     <%= peer.address %>
                                 </td>
                                 <td><%= peer.ping_time %></td>
+                                <td><%= peer.inbound %></td>
+                                <td><%= peer.bytes_sent %></td>
+                                <td><%= peer.bytes_recv %></td>
+                                <td><%= peer.sat_sent %></td>
+                                <td><%= peer.sat_recv %></td>
                                 <td>
                                     <div class="input-group input-group-sm" style="width:100%;">
                                         <input class="form-control" readonly="readonly" type="text" value="<%= peer.pub_key + '@' + peer.address %>" id="peer_<%= peer.pub_key %>">
@@ -75,10 +80,14 @@
                         </tbody>
                         <tfoot>
                             <tr>
-                                <th>Id</th>
                                 <th>Pub key</th>
                                 <th>Host</th>
                                 <th>Ping time</th>
+                                <th>Inbound</th>
+                                <th>Bytes Out</th>
+                                <th>Bytes In</th>
+                                <th>Sats Out</th>
+                                <th>Sats In</th>
                                 <th>Address</th>
                                 <th style="display:none"></th>
                                 <th style="display:none"></th>

@@ -184,13 +184,20 @@ desired effect
                             <ul class="dropdown-menu">
                                 <!-- The user image in the menu -->
                                 <li class="user-header">
-                                    <img src="images/lightning.jpg" class="img-circle" alt="User Image">
-                                    <p>
-                                        Satoshi Nakamoto
-                                        <small>Member since jan. 2009</small>
-                                    </p>
+                                    <p>Change Alias</p>
+                                    <!-- alias form (Optional) -->
+                                    <form method="get" class="sidebar-form">
+                                        <div class="input-group">
+                                            <input type="text" name="q" class="form-control" placeholder="Node Alias..." id="input_node_alias">
+                                            <span class="input-group-btn">
+                                                <button name="search" id="search-btn" class="btn btn-flat" onclick="newAlias($('#input_node_alias').val()); return false;">
+                                                    <i class="fa fa-wrench"></i>
+                                                </button>
+                                            </span>
+                                        </div>
+                                    </form>
                                 </li>
-                                <!-- Menu Body -->
+                                <!-- Menu Body 
                                 <li class="user-body">
                                     <div class="row">
                                         <div class="col-xs-4 text-center">
@@ -203,9 +210,9 @@ desired effect
                                             <a href="#">Friends</a>
                                         </div>
                                     </div>
-                                    <!-- /.row -->
+                                    <!-- /.row 
                                 </li>
-                                <!-- Menu Footer-->
+                                <!-- Menu Footer
                                 <li class="user-footer">
                                     <div class="pull-left">
                                         <a href="#" class="btn btn-default btn-flat">Profile</a>
@@ -213,7 +220,7 @@ desired effect
                                     <div class="pull-right">
                                         <a href="#" class="btn btn-default btn-flat">Sign out</a>
                                     </div>
-                                </li>
+                                </li>-->
                             </ul>
                         </li>
                         <!-- Control Sidebar Toggle Button -->
@@ -239,17 +246,7 @@ desired effect
                         <a><i class="fa fa-circle text-success"></i> Online</a>
                     </div>
                 </div>
-                <!-- alias form (Optional) -->
-                <form method="get" class="sidebar-form">
-                    <div class="input-group">
-                        <input type="text" name="q" class="form-control" placeholder="Node Alias..." id="input_node_alias">
-                        <span class="input-group-btn">
-                            <button name="search" id="search-btn" class="btn btn-flat" onclick="newAlias($('#input_node_alias').val()); return false;">
-                                <i class="fa fa-search"></i>
-                            </button>
-                        </span>
-                    </div>
-                </form>
+                
                 <!-- /.search form -->
                 <!-- Sidebar Menu -->
                 <ul class="sidebar-menu" data-widget="tree">
