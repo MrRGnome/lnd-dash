@@ -27,8 +27,6 @@ app.use(compression());
 app.engine('html', require('ejs').renderFile);
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'html');
-
-// uncomment after placing your favicon in /public
 app.use(favicon(__dirname + '/public/images/lightning.jpg'));
 app.use(expressLayouts);
 
@@ -83,13 +81,10 @@ app.use(function (err, req, res, next) {
     return;
 });
 
-app.set('port', process.env.PORT || 3000);
-app.set('httpport', 8888);
+app.set('port', process.env.PORT || 8888);
 
-//var server = app.listen(app.get('port'), function () {
-//    debug('Express server listening on port ' + server.address().port);
-//});
+var server = app.listen(app.get('port'),"127.0.0.1", function () {
+    debug('Server listening on port ' + server.address().port);
+});
 
-var http = require('http')
-var httpServer = http.createServer(app).listen(app.get('httpport'), "127.0.0.1", 511);
 
