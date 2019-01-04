@@ -1,14 +1,16 @@
 {
-  "name": "lightning",
+  "name": "lnd-dashboard",
   "version": "0.0.0",
   "private": true,
   "scripts": {
     "start": "node app"
   },
-  "description": "Lightning",
-  "author": {
-    "name": "margaret"
-  },
+  "description": "A dashboard for lnd nodes",
+  "contributors": [
+    "Siroos Ghanavati",
+    "margaret",
+    "MrRGnome"
+  ],
   "dependencies": {
     "body-parser": "^1.15.0",
     "compression": "^1.7.1",
