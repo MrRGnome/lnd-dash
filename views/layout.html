@@ -179,7 +179,7 @@ desired effect
                                 <!-- The user image in the navbar-->
                                 <img src="images/lightning.jpg" class="user-image" alt="User Image">
                                 <!-- hidden-xs hides the username on small devices so only the image appears. -->
-                                <span class="hidden-xs">TESTNET Network</span>
+                                <span id="network_mode" class="hidden-xs">NETWORK</span>
                             </a>
                             <ul class="dropdown-menu">
                                 <!-- The user image in the menu -->
@@ -561,6 +561,7 @@ desired effect
                         $("#div_peer_pubkey").html('PubKey: ' + jsonresult.data.identity_pubkey);
                         $("#input_node_pubkey").val(jsonresult.data.identity_pubkey);
                         $("#input_node_address").val(jsonresult.data.uris[0]);
+                        $("#network_mode").html(jsonresult.data.testnet ? "TESTNET" : "MAINNET")
                         $("#h3_connected_peers").html(jsonresult.data.num_peers);
                         $("#input_node_alias").val(jsonresult.data.alias);
                     }
