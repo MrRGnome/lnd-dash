@@ -562,7 +562,7 @@ desired effect
                         $("#input_node_pubkey").val(jsonresult.data.identity_pubkey);
                         $("#input_node_address").val(jsonresult.data.uris[0]);
                         $("#network_mode").html(jsonresult.data.testnet ? "TESTNET" : "MAINNET")
-                        $("#network_mode").html(jsonresult.data.alias)
+                        $("#alias_header").html(jsonresult.data.alias)
                         $("#h3_connected_peers").html(jsonresult.data.num_peers);
                         $("#input_node_alias").val(jsonresult.data.alias);
                     }
