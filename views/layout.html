@@ -241,7 +241,7 @@ desired effect
                         <img src="images/lightning.jpg" class="img-circle" alt="User Image">
                     </div>
                     <div class="pull-left info">
-                        <p  id="network_mode">Network</p>
+                        <p  class="network_mode">Network</p>
                         <!-- Status -->
                         <a><i class="fa fa-circle text-success"></i> Online</a>
                     </div>
@@ -558,7 +558,7 @@ desired effect
                         $("#div_peer_pubkey").html('PubKey: ' + jsonresult.data.identity_pubkey);
                         $("#input_node_pubkey").val(jsonresult.data.identity_pubkey);
                         $("#input_node_address").val(jsonresult.data.uris[0]);
-                        $("#network_mode").html(jsonresult.data.testnet ? "TESTNET" : "MAINNET")
+                        $(".network_mode").html(jsonresult.data.testnet ? "TESTNET" : "MAINNET")
                         $("#alias_header").html(jsonresult.data.alias)
                         $("#h3_connected_peers").html(jsonresult.data.num_peers);
                         $("#input_node_alias").val(jsonresult.data.alias);
