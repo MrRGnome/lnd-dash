@@ -560,7 +560,7 @@ desired effect
                     if (jsonresult.status == 'success') {
                         $("#div_peer_pubkey").html('PubKey: ' + jsonresult.data.identity_pubkey);
                         $("#input_node_pubkey").val(jsonresult.data.identity_pubkey);
-                        $("#input_node_address").val(jsonresult.data.identity_pubkey + '@' + window.location.host + ':9735');
+                        $("#input_node_address").val(jsonresult.data.uris[0]);
                         $("#h3_connected_peers").html(jsonresult.data.num_peers);
                         $("#input_node_alias").val(jsonresult.data.alias);
                     }
