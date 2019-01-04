@@ -1,5 +1,4 @@
-﻿
-const timeout_in_seconds = 60;
+﻿const timeout_in_seconds = 60;
 const lnd_daemon = '127.0.0.1:10009';
 
 module.exports = {
@@ -21,7 +20,8 @@ module.exports = {
             var lightning = new lnrpc.Lightning(lnd_daemon, credentials);
 
             var metadata = new grpc.Metadata();
-            var macaroonHex = fs.readFileSync(process.env.LOCALAPPDATA + "\\Lnd\\data\\chain\\bitcoin\\testnet\\admin.macaroon").toString("hex");
+            var networkMode = require('../services/networkMode');
+            var macaroonHex = fs.readFileSync(process.env.LOCALAPPDATA + "\\Lnd\\data\\chain\\bitcoin\\" + networkMode  + "\\admin.macaroon").toString("hex");
             metadata.add('macaroon', macaroonHex);
 
             return { status: 'success', data: { client: lightning, metadata: metadata } };
