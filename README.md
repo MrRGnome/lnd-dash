@@ -17,4 +17,4 @@ $ yarn start --mainnet
 ```
 
 
-:zap: Go to [`localhost:8888`](http://localhost:8888), and you're done! :zap:
+:zap: Go to [`127.0.0.1:8888`](http://127.0.0.1:8888), and you're done! :zap:
