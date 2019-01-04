@@ -179,7 +179,7 @@ desired effect
                                 <!-- The user image in the navbar-->
                                 <img src="images/lightning.jpg" class="user-image" alt="User Image">
                                 <!-- hidden-xs hides the username on small devices so only the image appears. -->
-                                <span id="network_mode" class="hidden-xs">NETWORK</span>
+                                <span id="alias_header" class="hidden-xs">ALIAS</span>
                             </a>
                             <ul class="dropdown-menu">
                                 <!-- The user image in the menu -->
@@ -234,7 +234,7 @@ desired effect
                         <img src="images/lightning.jpg" class="img-circle" alt="User Image">
                     </div>
                     <div class="pull-left info">
-                        <p>Web Socket (soon)</p>
+                        <p  id="network_mode">Network</p>
                         <!-- Status -->
                         <a><i class="fa fa-circle text-success"></i> Online</a>
                     </div>
@@ -562,6 +562,7 @@ desired effect
                         $("#input_node_pubkey").val(jsonresult.data.identity_pubkey);
                         $("#input_node_address").val(jsonresult.data.uris[0]);
                         $("#network_mode").html(jsonresult.data.testnet ? "TESTNET" : "MAINNET")
+                        $("#network_mode").html(jsonresult.data.alias)
                         $("#h3_connected_peers").html(jsonresult.data.num_peers);
                         $("#input_node_alias").val(jsonresult.data.alias);
                     }
