@@ -34,7 +34,7 @@
                 <div class="info-box-content">
                     <span class="info-box-text" style="text-align:right">
                         CID: <%= channel.chan_id %>
-                        <button type="button" class="btn btn-box-tool" data-widget="remove" style="padding:0px;" onclick="ask_for_Close('<%= channel.channel_point %>','<%= channel.chan_id %>' , '<%= channel.active %>')"><i class="fa fa-times"></i></button>
+                        <button type="button" class="btn btn-box-tool" data-widget="remove" style="padding:0px; color: #FFF;" onclick="ask_for_Close('<%= channel.channel_point %>','<%= channel.chan_id %>' , '<%= channel.active %>')"><i class="fa fa-times"></i></button>
                     </span>
                     <span class="info-box-number">My Balance: <%= Number(channel.local_balance).toLocaleString('en') %> SAT <span style="font-size:12px;">(<%= local_percent %> %)</span> </span>
 
