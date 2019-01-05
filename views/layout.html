@@ -59,7 +59,7 @@ desired effect
             <!-- Logo -->
             <a href="/" class="logo">
                 <!-- mini logo for sidebar mini 50x50 pixels -->
-                <span class="logo-mini"><b>A</b>LT</span>
+                <span class="logo-mini"><b>LND</b></span>
                 <!-- logo for regular state and mobile devices -->
                 <span class="logo-lg"><b>Bitcoin</b> LND</span>
             </a>
@@ -384,7 +384,7 @@ desired effect
             <div class="tab-content">
                 <!-- Home tab content -->
                 <div class="tab-pane active" id="control-sidebar-home-tab">
-                    <h3 class="control-sidebar-heading">Recent Activity</h3>
+              <!--      <h3 class="control-sidebar-heading">Recent Activity</h3>
                     <ul class="control-sidebar-menu">
                         <li>
                             <a href="javascript:;">
@@ -395,9 +395,9 @@ desired effect
                                 </div>
                             </a>
                         </li>
-                    </ul>
+                    </ul> -->
                     <!-- /.control-sidebar-menu -->
-                    <h3 class="control-sidebar-heading">Tasks Progress</h3>
+                <!--    <h3 class="control-sidebar-heading">Tasks Progress</h3>
                     <ul class="control-sidebar-menu">
                         <li>
                             <a href="javascript:;">
@@ -412,7 +412,7 @@ desired effect
                                 </div>
                             </a>
                         </li>
-                    </ul>
+                    </ul> -->
                     <!-- /.control-sidebar-menu -->
                 </div>
                 <!-- /.tab-pane -->
@@ -422,14 +422,44 @@ desired effect
                 <!-- Settings tab content -->
                 <div class="tab-pane" id="control-sidebar-settings-tab">
                     <form method="post">
-                        <h3 class="control-sidebar-heading">General Settings</h3>
+                        <h3 class="control-sidebar-heading">Node Settings</h3>
                         <div class="form-group">
                             <label class="control-sidebar-subheading">
-                                Report panel usage
+                                <button type="button" class="btn btn-info btn-flat" id="start_lnd" >Start LND</button>
+                                <button type="button" class="btn btn-info btn-flat" id="stop_lnd">Stop LND</button>
+                            </label>
+                            <p>
+                                Stop and start LND
+                            </p>
+                        </div>
+                        <!-- /.form-group -->
+                        <div class="form-group">
+                            <label class="control-sidebar-subheading">
+                                LND Autopilot
                                 <input type="checkbox" class="pull-right" checked>
                             </label>
                             <p>
-                                Some information about this general settings option
+                                Enable LND to manage channels at will
+                            </p>
+                        </div>
+                        <!-- /.form-group -->
+                        <div class="form-group">
+                            <label class="control-sidebar-subheading">
+                                LND Autopilot Minimum Channel Size
+                                <input type="number" class="pull-right form-control">
+                            </label>
+                            <p>
+                                Smallest size channel Autopilot will attempt to create
+                            </p>
+                        </div>
+                        <!-- /.form-group -->
+                        <div class="form-group">
+                            <label class="control-sidebar-subheading">
+                                LND Autopilot Maximum Channel Size
+                                <input type="number" class="pull-right form-control">
+                            </label>
+                            <p>
+                                Largest size channel Autopilot will attempt to create
                             </p>
                         </div>
                         <!-- /.form-group -->
