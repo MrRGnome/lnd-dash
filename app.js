@@ -11,6 +11,8 @@ var compression = require('compression');
 var expressLayouts = require('express-ejs-layouts');
 var session = require('express-session');
 var RateLimit = require('express-rate-limit'); ///https://github.com/nfriedly/express-rate-limit
+var config = require('./config.json');
+var auth = require('./services/auth');
 
 var limiter = new RateLimit({
     windowMs: 60 * 1000, // 1 minutes
@@ -22,6 +24,9 @@ var app = express();
 app.use(limiter);
 app.disable('x-powered-by');
 app.use(compression());
+
+//Authentication
+app.use(auth);
 
 // view engine setup
 app.engine('html', require('ejs').renderFile);
@@ -81,9 +86,9 @@ app.use(function (err, req, res, next) {
     return;
 });
 
-app.set('port', process.env.PORT || 8888);
+app.set('port', process.env.PORT || config.guiport || 8888);
 
-var server = app.listen(app.get('port'),"127.0.0.1", function () {
+var server = app.listen(app.get('port'), config.host || "127.0.0.1", function () {
     debug('Server listening on port ' + server.address().port);
 });
 

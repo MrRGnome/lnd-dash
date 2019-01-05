@@ -32,7 +32,7 @@
                     <input id="input_list_invoices" type="hidden" value="0">
                     <input id="input_pending_invoices" type="hidden" value="0">
                     <h3 id="h3_invoices_box">0 <sup style="font-size: 20px">of 0</sup></h3>
-                    
+
                     <p>Paid Invoices</p>
                 </div>
                 <div class="icon">
@@ -89,6 +89,37 @@
             </div>
         </div>
         <!-- ./col -->
+        <!-- ./col -->
+        <div class="col-lg-3 col-xs-6">
+            <!-- small box -->
+            <div class="small-box bg-maroon">
+                <div class="inner">
+                    <h3><span id="channels_opening">0</span> <sup style="font-size: 20px">with <span id="channels_opening_capacity">0</span> sats</sup></h3>
+
+                    <p>Opening Channels</p>
+                </div>
+                <div class="icon">
+                    <i class="ion ion-log-in"></i>
+                </div>
+                <a href="pendingchannels" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+            </div>
+        </div>
+        <!-- ./col -->
+        <div class="col-lg-3 col-xs-6">
+            <!-- small box -->
+            <div class="small-box bg-purple">
+                <div class="inner">
+                    <h3><span id="channels_closing">0</span> <sup style="font-size: 20px">with <span id="channels_closing_capacity">0</span> sats</sup></h3>
+
+                    <p>Closing Channels</p>
+                </div>
+                <div class="icon">
+                    <i class="ion ion-flash-off"></i>
+                </div>
+                <a href="closingchannels" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+            </div>
+        </div>
+        <!-- ./col -->
     </div>
 
     <div class="row">
@@ -100,11 +131,11 @@
                 <div class="info-box-content">
                     <span class="info-box-text">In Channels</span>
                     <%
-                        var channelbalance =0;
-                        if(viewdata && viewdata.channelBalance && viewdata.channelBalance.status== 'success')
-                        {
-                            channelbalance = Number(viewdata.channelBalance.data.balance);
-                        }
+                    var channelbalance =0;
+                    if(viewdata && viewdata.channelBalance && viewdata.channelBalance.status== 'success')
+                    {
+                    channelbalance = Number(viewdata.channelBalance.data.balance);
+                    }
                     %>
                     <span class="info-box-number" id="span_channel_balance_index">0</span>
                     <span class="info-box-text">SAT</span>
@@ -121,13 +152,27 @@
                 <div class="info-box-content">
                     <span class="info-box-text">On Chain</span>
                     <%
-                        var walletbalance =0;
-                        if(viewdata && viewdata.walletBalance && viewdata.walletBalance.status== 'success')
-                        {
-                            walletbalance = Number(viewdata.walletBalance.data.confirmed_balance);
-                        }
+                    var walletbalance =0;
+                    if(viewdata && viewdata.walletBalance && viewdata.walletBalance.status== 'success')
+                    {
+                    walletbalance = Number(viewdata.walletBalance.data.confirmed_balance);
+                    }
                     %>
                     <span class="info-box-number" id="span_confirmed_balance">0</span>
+                    <span class="info-box-text">SAT</span>
+                </div>
+                <!-- /.info-box-content -->
+            </div>
+            <!-- /.info-box -->
+        </div>
+
+        <div class="col-md-3 col-sm-6 col-xs-12">
+            <div class="info-box">
+                <span class="info-box-icon bg-red"><i class="ion ion-flash"></i></span>
+
+                <div class="info-box-content">
+                    <span class="info-box-text">Pending In Channels</span>
+                    <span class="info-box-number" id="pending_channels_balance">0</span>
                     <span class="info-box-text">SAT</span>
                 </div>
                 <!-- /.info-box-content -->
@@ -142,11 +187,11 @@
                 <div class="info-box-content">
                     <span class="info-box-text">Pending On Chain</span>
                     <%
-                        var unconfirmed_balance =0;
-                        if(viewdata && viewdata.walletBalance && viewdata.walletBalance.status== 'success')
-                        {
-                            unconfirmed_balance = Number(viewdata.walletBalance.data.unconfirmed_balance);
-                        }
+                    var unconfirmed_balance =0;
+                    if(viewdata && viewdata.walletBalance && viewdata.walletBalance.status== 'success')
+                    {
+                    unconfirmed_balance = Number(viewdata.walletBalance.data.unconfirmed_balance);
+                    }
                     %>
                     <span class="info-box-number" id="span_unconfirmed_balance">0</span>
                     <span class="info-box-text">SAT</span>
@@ -181,7 +226,7 @@
 
     <div class="row">
         <div class="col-md-9">
-            <h3>Special thanks to <a href="http://bitcoin.org" target="_blank">Bitcoin.org</a> developers and <a href="https://github.com/lightningnetwork/lnd" target="_blank">LND</a> developers !</h3>
+            <h3>Special thanks to <a href="https://github.com/bitcoin/bitcoin" target="_blank">Bitcoin Core</a> developers and <a href="https://github.com/lightningnetwork/lnd" target="_blank">LND</a> developers!</h3>
         </div>
     </div>
 

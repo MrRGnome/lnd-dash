@@ -1,5 +1,6 @@
 ﻿const timeout_in_seconds = 60;
-const lnd_daemon = '127.0.0.1:10009';
+var config = require('../config.json');
+const lnd_daemon = config.lnd_daemon || '127.0.0.1:10009';
 
 module.exports = {
 
@@ -428,7 +429,7 @@ module.exports = {
         return await call;
     },
 
-    //{"address":"tb1q4us3nm2xx84u000292a35w64z4tp5kqftk0rjr"}
+
     newAddress: async function (type) {
         var client = await this.getLightningClient();
         if (client.status == 'fail') return client;
@@ -663,6 +664,31 @@ module.exports = {
             client.data.client.connectPeer({
                 addr: { pubkey: remote_addr.data.pubkey, host: remote_addr.data.host }, perm: perm
             }, client.data.metadata, {deadline:timeout}, function (err, response) {
+                if (err)
+                    return resolve({ status: 'fail', data: { error_message: err.message } });
+                else
+                    return resolve({ status: 'success', data: response });
+            });
+        });
+
+        return await call;
+    },
+
+    //data will be like:
+    // { "peer_id" : 0 }
+    disconnectPeer: async function (addr_string, perm) {
+        var remote_addr = await this.validateLightningAddress(addr_string);
+        if (remote_addr.status == 'fail') return remote_addr;
+
+        var client = await this.getLightningClient();
+        if (client.status == 'fail') return client;
+        
+        var timeout = new Date().setSeconds(new Date().getSeconds() + timeout_in_seconds);
+
+        var call = new Promise((resolve) => {
+            client.data.client.disconnectPeer({
+                pub_key: remote_addr.data.pubkey
+            }, client.data.metadata, { deadline: timeout }, function (err, response) {
                 if (err)
                     return resolve({ status: 'fail', data: { error_message: err.message } });
                 else

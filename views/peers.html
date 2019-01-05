@@ -28,6 +28,14 @@
 
             <div class="box">
                 <!-- /.box-header -->
+                <div class="box-header">
+                    <div class="input-group input-group-sm" style="width:100%;">
+                        <input class="form-control" type="text" value="" id="add_peer">
+                        <span class="input-group-btn">
+                            <button type="button" class="btn btn-info btn-flat" id="btn_addpeer" onclick="add_peer()">Add Peer</button>
+                        </span>
+                    </div>
+                </div>
                 <div class="box-body table-responsive">
                     <table id="example1" class="table table-bordered table-striped">
                         <thead>
@@ -69,6 +77,9 @@
                                         <span class="input-group-btn">
                                             <button type="button" class="btn btn-info btn-flat" data-clipboard-target="#peer_<%= peer.pub_key %>" id="btn_<%= peer.pub_key %>">Copy</button>
                                         </span>
+                                        <span class="input-group-btn">
+                                            <button type="button" class="btn btn-danger btn-flat"  id="btn_disconn_<%= peer.pub_key %>" onclick="disconnect_peer('<%= peer.pub_key + '@' + peer.address %>')">Disconnect</button>
+                                        </span>
                                     </div>
                                 </td>
                                 <td style="display:none"><%= peer.pub_key %></td>
@@ -101,6 +112,26 @@
         </div>
         <!-- /.col -->
     </div>
+    <script>
+        function add_peer() {
+            $.post("/call",
+                "method_name=connectPeer&addr_string=" + $("#add_peer").val() + "&perm=false",
+                function (jsonresult) {
+                    if (jsonresult.status == 'success') {
+                        window.location.reload();
+                    }
+                });
+        }
 
+        function disconnect_peer(address) {
+            $.post("/call",
+                "method_name=disconnectPeer&addr_string=" +address,
+                function (jsonresult) {
+                    if (jsonresult.status == 'success') {
+                        window.location.reload();
+                    }
+                });
+        }
+    </script>
 </section>
 

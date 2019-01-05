@@ -250,7 +250,6 @@ desired effect
                 <!-- /.search form -->
                 <!-- Sidebar Menu -->
                 <ul class="sidebar-menu" data-widget="tree">
-                    <li class="header">MAIN NAVIGATION</li>
                     <!-- Optionally, you can add icons to the links -->
                     <li class="active"><a href="/"><i class="fa fa-dashboard"></i> <span>Dashboard</span></a></li>    
                     <li><a href="pay"><i class="ion ion-paper-airplane"></i> <span>Pay</span></a></li>
@@ -517,6 +516,8 @@ desired effect
             //console.log(window.location.pathname);
             //console.log(getAbsolutePath());
 
+           
+            //promptPass();
             getInfo();
             walletBalance();
             channelBalance();
@@ -530,6 +531,23 @@ desired effect
 
            
         });
+
+        /*function promptPass() {
+            var pass = sessionStorage['pass'];
+            if (!pass) {
+                pass = prompt("LND Dashboard Password:");
+                sessionStorage['pass'] = pass;
+            }
+
+            $.ajaxSetup({
+                headers: { 'auth': pass },
+                error: function (xhr) {
+                    console.log(xhr.statusText);
+                    if (xhr.statusText == 401)
+                        promptPass();
+                }
+            });
+        }*/
 
         function getAbsolutePath() {
             var loc = window.location;
@@ -626,6 +644,27 @@ desired effect
                         var totalchannels = Number($("#input_active_channels").val()) + Number($("#input_pending_channels").val());
                         var result = $("#input_active_channels").val() + " <sup style='font-size: 20px'>of " + totalchannels + "</sup>";
                         $("#h3_channels_box").html(result);
+
+                        //get pending opening and pending closed details
+                        $("#channels_opening").html(jsonresult.data.pending_open_channels.length);
+                        var opening_cap = 0;
+                        $("#channels_closing").html(jsonresult.data.pending_force_closing_channels.length + jsonresult.data.pending_closing_channels.length);
+                        var closing_cap = 0;
+
+                        for (var i = 0; i < jsonresult.data.pending_open_channels.length; i++) {
+                            opening_cap += Number(jsonresult.data.pending_open_channels[i].channel.local_balance);
+                        }
+                        $("#channels_opening_capacity").html(Number(opening_cap).toLocaleString("en"));
+
+                        for (var i = 0; i < jsonresult.data.pending_closing_channels.length; i++) {
+                            closing_cap += Number(jsonresult.data.pending_closing_channels[i].channel.local_balance);
+                        }
+
+                        for (var i = 0; i < jsonresult.data.pending_force_closing_channels.length; i++) {
+                            closing_cap += Number(jsonresult.data.pending_force_closing_channels[i].channel.local_balance);
+                        }
+                        $("#channels_closing_capacity").html(Number(closing_cap).toLocaleString("en"));
+                        $("#pending_channels_balance").html(Number(jsonresult.data.total_limbo_balance).toLocaleString("en"));
                     }
                 });
             return false;

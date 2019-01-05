@@ -1,5 +1,5 @@
-﻿<% applocals.header='Your Closing Channels'%>
-<% applocals.header_small='Channels are like tubes of money used to send money through the network.'%>
+﻿<% applocals.header='Closing Channels'%>
+<% applocals.header_small='These channels are removing funds from the lightning network'%>
 
 <section class="content">
     <div class="row">
@@ -23,7 +23,7 @@
 
                 <div class="info-box-content">
                     <span class="info-box-text" style="text-align:right">
-                        CID: N/A
+                        Clears In <%= (Number(item.blocks_til_maturity) * 10 / 60).toFixed(2); %>h/<%= Number(item.blocks_til_maturity).toLocaleString("en")  %> blocks
                     </span>
                     <span class="info-box-number">My Balance: <%= Number(item.channel.local_balance).toLocaleString('en') %> SAT <span style="font-size:12px;">(<%= local_percent %> %)</span> </span>
 
@@ -60,7 +60,7 @@
 
                 <div class="info-box-content">
                     <span class="info-box-text" style="text-align:right">
-                        CID: N/A
+                        Clears In <%= (Number(item.blocks_til_maturity) * 10 / 60).toFixed(2); %>h/<%= Number(item.blocks_til_maturity).toLocaleString("en")  %> blocks
                     </span>
                     <span class="info-box-number">My Balance: <%= Number(item.channel.local_balance).toLocaleString('en') %> SAT <span style="font-size:12px;">(<%= local_percent %> %)</span> </span>
 
