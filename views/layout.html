@@ -658,9 +658,13 @@ desired effect
                 "method_name=listChannels",
                 function (jsonresult) {
                     if (jsonresult.status == 'success') {
-                        $("#input_active_channels").val(Number(jsonresult.data.channels.length));
-                        var totalchannels = Number($("#input_active_channels").val()) + Number($("#input_pending_channels").val());
-                        var result = $("#input_active_channels").val() + " <sup style='font-size: 20px'>of " + totalchannels + "</sup>";
+                        var totalchannels = Number(jsonresult.data.channels.length);
+                        var activeChannels = 0;
+                        for (var i = 0; i < jsonresult.data.channels.length; i++) {
+                            if (jsonresult.data.channels[i].active)
+                                activeChannels += 1;
+                        }
+                        var result = activeChannels + " <sup style='font-size: 20px'>of " + totalchannels + "</sup>";
                         $("#h3_channels_box").html(result);
                     }
                 });
@@ -672,10 +676,6 @@ desired effect
                 "method_name=pendingChannels",
                 function (jsonresult) {
                     if (jsonresult.status == 'success') {
-                        $("#input_pending_channels").val(Number(jsonresult.data.pending_open_channels.length));
-                        var totalchannels = Number($("#input_active_channels").val()) + Number($("#input_pending_channels").val());
-                        var result = $("#input_active_channels").val() + " <sup style='font-size: 20px'>of " + totalchannels + "</sup>";
-                        $("#h3_channels_box").html(result);
 
                         //get pending opening and pending closed details
                         $("#channels_opening").html(jsonresult.data.pending_open_channels.length);
