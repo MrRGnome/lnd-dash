@@ -333,11 +333,15 @@ module.exports = {
         
         force = (/true/i).test(force);
 
+        
+
         try {
             var channel_point_obj = {};
-            channel_point_obj["funding_txid"] = new Buffer(channel_point.split(':')[0], 'hex').reverse();
-            //channel_point_obj["funding_txid_str"] = channel_point.split(':')[0];
+            //channel_point_obj["funding_txid_bytes"] = new Buffer(channel_point.split(':')[0], 'hex').reverse();
+            channel_point_obj["funding_txid_str"] = channel_point.split(':')[0];
             channel_point_obj["output_index"] = parseInt(channel_point.split(':')[1], 10)
+
+            console.log("attempting to close channel: " + channel_point);
 
             var call = client.data.client.closeChannel({
                 channel_point: channel_point_obj,

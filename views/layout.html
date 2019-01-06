@@ -540,14 +540,18 @@ desired effect
     </script>
 
     <script>
-  
+
+        var interval;
         $(document).ready(function () {
             //console.log($(location).attr('href'));
             //console.log(window.location.pathname);
             //console.log(getAbsolutePath());
-
-           
+            interval = setInterval(update, 10000);
+            update();
             //promptPass();
+        });
+
+        function update() {
             getInfo();
             walletBalance();
             channelBalance();
@@ -558,9 +562,7 @@ desired effect
                 listInvoices();
                 pendingInvoices();
             }
-
-           
-        });
+        };
 
         /*function promptPass() {
             var pass = sessionStorage['pass'];
@@ -678,7 +680,7 @@ desired effect
                         //get pending opening and pending closed details
                         $("#channels_opening").html(jsonresult.data.pending_open_channels.length);
                         var opening_cap = 0;
-                        $("#channels_closing").html(jsonresult.data.pending_force_closing_channels.length + jsonresult.data.pending_closing_channels.length);
+                        $("#channels_closing").html(jsonresult.data.pending_force_closing_channels.length + jsonresult.data.pending_closing_channels.length + jsonresult.data.waiting_close_channels.length);
                         var closing_cap = 0;
 
                         for (var i = 0; i < jsonresult.data.pending_open_channels.length; i++) {
@@ -693,6 +695,11 @@ desired effect
                         for (var i = 0; i < jsonresult.data.pending_force_closing_channels.length; i++) {
                             closing_cap += Number(jsonresult.data.pending_force_closing_channels[i].channel.local_balance);
                         }
+
+                        for (var i = 0; i < jsonresult.data.waiting_close_channels.length; i++) {
+                            closing_cap += Number(jsonresult.data.waiting_close_channels[i].channel.local_balance);
+                        }
+
                         $("#channels_closing_capacity").html(Number(closing_cap).toLocaleString("en"));
                         $("#pending_channels_balance").html(Number(jsonresult.data.total_limbo_balance).toLocaleString("en"));
                     }

@@ -6,9 +6,9 @@
         <% if(viewdata.pendingChannels.status =='success') { %>
         <% viewdata.pendingChannels.data.pending_closing_channels.forEach(function (item) { %>
         <%
-        var channel_color ='bg-red';
+        var channel_color ='bg-yellow';
         var channel_status ='CLOSING';
-        var channel_icon ='fa-times-circle';
+        var channel_icon ='fa-thumbs-up';
 
         var local_percent =0;
         var remote_percent =0;
@@ -23,7 +23,7 @@
 
                 <div class="info-box-content">
                     <span class="info-box-text" style="text-align:right">
-                        Clears In <%= (Number(item.blocks_til_maturity) * 10 / 60).toFixed(2); %>h/<%= Number(item.blocks_til_maturity).toLocaleString("en")  %> blocks
+                        Clears in <%= (Number(item.blocks_til_maturity) * 10 / 60).toFixed(2); %>h/<%= Number(item.blocks_til_maturity).toLocaleString("en")  %> blocks
                     </span>
                     <span class="info-box-number">My Balance: <%= Number(item.channel.local_balance).toLocaleString('en') %> SAT <span style="font-size:12px;">(<%= local_percent %> %)</span> </span>
 
@@ -45,7 +45,7 @@
         <%
         var channel_color ='bg-red';
         var channel_status ='FORCE CLOSING';
-        var channel_icon ='fa-times-circle';
+        var channel_icon ='fa-lock';
 
         var local_percent =0;
         var remote_percent =0;
@@ -60,7 +60,7 @@
 
                 <div class="info-box-content">
                     <span class="info-box-text" style="text-align:right">
-                        Clears In <%= (Number(item.blocks_til_maturity) * 10 / 60).toFixed(2); %>h/<%= Number(item.blocks_til_maturity).toLocaleString("en")  %> blocks
+                        Clears in <%= (Number(item.blocks_til_maturity) * 10 / 60).toFixed(2); %>h/<%= Number(item.blocks_til_maturity).toLocaleString("en")  %> blocks
                     </span>
                     <span class="info-box-number">My Balance: <%= Number(item.channel.local_balance).toLocaleString('en') %> SAT <span style="font-size:12px;">(<%= local_percent %> %)</span> </span>
 
@@ -77,7 +77,43 @@
         </div>
         <% }); %>
 
-        <% if(viewdata.pendingChannels.data.pending_force_closing_channels.length==0  && viewdata.pendingChannels.data.pending_closing_channels.length==0) { %>
+        <% viewdata.pendingChannels.data.waiting_close_channels.forEach(function (item) { %>
+        <%
+        var channel_color ='bg-red';
+        var channel_status ='WAITING CLOSING';
+        var channel_icon ='fa-hourglass';
+
+        var local_percent =0;
+        var remote_percent =0;
+        var capacity = Number(item.channel.local_balance) + Number(item.channel.remote_balance);
+        local_percent = ((Number(item.channel.local_balance) * 100) / Number(capacity)).toFixed(2);
+        remote_percent = ((Number(item.channel.remote_balance) * 100) / Number(capacity)).toFixed(2);
+        1
+        %>
+        <div class="col-md-3 col-sm-6 col-xs-12" style="width:50%">
+            <div class="info-box <%= channel_color %>">
+                <span class="info-box-icon"><i class="fa <%= channel_icon %>" title="<%= channel_status %>"></i></span>
+
+                <div class="info-box-content">
+                    <span class="info-box-text" style="text-align:right">
+                        WAITING CLOSE
+                    </span>
+                    <span class="info-box-number">My Balance: <%= Number(item.channel.local_balance).toLocaleString('en') %> SAT <span style="font-size:12px;">(<%= local_percent %> %)</span> </span>
+
+                    <div class="progress">
+                        <div class="progress-bar" style="width: <%= local_percent %>%"></div>
+                    </div>
+                    <span class="progress-description" style="text-align:right;">
+                        Available to Receive: <%= Number(item.channel.remote_balance).toLocaleString('en') %> SAT <span style="font-size:12px;">(<%= remote_percent %> %)</span>
+                    </span>
+                </div>
+                <!-- /.info-box-content -->
+            </div>
+            <!-- /.info-box -->
+        </div>
+        <% }); %>
+
+        <% if(viewdata.pendingChannels.data.pending_force_closing_channels.length==0  && viewdata.pendingChannels.data.pending_closing_channels.length==0 && viewdata.pendingChannels.data.waiting_close_channels.length==0) { %>
         <h3>You have no pending closing channels.</h3>
         <% } %>
 
