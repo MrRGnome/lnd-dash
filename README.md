@@ -18,7 +18,7 @@ $ yarn start --mainnet
 
 You can further congifure LND Dashboard using the root config.json file.
 
-'''bash
+```bash
 {
 	"host": "127.0.0.1",
 	"network": "testnet",
@@ -30,7 +30,7 @@ You can further congifure LND Dashboard using the root config.json file.
 	"guiport": 8888,
 	"lnd_daemon": "127.0.0.1:10009"
 }
-'''
+```
 
 'host' is the IP to listen to (leave blank to listen to all - unrecommended and potential security issue)
 
