@@ -48,9 +48,9 @@
                 <div class="inner">
                     <input id="input_active_channels" type="hidden" value="0">
                     <input id="input_pending_channels" type="hidden" value="0">
-                    <div class="pull-right">
-                        <p>Incoming Cap. <span id="active_incoming_cap">0</span></p>
-                        <p>Outgoing Cap. <span id="active_outgoing_cap">0</span></p>
+                    <div class="pull-right text-right">
+                        Incoming Cap. <span id="active_incoming_cap">0</span><br/>
+                        Outgoing Cap. <span id="active_outgoing_cap">0</span>
                     </div>
                     <h3 id="h3_channels_box">0 <sup style="font-size: 20px">of 0</sup></h3>
 
@@ -99,7 +99,11 @@
             <!-- small box -->
             <div class="small-box bg-maroon">
                 <div class="inner">
-                    <h3><span id="channels_opening">0</span> <sup style="font-size: 20px">with <span id="channels_opening_capacity">0</span> sats</sup></h3>
+                    <div class="pull-right text-right">
+                        Incoming Cap. <span id="opening_incoming_cap">0</span><br />
+                        Outgoing Cap. <span id="opening_outgoing_cap">0</span>
+                    </div>
+                    <h3><span id="channels_opening">0</span></h3>
 
                     <p>Opening Channels</p>
                 </div>
@@ -114,7 +118,11 @@
             <!-- small box -->
             <div class="small-box bg-purple">
                 <div class="inner">
-                    <h3><span id="channels_closing">0</span> <sup style="font-size: 20px">with <span id="channels_closing_capacity">0</span> sats</sup></h3>
+                    <div class="pull-right text-right">
+                        Incoming Cap. <span id="closing_incoming_cap">0</span><br />
+                        Outgoing Cap. <span id="closing_outgoing_cap">0</span>
+                    </div>
+                    <h3><span id="channels_closing">0</span></h3>
 
                     <p>Closing Channels</p>
                 </div>

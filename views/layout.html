@@ -686,28 +686,36 @@ desired effect
 
                         //get pending opening and pending closed details
                         $("#channels_opening").html(jsonresult.data.pending_open_channels.length);
-                        var opening_cap = 0;
+                        var openingIn = 0;
+                        var openingOut = 0;
                         $("#channels_closing").html(jsonresult.data.pending_force_closing_channels.length + jsonresult.data.pending_closing_channels.length + jsonresult.data.waiting_close_channels.length);
-                        var closing_cap = 0;
+                        var closingIn = 0;
+                        var closingOut = 0;
 
                         for (var i = 0; i < jsonresult.data.pending_open_channels.length; i++) {
-                            opening_cap += Number(jsonresult.data.pending_open_channels[i].channel.capacity);
+                            openingIn += Number(jsonresult.data.pending_open_channels[i].channel.remote_balance);
+                            openingOut += Number(jsonresult.data.pending_open_channels[i].channel.local_balance);
                         }
-                        $("#channels_opening_capacity").html(Number(opening_cap).toLocaleString("en"));
+                        $("#opening_incoming_cap").html(Number(openingIn).toLocaleString("en"));
+                        $("#opening_outgoing_cap").html(Number(openingOut).toLocaleString("en"));
 
                         for (var i = 0; i < jsonresult.data.pending_closing_channels.length; i++) {
-                            closing_cap += Number(jsonresult.data.pending_closing_channels[i].channel.capacity);
+                            closingIn += Number(jsonresult.data.pending_closing_channels[i].channel.remote_balance);
+                            closingOut += Number(jsonresult.data.pending_closing_channels[i].channel.local_balance);
                         }
 
                         for (var i = 0; i < jsonresult.data.pending_force_closing_channels.length; i++) {
-                            closing_cap += Number(jsonresult.data.pending_force_closing_channels[i].channel.capacity);
+                            closingIn += Number(jsonresult.data.pending_force_closing_channels[i].channel.remote_balance);
+                            closingOut += Number(jsonresult.data.pending_force_closing_channels[i].channel.local_balance);
                         }
 
                         for (var i = 0; i < jsonresult.data.waiting_close_channels.length; i++) {
-                            closing_cap += Number(jsonresult.data.waiting_close_channels[i].channel.capacity);
+                            closingIn += Number(jsonresult.data.waiting_close_channels[i].channel.remote_balance);
+                            closingOut += Number(jsonresult.data.waiting_close_channels[i].channel.local_balance);
                         }
 
-                        $("#channels_closing_capacity").html(Number(closing_cap).toLocaleString("en"));
+                        $("#closing_incoming_cap").html(Number(closingIn).toLocaleString("en"));
+                        $("#closing_outgoing_cap").html(Number(closingOut).toLocaleString("en"));
                         $("#pending_channels_balance").html(Number(jsonresult.data.total_limbo_balance).toLocaleString("en"));
                     }
                 });
