@@ -16,7 +16,7 @@ Unless specified LND Dashboard will run on testnet. To run on mainnet pass the a
 $ yarn start --mainnet
 ```
 
-You can further congifure LND Dashboard using the root config.json file.
+You can further congifure LND Dashboard using the root config.json file though configurations are overwritten by command line options
 
 ```bash
 {
