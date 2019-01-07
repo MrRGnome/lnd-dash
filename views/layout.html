@@ -660,11 +660,18 @@ desired effect
                     if (jsonresult.status == 'success') {
                         var totalchannels = Number(jsonresult.data.channels.length);
                         var activeChannels = 0;
+                        var activeIn = 0;
+                        var activeOut = 0;
                         for (var i = 0; i < jsonresult.data.channels.length; i++) {
-                            if (jsonresult.data.channels[i].active)
-                                activeChannels += 1;
+                            if (jsonresult.data.channels[i].active) {
+                                activeChannels++;
+                                activeOut += Number(jsonresult.data.channels[i].local_balance);
+                                activeIn += Number(jsonresult.data.channels[i].remote_balance);
+                            }
                         }
                         var result = activeChannels + " <sup style='font-size: 20px'>of " + totalchannels + "</sup>";
+                        $("#active_incoming_cap").html(Number(activeIn).toLocaleString('en'));
+                        $("#active_outgoing_cap").html(Number(activeOut).toLocaleString('en'));
                         $("#h3_channels_box").html(result);
                     }
                 });
@@ -684,20 +691,20 @@ desired effect
                         var closing_cap = 0;
 
                         for (var i = 0; i < jsonresult.data.pending_open_channels.length; i++) {
-                            opening_cap += Number(jsonresult.data.pending_open_channels[i].channel.local_balance);
+                            opening_cap += Number(jsonresult.data.pending_open_channels[i].channel.capacity);
                         }
                         $("#channels_opening_capacity").html(Number(opening_cap).toLocaleString("en"));
 
                         for (var i = 0; i < jsonresult.data.pending_closing_channels.length; i++) {
-                            closing_cap += Number(jsonresult.data.pending_closing_channels[i].channel.local_balance);
+                            closing_cap += Number(jsonresult.data.pending_closing_channels[i].channel.capacity);
                         }
 
                         for (var i = 0; i < jsonresult.data.pending_force_closing_channels.length; i++) {
-                            closing_cap += Number(jsonresult.data.pending_force_closing_channels[i].channel.local_balance);
+                            closing_cap += Number(jsonresult.data.pending_force_closing_channels[i].channel.capacity);
                         }
 
                         for (var i = 0; i < jsonresult.data.waiting_close_channels.length; i++) {
-                            closing_cap += Number(jsonresult.data.waiting_close_channels[i].channel.local_balance);
+                            closing_cap += Number(jsonresult.data.waiting_close_channels[i].channel.capacity);
                         }
 
                         $("#channels_closing_capacity").html(Number(closing_cap).toLocaleString("en"));

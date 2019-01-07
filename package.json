@@ -8,6 +8,7 @@
   "description": "A dashboard for lnd nodes",
   "contributors": [
     "Siroos Ghanavati",
+    "torkelrogstad",
     "margaret",
     "MrRGnome"
   ],
