@@ -31,6 +31,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <!-- Google Font -->
     <link rel="stylesheet"
           href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
+    <link rel="stylesheet" href="css/layout.css">
 </head>
 <!--
 BODY TAG OPTIONS:
@@ -662,7 +663,9 @@ desired effect
                         var activeChannels = 0;
                         var activeIn = 0;
                         var activeOut = 0;
+                        var commitFees = 0;
                         for (var i = 0; i < jsonresult.data.channels.length; i++) {
+                            commitFees += Number(jsonresult.data.channels[i].commit_fee);
                             if (jsonresult.data.channels[i].active) {
                                 activeChannels++;
                                 activeOut += Number(jsonresult.data.channels[i].local_balance);
@@ -672,6 +675,7 @@ desired effect
                         var result = activeChannels + " <sup style='font-size: 20px'>of " + totalchannels + "</sup>";
                         $("#active_incoming_cap").html(Number(activeIn).toLocaleString('en'));
                         $("#active_outgoing_cap").html(Number(activeOut).toLocaleString('en'));
+                        $("#active_commit_fee").html(Number(commitFees).toLocaleString('en'));
                         $("#h3_channels_box").html(result);
                     }
                 });

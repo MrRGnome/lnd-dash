@@ -1593,9 +1593,9 @@ a:focus {
   .small-box {
     text-align: center;
   }
-  .small-box .icon {
+ /* .small-box .icon {
     display: none;
-  }
+  }*/
   .small-box p {
     font-size: 12px;
   }

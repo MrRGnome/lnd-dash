@@ -1,0 +1,48 @@
+.dash-widget-parent-md {
+    min-width:300px;
+}
+
+.dash-widget-md {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.dash-widget-details {
+    flex-grow: 1;
+}
+
+.dash-widget-parent-sm {
+    max-width: 225px;
+}
+
+@media (min-width: 1200px) {
+    .dash-widget-parent-sm {
+        max-width: 450px;
+    }
+}
+
+@media (max-width: 1199px) {
+    .row {
+        max-width: 480px;
+    }
+}
+
+.dash-widget-sm {
+
+}
+
+
+.row {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+}
+
+.content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
