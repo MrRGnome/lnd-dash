@@ -1,5 +1,5 @@
 .dash-widget-parent-md {
-    min-width:300px;
+    min-width:250px;
 }
 
 .dash-widget-md {
@@ -11,6 +11,7 @@
 
 .dash-widget-details {
     flex-grow: 1;
+    font-weight: bold;
 }
 
 .dash-widget-parent-sm {

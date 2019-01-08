@@ -695,13 +695,17 @@ desired effect
                         $("#channels_closing").html(jsonresult.data.pending_force_closing_channels.length + jsonresult.data.pending_closing_channels.length + jsonresult.data.waiting_close_channels.length);
                         var closingIn = 0;
                         var closingOut = 0;
+                        var commitFees = 0;
 
                         for (var i = 0; i < jsonresult.data.pending_open_channels.length; i++) {
                             openingIn += Number(jsonresult.data.pending_open_channels[i].channel.remote_balance);
                             openingOut += Number(jsonresult.data.pending_open_channels[i].channel.local_balance);
+                            commitFees += Number(jsonresult.data.pending_open_channels[i].commit_fee);
                         }
+                       
                         $("#opening_incoming_cap").html(Number(openingIn).toLocaleString("en"));
                         $("#opening_outgoing_cap").html(Number(openingOut).toLocaleString("en"));
+                        $("#opening_commit_fee").html(Number(commitFees).toLocaleString('en'));
 
                         for (var i = 0; i < jsonresult.data.pending_closing_channels.length; i++) {
                             closingIn += Number(jsonresult.data.pending_closing_channels[i].channel.remote_balance);
