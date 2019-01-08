@@ -25,7 +25,7 @@
 }
 
 @media (max-width: 1199px) {
-    .row {
+    .dash {
         max-width: 480px;
     }
 }
@@ -35,7 +35,7 @@
 }
 
 
-.row {
+.dash-row {
     display: flex;
     flex-direction: row;
     justify-content: flex-start;
