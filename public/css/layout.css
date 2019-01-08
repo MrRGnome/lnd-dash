@@ -14,15 +14,6 @@
     font-weight: bold;
 }
 
-.dash-widget-parent-sm {
-    max-width: 225px;
-}
-
-@media (min-width: 1200px) {
-    .dash-widget-parent-sm {
-        max-width: 450px;
-    }
-}
 
 @media (max-width: 1199px) {
     .dash {
