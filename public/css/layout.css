@@ -42,7 +42,7 @@
     flex-wrap: wrap;
 }
 
-.content {
+.dash {
     display: flex;
     flex-direction: column;
     justify-content: center;
