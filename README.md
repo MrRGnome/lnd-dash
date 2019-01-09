@@ -4,9 +4,9 @@ This is a dashboard for interacting with and inspecting your `lnd` node.
 
 ## Disclaimer
 
-This project was a bit of a mess when I originally adopted it from http://lnd.fun. A lot of hard coded values such as macroon paths may result in it not working on all custom installations or operating systems. While many of these values have been already moved to the new config.json file some haven't.
+This project was a bit of a mess when I originally adopted it from http://lnd.fun. You may find some bugs.
 
-Please submit PR's for these issues as you come across them. At the moment this is only tested on a Windows 10/lnd/bitcoind stack but the intent is to get it working universally on top of any lnd node.
+Please submit PR's for these issues as you come across them. At the moment this is only tested on a Windows 10/lnd/bitcoind stack but the code to enable POSIX support has been added and just needs testing.
 
 ## Getting started
 

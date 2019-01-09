@@ -1,6 +1,12 @@
 ﻿const timeout_in_seconds = 60;
 var config = require('../config.json');
 const lnd_daemon = config.lnd_daemon || '127.0.0.1:10009';
+var path = require('path');
+var networkMode = require('../services/networkMode');
+var dataDir = process.env.LOCALAPPDATA ? path.join(process.env.LOCALAPPDATA, "Lnd") : path.join(process.env.HOME, ".lnd");
+console.log(path.join(dataDir, "data", "chain", "bitcoin", networkMode, "admin.macaroon"));
+console.log(path.join(dataDir, "tls.cert"));
+console.log(path.join("services", "rpc.proto"));
 
 module.exports = {
 
@@ -11,18 +17,23 @@ module.exports = {
             process.env.GRPC_SSL_CIPHER_SUITES = 'HIGH+ECDSA';
             var grpc = require('grpc');
             var fs = require('fs');
-            var lndCert = fs.readFileSync(process.env.LOCALAPPDATA + "\\Lnd\\tls.cert");
+            
+            var dataDir = process.env.LOCALAPPDATA ? path.join(process.env.LOCALAPPDATA, "Lnd") : path.join(process.env.HOME, ".lnd");
+            
+
+            var lndCert = fs.readFileSync(path.join(dataDir , "tls.cert"));
             if (!Buffer.isBuffer(lndCert)) {
                 lndCert = Buffer.from(lndCert);
             }
             var credentials = grpc.credentials.createSsl(lndCert);
-            var lnrpcDescriptor = grpc.load(".\\services\\rpc.proto");
+            var lnrpcDescriptor = grpc.load(path.join("services", "rpc.proto"));
             var lnrpc = lnrpcDescriptor.lnrpc;
             var lightning = new lnrpc.Lightning(lnd_daemon, credentials);
 
             var metadata = new grpc.Metadata();
             var networkMode = require('../services/networkMode');
-            var macaroonHex = fs.readFileSync(process.env.LOCALAPPDATA + "\\Lnd\\data\\chain\\bitcoin\\" + networkMode  + "\\admin.macaroon").toString("hex");
+            
+            var macaroonHex = fs.readFileSync(path.join(dataDir, "data", "chain", "bitcoin", networkMode, "admin.macaroon")).toString("hex");
             metadata.add('macaroon', macaroonHex);
 
             return { status: 'success', data: { client: lightning, metadata: metadata } };
