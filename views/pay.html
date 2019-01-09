@@ -17,7 +17,7 @@
                             <label for="payment_request" class="col-sm-2 control-label">Payment Request</label>
 
                             <div class="col-sm-10">
-                                <textarea class="form-control" rows="5" placeholder="Enter ..." id="payment_request"></textarea>
+                                <textarea class="form-control" rows="5" placeholder="Paste payment request" id="payment_request" oninput="decode_request($('#payment_request').val(), true);"></textarea>
                             </div>
                         </div>
                         <div class="form-group">
@@ -61,15 +61,17 @@
         return false;
     }
 
-    function decode_request(payment_request) {
-        notify_handler('info', 'Wait , Decoding ...');
+    function decode_request(payment_request, suppressErrors) {
+        if (!suppressErrors)
+            notify_handler('info', 'Wait , Decoding ...');
         $.post("/pay/decode_request",
             "payment_request=" + payment_request,
             function (htmlResult) {
                 if (htmlResult.status == 'fail') {
                     $('#amount').val('');
                     $('#memo').val('');
-                    notify_handler('error',htmlResult.data.error_message);
+                    if (!suppressErrors)
+                        notify_handler('error', htmlResult.data.error_message);
                 } else {
                     $('#amount').val(htmlResult.data.num_satoshis);
                     $('#memo').val(htmlResult.data.description);
@@ -87,10 +89,13 @@
                 if (htmlResult.status == 'fail') {
                     notify_handler('error', htmlResult.data.error_message);
                 } else {
-                    notify_handler('success', 'Payment has been send. payment_preimage_str: ' + htmlResult.data.payment_preimage_str);
+                    notify_handler('success', 'Payment has been sent. payment_preimage_str: ' + htmlResult.data.payment_preimage_str);
                 }
             });
         return false;
-    }    
+    }
+    
+
+    
 
 </script>
