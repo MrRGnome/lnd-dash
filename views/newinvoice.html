@@ -141,18 +141,30 @@
                 } else {
                     $('#payment_request').val(htmlResult.data.payment_request);
                     $('#qr_code').attr('src', "https://chart.apis.google.com/chart?cht=qr&chld=Q|2&chs=370&chl=lightning:" + htmlResult.data.payment_request);
-                    notify_handler('success', 'Payment request has been generated and copied to clipboard!');
+                    
                 }
                 window.loadedPR = true;
             },
             async: false
         });
+
+        if (navigator.clipboard) {
+            navigator.clipboard.writeText($('#payment_request').val())
+                .then(() => {
+                    notify_handler('success', 'Payment request has been generated and copied to clipboard!');
+                })
+                .catch(err => {
+                    console.error('Failed to write clipboard contents: ', err);
+                });
+        } else {
+            $('#payment_request').select();
+            document.designMode = "on";
+            console.log(document.execCommand('copy'));
+            window.getSelection().removeAllRanges();
+            document.designMode = "off";
+            notify_handler('success', 'Payment request has been generated and copied to clipboard!');
+        }
         
-        $('#payment_request').select();
-        document.designMode = "on";
-        console.log(document.execCommand('copy'));
-        window.getSelection().removeAllRanges();
-        document.designMode = "off";
         return false;
     }
 
