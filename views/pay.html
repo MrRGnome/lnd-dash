@@ -17,7 +17,7 @@
                             <label for="payment_request" class="col-sm-2 control-label">Payment Request</label>
 
                             <div class="col-sm-10">
-                                <textarea class="form-control" rows="5" placeholder="Paste payment request" id="payment_request" oninput="decode_request($('#payment_request').val(), true);"></textarea>
+                                <textarea class="form-control" rows="5" placeholder="Paste payment request" id="payment_request" onclick="paste()" oninput="decode_request(true);"></textarea>
                             </div>
                         </div>
                         <div class="form-group">
@@ -40,7 +40,7 @@
                     </div>
                     <!-- /.box-body -->
                     <div class="box-footer">
-                        <button type="submit" class="btn btn-default" onclick="decode_request($('#payment_request').val());">Decode</button>
+                        <button type="submit" class="btn btn-default" onclick="decode_request();">Decode</button>
                         <button type="submit" class="btn btn-default" onclick="reset_form();">Reset</button>
                         <button type="submit" class="btn btn-info pull-right" onclick="send_payment($('#payment_request').val());">Send Payment</button>
                     </div>
@@ -61,7 +61,11 @@
         return false;
     }
 
-    function decode_request(payment_request, suppressErrors) {
+    function decode_request(suppressErrors) {
+        var payment_request = $('#payment_request').val();
+        if (!payment_request)
+            return;
+
         if (!suppressErrors)
             notify_handler('info', 'Wait , Decoding ...');
         $.post("/pay/decode_request",
@@ -95,7 +99,30 @@
         return false;
     }
     
+    function paste() {
+        if ($('#payment_request').val() != "")
+            return;
 
-    
+        if (navigator.clipboard) {
+            navigator.clipboard.readText()
+                .then(text => {
+                    if(text.length > 150 && text.slice(0,2) == "ln")
+                        $('#payment_request').val(text);
+                })
+                .catch(err => {
+                    console.error('Failed to read clipboard contents: ', err);
+                });
+        }
+        else {
+            $('#payment_request').select();
+            document.designMode = "on";
+            console.log(document.execCommand('paste'));
+            window.getSelection().removeAllRanges();
+            document.designMode = "off";
+        }
+    }
+
+    paste();
+    decode_request(true)
 
 </script>
