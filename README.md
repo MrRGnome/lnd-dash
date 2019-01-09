@@ -2,9 +2,15 @@
 
 This is a dashboard for interacting with and inspecting your `lnd` node.
 
+## Disclaimer
+
+This project was a bit of a mess when I originally adopted it from http://lnd.fun. A lot of hard coded values such as macroon paths may result it in not working on all custom installations or operating systems.
+
+Please submit PR's for these issues as you come across them. At the moment this is only tested on a Windows 10/lnd/bitcoind stack but the intent is to get it working universally on top of any lnd node.
+
 ## Getting started
 
-This assumes you have a running `lnd` node on the Bitcoin testnet, using macaroon authentication.
+This assumes you have a running `lnd` node on the Bitcoin testnet, using default macaroon authentication.
 
 ```bash
 $ yarn install
