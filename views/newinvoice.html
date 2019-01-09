@@ -130,17 +130,29 @@
 
     function generate_request(amount,memo) {
         notify_handler('info', 'Wait, generating payment request ...');
-        $.post("/newinvoice",
-            "amount=" + amount.replace(/,/g, "") + "&memo=" + memo,
-            function (htmlResult) {
+
+        //synchronous since we need to have the result while still in the directly user called function to use execCommand and copy auotmatically
+        $.post({
+            url: "/newinvoice",
+            data: "amount=" + amount.replace(/,/g, "") + "&memo=" + memo,
+            success: function(htmlResult) {
                 if (htmlResult.status == 'fail') {
                     notify_handler('error', htmlResult.data.error_message);
                 } else {
                     $('#payment_request').val(htmlResult.data.payment_request);
                     $('#qr_code').attr('src', "https://chart.apis.google.com/chart?cht=qr&chld=Q|2&chs=370&chl=lightning:" + htmlResult.data.payment_request);
-                    notify_handler('success', 'Payment request has been generated !');
+                    notify_handler('success', 'Payment request has been generated and copied to clipboard!');
                 }
-            });
+                window.loadedPR = true;
+            },
+            async: false
+        });
+        
+        $('#payment_request').select();
+        document.designMode = "on";
+        console.log(document.execCommand('copy'));
+        window.getSelection().removeAllRanges();
+        document.designMode = "off";
         return false;
     }
 
