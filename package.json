@@ -3,7 +3,8 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "node app"
+    "start": "node app",
+    "postinstall": "node install/lightning-uri-scheme"
   },
   "description": "A dashboard for lnd nodes",
   "contributors": [
@@ -12,6 +13,8 @@
     "margaret",
     "MrRGnome"
   ],
+  "license": "SEE LICENSE IN LICENSE",
+  "repository": "github:MrRGnome/lnd-fun",
   "dependencies": {
     "body-parser": "^1.15.0",
     "compression": "^1.7.1",

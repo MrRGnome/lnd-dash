@@ -1,0 +1,15 @@
+Windows Registry Editor Version 5.00
+
+[HKEY_CURRENT_USER\Software\Classes\mycustproto]
+"URL Protocol"="\"\""
+@="\"URL:lightning Protocol\""
+
+[HKEY_CURRENT_USER\Software\Classes\mycustproto\DefaultIcon]
+@="\"lnd.exe,1\""
+
+[HKEY_CURRENT_USER\Software\Classes\mycustproto\shell]
+
+[HKEY_CURRENT_USER\Software\Classes\mycustproto\shell\open]
+
+[HKEY_CURRENT_USER\Software\Classes\mycustproto\shell\open\command]
+@="\"C:\\Program Files\\MyProgram\\myprogram.exe\" \"%1\""
