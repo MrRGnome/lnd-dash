@@ -7,13 +7,22 @@
     flex-direction: row;
     flex-wrap: wrap;
     justify-content: space-between;
+    min-height: 110px;
 }
 
 .dash-widget-details {
     flex-grow: 1;
     font-weight: bold;
+    z-index: 1;
 }
 
+.dash-widget-details a {
+    color: rgba(255, 255, 255, 0.8);
+}
+
+.dash-widget-details a:hover {
+    color: #FFF;
+}
 
 @media (max-width: 1199px) {
     .dash {
@@ -37,4 +46,104 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
+}
+
+.hide {
+    display:none !important;
+}
+
+.channel-bar {
+    width: 100%;
+    height: 10px;
+    padding-left: 10px;
+    padding-right: 10px;
+    display: flex;
+    flex-direction: row;
+}
+
+.channel-balance {
+    width: 100%;
+    padding-left: 10px;
+    padding-right: 10px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    font-weight: bold;
+}
+
+.bg-local {
+    background-color: #000 !important;
+    color: #FFF;
+    overflow:hidden;
+    line-height:initial;
+    font-size:9px;
+}
+
+.bg-remote {
+    background-color: #FFF !important;
+    color: #000;
+    overflow: hidden;
+    line-height: initial;
+    font-size: 9px;
+}
+
+.bold {
+    font-weight: bold;
+}
+
+#modalButtons {
+    display:flex;
+    flex-direction: column;
+}
+
+
+
+
+#modalbox {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 10000000; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+
+#confirmBox {
+    display: none;
+    background-color: #eee;
+    border-radius: 5px;
+    border: 1px solid #aaa;
+    position: fixed;
+    width: 300px;
+    left: 50%;
+    top: 10%;
+    margin-left: -150px;
+    padding: 6px 8px 8px;
+    box-sizing: border-box;
+    text-align: center;
+}
+
+#confirmBox .button {
+    background-color: #ccc;
+    display: inline-block;
+    border-radius: 3px;
+    border: 1px solid #aaa;
+    padding: 2px;
+    margin: 5px;
+    text-align: center;
+    cursor: pointer;
+}
+
+    #confirmBox .button:hover {
+        background-color: #ddd;
+    }
+
+#confirmBox .message {
+    text-align: left;
+    margin-bottom: 8px;
 }
