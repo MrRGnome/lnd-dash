@@ -108,6 +108,7 @@
                 .then(text => {
                     if(text.length > 150 && text.slice(0,2) == "ln")
                         $('#payment_request').val(text);
+                    decode_request(true)
                 })
                 .catch(err => {
                     console.error('Failed to read clipboard contents: ', err);
@@ -119,10 +120,11 @@
             console.log(document.execCommand('paste'));
             window.getSelection().removeAllRanges();
             document.designMode = "off";
+            decode_request(true)
         }
     }
 
     paste();
-    decode_request(true)
+    
 
 </script>
