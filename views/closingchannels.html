@@ -25,13 +25,13 @@
                     <span class="info-box-text" style="text-align:right">
                         Clears in <%= (Number(item.blocks_til_maturity) * 10 / 60).toFixed(2); %>h/<%= Number(item.blocks_til_maturity).toLocaleString("en")  %> blocks
                     </span>
-                    <span class="info-box-number">My Balance: <%= Number(item.channel.local_balance).toLocaleString('en') %> SAT <span style="font-size:12px;">(<%= local_percent %> %)</span> </span>
+                    <span class="info-box-number">My Balance: <%= Number(item.channel.local_balance).toLocaleString() %> SAT <span style="font-size:12px;">(<%= local_percent %> %)</span> </span>
 
                     <div class="progress">
                         <div class="progress-bar" style="width: <%= local_percent %>%"></div>
                     </div>
                     <span class="info-box-number" style="text-align:right;font-size:12px;">
-                        Available to Receive: <%= Number(item.channel.remote_balance).toLocaleString('en') %> SAT <span style="font-size:12px;">(<%= remote_percent %> %)</span>
+                        Available to Receive: <%= Number(item.channel.remote_balance).toLocaleString() %> SAT <span style="font-size:12px;">(<%= remote_percent %> %)</span>
                     </span>
                 </div>
                 <!-- /.info-box-content -->
@@ -62,13 +62,13 @@
                     <span class="info-box-text" style="text-align:right">
                         Clears in <%= (Number(item.blocks_til_maturity) * 10 / 60).toFixed(2); %>h/<%= Number(item.blocks_til_maturity).toLocaleString("en")  %> blocks
                     </span>
-                    <span class="info-box-number">My Balance: <%= Number(item.channel.local_balance).toLocaleString('en') %> SAT <span style="font-size:12px;">(<%= local_percent %> %)</span> </span>
+                    <span class="info-box-number">My Balance: <%= Number(item.channel.local_balance).toLocaleString() %> SAT <span style="font-size:12px;">(<%= local_percent %> %)</span> </span>
 
                     <div class="progress">
                         <div class="progress-bar" style="width: <%= local_percent %>%"></div>
                     </div>
                     <span class="progress-description" style="text-align:right;">
-                        Available to Receive: <%= Number(item.channel.remote_balance).toLocaleString('en') %> SAT <span style="font-size:12px;">(<%= remote_percent %> %)</span>
+                        Available to Receive: <%= Number(item.channel.remote_balance).toLocaleString() %> SAT <span style="font-size:12px;">(<%= remote_percent %> %)</span>
                     </span>
                 </div>
                 <!-- /.info-box-content -->
@@ -98,13 +98,13 @@
                     <span class="info-box-text" style="text-align:right">
                         WAITING CLOSE
                     </span>
-                    <span class="info-box-number">My Balance: <%= Number(item.channel.local_balance).toLocaleString('en') %> SAT <span style="font-size:12px;">(<%= local_percent %> %)</span> </span>
+                    <span class="info-box-number">My Balance: <%= Number(item.channel.local_balance).toLocaleString() %> SAT <span style="font-size:12px;">(<%= local_percent %> %)</span> </span>
 
                     <div class="progress">
                         <div class="progress-bar" style="width: <%= local_percent %>%"></div>
                     </div>
                     <span class="progress-description" style="text-align:right;">
-                        Available to Receive: <%= Number(item.channel.remote_balance).toLocaleString('en') %> SAT <span style="font-size:12px;">(<%= remote_percent %> %)</span>
+                        Available to Receive: <%= Number(item.channel.remote_balance).toLocaleString() %> SAT <span style="font-size:12px;">(<%= remote_percent %> %)</span>
                     </span>
                 </div>
                 <!-- /.info-box-content -->

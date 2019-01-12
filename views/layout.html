@@ -641,9 +641,9 @@ desired effect
                 "method_name=walletBalance",
                 function (jsonresult) {
                     if (jsonresult.status == 'success') {
-                        $("#span_wallet_balance").html(Number(jsonresult.data.confirmed_balance).toLocaleString('en'));
-                        $("#span_confirmed_balance").html(Number(jsonresult.data.confirmed_balance).toLocaleString('en'));
-                        $("#span_unconfirmed_balance").html(Number(jsonresult.data.unconfirmed_balance).toLocaleString('en'));
+                        $("#span_wallet_balance").html(Number(jsonresult.data.confirmed_balance).toLocaleString());
+                        $("#span_confirmed_balance").html(Number(jsonresult.data.confirmed_balance).toLocaleString());
+                        $("#span_unconfirmed_balance").html(Number(jsonresult.data.unconfirmed_balance).toLocaleString());
                     }
                 });
             return false;
@@ -654,8 +654,8 @@ desired effect
                 "method_name=channelBalance",
                 function (jsonresult) {
                     if (jsonresult.status == 'success') {
-                        $("#span_channel_balance").html(Number(jsonresult.data.balance).toLocaleString('en'));
-                        $("#span_channel_balance_index").html(Number(jsonresult.data.balance).toLocaleString('en'));
+                        $("#span_channel_balance").html(Number(jsonresult.data.balance).toLocaleString());
+                        $("#span_channel_balance_index").html(Number(jsonresult.data.balance).toLocaleString());
                     }
                 });
             return false;
@@ -666,7 +666,7 @@ desired effect
                 "method_name=listPayments",
                 function (jsonresult) {
                     if (jsonresult.status == 'success') {
-                        $("#span_list_payments").html(Number(jsonresult.data.payments.length).toLocaleString('en'));
+                        $("#span_list_payments").html(Number(jsonresult.data.payments.length).toLocaleString());
                     }
                 });
             return false;
@@ -691,9 +691,9 @@ desired effect
                             }
                         }
                         var result = activeChannels + " <sup style='font-size: 20px'>of " + totalchannels + "</sup>";
-                        $("#active_incoming_cap").html(Number(activeIn).toLocaleString('en'));
-                        $("#active_outgoing_cap").html(Number(activeOut).toLocaleString('en'));
-                        $("#active_commit_fee").html(Number(commitFees).toLocaleString('en'));
+                        $("#active_incoming_cap").html(Number(activeIn).toLocaleString());
+                        $("#active_outgoing_cap").html(Number(activeOut).toLocaleString());
+                        $("#active_commit_fee").html(Number(commitFees).toLocaleString());
                         $("#h3_channels_box").html(result);
                     }
                 });
@@ -723,7 +723,7 @@ desired effect
                        
                         $("#opening_incoming_cap").html(Number(openingIn).toLocaleString("en"));
                         $("#opening_outgoing_cap").html(Number(openingOut).toLocaleString("en"));
-                        $("#opening_commit_fee").html(Number(commitFees).toLocaleString('en'));
+                        $("#opening_commit_fee").html(Number(commitFees).toLocaleString());
 
                         for (var i = 0; i < jsonresult.data.pending_closing_channels.length; i++) {
                             closingIn += Number(jsonresult.data.pending_closing_channels[i].channel.remote_balance);

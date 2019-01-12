@@ -61,10 +61,10 @@
                                 <td><%= Number(payment.time_stamp) %></td>
                                 <td><%= timeConverter(payment.time_stamp) %></td>
                                 <td style="color:<%= (Number(payment.amount)<0) ? 'red' : 'green' %>;">
-                                    <%= Number(payment.amount).toLocaleString('en') %>
+                                    <%= Number(payment.amount).toLocaleString() %>
                                 </td>
                                 <td>
-                                    <%= Number(payment.total_fees).toLocaleString('en') %>
+                                    <%= Number(payment.total_fees).toLocaleString() %>
                                 </td>
                                 <td><%= payment.num_confirmations %></td>
                                 <td>
