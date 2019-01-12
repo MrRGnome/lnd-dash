@@ -429,11 +429,7 @@ a:focus {
   -o-transition: -o-transform 0.3s ease-in-out, width 0.3s ease-in-out;
   transition: transform 0.3s ease-in-out, width 0.3s ease-in-out;
 }
-@media (max-width: 767px) {
-  .main-sidebar {
-    padding-top: 100px;
-  }
-}
+
 @media (max-width: 767px) {
   .main-sidebar {
     -webkit-transform: translate(-230px, 0);

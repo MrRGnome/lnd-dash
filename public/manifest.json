@@ -9,5 +9,12 @@
     "clipboard",
     "clipboardRead",
     "clipboardWrite"
-  ]
+  ],
+  "protocol_handlers": {
+    {
+      "protocol": "lightning",
+      "name": "Bitcoin Lightning",
+      "uriTemplate": "https://127.0.0.1:8888/pay?invoice=%s"
+    }
+  }
 }

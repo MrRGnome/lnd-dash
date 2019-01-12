@@ -70,7 +70,7 @@ desired effect
 |               | sidebar-mini                            |
 |---------------------------------------------------------|
 -->
-<body class="hold-transition skin-blue sidebar-mini fixed">
+<body class="hold-transition skin-blue sidebar-mini">
     <div class="wrapper">
         <!-- Main Header -->
         <header class="main-header">
@@ -260,7 +260,7 @@ desired effect
                         <div class="image">
                             <img src="images/lightning.jpg" class="img-circle" alt="User Image">
                         </div>
-                        <div class="info">
+                        <div class="info chaindata">
                             <span class="network_mode">Network</span><br/>
                             <!-- Status -->
                             <a><i class="fa fa-circle text-success"></i> Online</a>
@@ -268,7 +268,7 @@ desired effect
 
                     </div>
                     
-                    <div class="white">
+                    <div class="white chaindata">
                         Time: <span class="lastblock"></span><br/>
                         Height: <span class="blockheight"></span><br/>
                     </div>
@@ -555,6 +555,11 @@ desired effect
 
         var interval;
         $(document).ready(function () {
+            /*navigator.registerProtocolHandler("lightning",
+                "https://"+window.location.host+"/pay?invoice=%s",
+                "Bitcoin Lightning");*/
+
+
             //console.log($(location).attr('href'));
             //console.log(window.location.pathname);
             //console.log(getAbsolutePath());
