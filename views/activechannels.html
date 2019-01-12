@@ -4,7 +4,7 @@
 <section class="content dash">
     <div class="row dash-row">
         <% if(viewdata.listChannels.status =='success') { %>
-        <% viewdata.listChannels.data.channels.forEach(function (channel) { %>
+        <% viewdata.listChannels.data.channels.sort((a,b) => { return Number(b.capacity) - Number(a.capacity); }).forEach(function (channel) { %>
         <%
         var channel_color ='';
         var channel_status ='';
@@ -28,9 +28,9 @@
         %>
 
 
-        
 
-            <!-- ./col -->
+
+        <!-- ./col -->
         <div class="col-lg-4 col-xs-12">
             <!-- small box -->
             <div id="<%= channel.chan_id %>" class="small-box <%= channel_color %> dash-widget-parent-md">
@@ -78,7 +78,7 @@
                     </div>
                     <div class="text-right dash-widget-details">
                         Sent: <%= Number(channel.total_satoshis_sent).toLocaleString('en') %> <br />
-                        Received: <%= Number(channel.total_satoshis_sent).toLocaleString('en') %> <br />
+                        Received: <%= Number(channel.total_satoshis_received).toLocaleString('en') %> <br />
                         Unsettled: <%= Number(channel.unsettled_balance).toLocaleString('en') %> <br />
                         <a href="javascript: ask_for_Close('<%= channel.channel_point %>', '<%= channel.chan_id %>', <%= channel.active %>, <%= (Number(channel.csv_delay) * 10 / 60).toFixed(2) %>)">Force Close</a>: <%= (Number(channel.csv_delay) * 10 / 60).toFixed(2) %>h/<%= channel.csv_delay %> bl
                     </div>
@@ -105,104 +105,104 @@
                 <a href="javascript:$('#<%= channel.chan_id %>_details').addClass('hide'); $('#<%= channel.chan_id %>').removeClass('hide');" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
             </div>
         </div>
-           
 
-            <!--
 
-        <div class="col-md-3 col-sm-6 col-xs-12" style="min-width:50%;" id="<%= channel.chan_id %>" onclick="$('#<%= channel.chan_id %>').addClass('hide'); $('#<%= channel.chan_id %>_details').removeClass('hide');">
-            <div class="info-box <%= channel_color %>">
-                
+        <!--
 
-                <div class="info-box-content">
-                    <span class="info-box-text" style="text-align:right">
-                        CID: <%= channel.chan_id %>
-                        <button type="button" class="btn btn-box-tool" data-widget="remove" style="padding:0px; color: #FFF;" onclick="ask_for_Close('<%= channel.channel_point %>','<%= channel.chan_id %>' , '<%= channel.active %>')"><i class="fa fa-times"></i></button>
-                    </span>
-                    <span class="info-box-number">My Balance: <%= Number(channel.local_balance).toLocaleString('en') %> SAT <span style="font-size:12px;">(<%= local_percent %> %)</span> </span>
+    <div class="col-md-3 col-sm-6 col-xs-12" style="min-width:50%;" id="<%= channel.chan_id %>" onclick="$('#<%= channel.chan_id %>').addClass('hide'); $('#<%= channel.chan_id %>_details').removeClass('hide');">
+        <div class="info-box <%= channel_color %>">
 
-                    <div class="progress">
-                        <div class="progress-bar" style="width: <%= local_percent %>%"></div>
-                    </div>
-                    <span class="info-box-number" style="text-align:right;font-size:12px;">
-                        Available to Receive: <%= Number(channel.remote_balance).toLocaleString('en') %> SAT <span style="font-size:12px;">(<%= remote_percent %> %)</span>
-                    </span>
+
+            <div class="info-box-content">
+                <span class="info-box-text" style="text-align:right">
+                    CID: <%= channel.chan_id %>
+                    <button type="button" class="btn btn-box-tool" data-widget="remove" style="padding:0px; color: #FFF;" onclick="ask_for_Close('<%= channel.channel_point %>','<%= channel.chan_id %>' , '<%= channel.active %>')"><i class="fa fa-times"></i></button>
+                </span>
+                <span class="info-box-number">My Balance: <%= Number(channel.local_balance).toLocaleString('en') %> SAT <span style="font-size:12px;">(<%= local_percent %> %)</span> </span>
+
+                <div class="progress">
+                    <div class="progress-bar" style="width: <%= local_percent %>%"></div>
                 </div>
-                <a href="javascript:$('#<%= channel.chan_id %>').addClass('hide'); $('#<%= channel.chan_id %>_details').removeClass('hide');" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+                <span class="info-box-number" style="text-align:right;font-size:12px;">
+                    Available to Receive: <%= Number(channel.remote_balance).toLocaleString('en') %> SAT <span style="font-size:12px;">(<%= remote_percent %> %)</span>
+                </span>
+            </div>
+            <a href="javascript:$('#<%= channel.chan_id %>').addClass('hide'); $('#<%= channel.chan_id %>_details').removeClass('hide');" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+        </div>
+    </div>
+    <div class="col-md-3 col-sm-6 col-xs-12 hide" style="min-width:50%;" id="<%= channel.chan_id %>_details" onclick="$('#<%= channel.chan_id %>_details').addClass('hide'); $('#<%= channel.chan_id %>').removeClass('hide');">
+        <div class="info-box <%= channel_color %>">
+
+        </div>
+    </div>-->
+        <% }); %>
+
+        <% if(viewdata.listChannels.data.channels.length==0) { %>
+        <h3>You have no active channels.</h3>
+        <% } %>
+
+        <% } %>
+
+
+        <div id="modalbox">
+            <div id="confirmBox">
+                <div class="message"></div>
+                <div id="modalButtons">
+                    <button class="button bg-red force">Force it closed!</button>
+                    <button class="button bg-yellow yes">Close Gracefully</button>
+                    <button class="button bg-green no">Cancel Close</button>
+                </div>
             </div>
         </div>
-        <div class="col-md-3 col-sm-6 col-xs-12 hide" style="min-width:50%;" id="<%= channel.chan_id %>_details" onclick="$('#<%= channel.chan_id %>_details').addClass('hide'); $('#<%= channel.chan_id %>').removeClass('hide');">
-            <div class="info-box <%= channel_color %>">
 
-            </div>
-        </div>-->
-            <% }); %>
+        <script>
 
-            <% if(viewdata.listChannels.data.channels.length==0) { %>
-            <h3>You have no active channels.</h3>
-            <% } %>
+            function doConfirm(msg, yesFn, forceFn, noFn) {
+                var confirmBox = $("#confirmBox");
+                var modalbox = $("#modalbox");
+                confirmBox.find(".message").text(msg);
+                confirmBox.find(".yes,.no,.force").unbind().click(function () {
+                    confirmBox.hide();
+                    modalbox.hide();
+                });
+                confirmBox.find(".yes").click(yesFn);
+                confirmBox.find(".force").click(forceFn);
+                confirmBox.find(".no").click(noFn);
+                modalbox.show();
+                confirmBox.show();
+            }
 
-            <% } %>
+            function ask_for_Close(channel_point, cid, isOnline, csvHours) {
+                //e.preventDefault();
+                if (isOnline) {
+                    $("#confirmBox").find(".yes").show();
+                } else {
+                    $("#confirmBox").find(".yes").hide();
+                }
+                doConfirm("Are you sure you want to close this channel [" + cid + "] ? If you force it closed it will take ~" + csvHours + " hours to have your coins returned on-chain", function yes() {
+                    closeChannel(channel_point, cid, false);
+                }, function force() {
+                    closeChannel(channel_point, cid, true);
+                }, function no() {
+                    // do nothing
+                });
+            }
 
-
-            <div id="modalbox">
-                <div id="confirmBox">
-                    <div class="message"></div>
-                    <div id="modalButtons">
-                        <button class="button bg-red force">Force it closed!</button>
-                        <button class="button bg-yellow yes">Close Gracefully</button>
-                        <button class="button bg-green no">Cancel Close</button>
-                    </div>
-                </div>
-            </div>
-
-            <script>
-
-                function doConfirm(msg, yesFn, forceFn, noFn) {
-                    var confirmBox = $("#confirmBox");
-                    var modalbox = $("#modalbox");
-                    confirmBox.find(".message").text(msg);
-                    confirmBox.find(".yes,.no,.force").unbind().click(function () {
-                        confirmBox.hide();
-                        modalbox.hide();
+            function closeChannel(channel_point, cid, force) {
+                notify_handler('info', 'Wait , ' + (force ? 'force' : '') + ' closing channel [' + cid + '] ...');
+                $.post("/activechannels/closechannel",
+                    "channel_point=" + channel_point + "&force=" + force,
+                    function (htmlResult) {
+                        if (htmlResult.status == 'fail') {
+                            notify_handler('error', htmlResult.data.error_message);
+                        } else {
+                            notify_handler('success', 'closing_txid: ' + htmlResult.data.closing_txid);
+                        }
                     });
-                    confirmBox.find(".yes").click(yesFn);
-                    confirmBox.find(".force").click(forceFn);
-                    confirmBox.find(".no").click(noFn);
-                    modalbox.show();
-                    confirmBox.show();
-                }
+                return false;
 
-                function ask_for_Close(channel_point, cid, isOnline, csvHours) {
-                    //e.preventDefault();
-                    if (isOnline) {
-                        $("#confirmBox").find(".yes").show();
-                    } else {
-                        $("#confirmBox").find(".yes").hide();
-                    }
-                    doConfirm("Are you sure you want to close this channel [" + cid + "] ? If you force it closed it will take ~" + csvHours + " hours to have your coins returned on-chain", function yes() {
-                        closeChannel(channel_point, cid, false);
-                    }, function force() {
-                        closeChannel(channel_point, cid, true);
-                    }, function no() {
-                        // do nothing
-                    });
-                }
+            }
 
-                function closeChannel(channel_point, cid, force) {
-                    notify_handler('info', 'Wait , ' + (force ? 'force' : '') + ' closing channel [' + cid + '] ...');
-                    $.post("/activechannels/closechannel",
-                        "channel_point=" + channel_point + "&force=" + force,
-                        function (htmlResult) {
-                            if (htmlResult.status == 'fail') {
-                                notify_handler('error', htmlResult.data.error_message);
-                            } else {
-                                notify_handler('success', 'closing_txid: ' + htmlResult.data.closing_txid);
-                            }
-                        });
-                    return false;
-
-                }
-
-            </script>
-        </div>
+        </script>
+    </div>
 </section>

@@ -17,7 +17,7 @@
                             <label for="payment_request" class="col-sm-2 control-label">Payment Request</label>
 
                             <div class="col-sm-10">
-                                <textarea class="form-control" rows="5" placeholder="Paste payment request" id="payment_request" onclick="paste()" oninput="decode_request(true);"></textarea>
+                                <textarea class="form-control" rows="5" placeholder="Paste payment request" id="payment_request" contenteditable="true" onclick="paste()" oninput="decode_request(true);"></textarea>
                             </div>
                         </div>
                         <div class="form-group">
@@ -42,7 +42,7 @@
                     <div class="box-footer">
                         <button type="submit" class="btn btn-default" onclick="decode_request();">Decode</button>
                         <button type="submit" class="btn btn-default" onclick="reset_form();">Reset</button>
-                        <button type="submit" class="btn btn-info pull-right" onclick="send_payment($('#payment_request').val());">Send Payment</button>
+                        <button type="submit" id="send" class="btn btn-info pull-right" onclick="send_payment($('#payment_request').val());">Send Payment</button>
                     </div>
                     <!-- /.box-footer -->
                 </div>
@@ -87,6 +87,7 @@
 
     function send_payment(payment_request) {
         notify_handler('info', 'Wait , sending payment ...');
+        $("#send").attr("disabled", true);
         $.post("/pay",
             "payment_request=" + payment_request,
             function (htmlResult) {
@@ -95,6 +96,7 @@
                 } else {
                     notify_handler('success', 'Payment has been sent. payment_preimage_str: ' + htmlResult.data.payment_preimage_str);
                 }
+                $("#send").attr("disabled", false);
             });
         return false;
     }
@@ -102,11 +104,19 @@
     function paste() {
         if ($('#payment_request').val() != "")
             return;
-
-        if (navigator.clipboard) {
+        
+        $('#payment_request').select();
+        document.designMode = "on";
+        var pasted =document.execCommand('paste');
+        window.getSelection().removeAllRanges();
+        document.designMode = "off";
+        if (pasted)
+            decode_request(true);
+        
+        if (navigator.clipboard && !pasted) {
             navigator.clipboard.readText()
                 .then(text => {
-                    if(text.length > 150 && text.slice(0,2) == "ln")
+                    if (text.length > 150 && text.slice(0, 2) == "ln")
                         $('#payment_request').val(text);
                     decode_request(true)
                 })
@@ -114,17 +124,11 @@
                     console.error('Failed to read clipboard contents: ', err);
                 });
         }
-        else {
-            $('#payment_request').select();
-            document.designMode = "on";
-            console.log(document.execCommand('paste'));
-            window.getSelection().removeAllRanges();
-            document.designMode = "off";
-            decode_request(true)
-        }
+        
     }
 
     paste();
+    
     
 
 </script>

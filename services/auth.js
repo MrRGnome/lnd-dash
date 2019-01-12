@@ -2,8 +2,38 @@
 var express = require('express');
 var router = express.Router();
 var config = require('../config.json');
+var crypto = require('crypto');
+
+var activeSessions = {};
+
+function randomValueHex(len) {
+    return crypto
+        .randomBytes(Math.ceil(len / 2))
+        .toString('hex')
+        .slice(0, len);
+}
 
 function auth(req, res, next) {
+
+    //first time setup
+    if (!config.users) {
+        
+    }
+
+    //create session
+    if (req.body && req.body.password) {
+
+    }
+
+    /*if (!req.cookies || !req.cookies.lndauth) {
+        var options = {
+            maxAge: 1000 * 60 * 15, // would expire after 15 minutes
+            signed: true 
+        }
+        res.cookie('lndauth', '', options)
+
+    }*/
+
     /*var passVerified = false;
     if (config.pass) {
         var pass = req.header("auth");

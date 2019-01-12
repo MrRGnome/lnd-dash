@@ -1,6 +1,7 @@
 ﻿'use strict';
 var debug = require('debug');
 var express = require('express');
+var https = require('https');
 var path = require('path');
 var favicon = require('serve-favicon');
 var logger = require('morgan');
@@ -13,6 +14,7 @@ var session = require('express-session');
 var RateLimit = require('express-rate-limit'); ///https://github.com/nfriedly/express-rate-limit
 var config = require('./config.json');
 var auth = require('./services/auth');
+var dataDir = require('./services/lnddir');
 
 var limiter = new RateLimit({
     windowMs: 60 * 1000, // 1 minutes
@@ -38,7 +40,8 @@ app.use(expressLayouts);
 app.use(logger('short'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
-app.use(cookieParser());
+app.use(cookieParser("whynowork"));
+
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use(function (req, res, next) {
@@ -57,7 +60,7 @@ addRoutes('', 'routes');
 function addRoutes(routepath, dirpath) {
     var files = fs.readdirSync(dirpath);
     files.forEach(function (file) {
-        if (file.indexOf('.') == -1) { // this is a folder
+        if (file.indexOf('.') == -1) { 
             addRoutes(routepath + '/' + file, dirpath + '/' + file);
         }
         else {
@@ -88,8 +91,16 @@ app.use(function (err, req, res, next) {
 
 app.set('port', process.env.PORT || config.guiport || 8888);
 
-var server = app.listen(app.get('port'), config.host || "127.0.0.1", function () {
+
+var server = https.createServer({
+    key: fs.readFileSync(path.join(dataDir, "tls.key")),
+    cert: fs.readFileSync(path.join(dataDir, "tls.cert"))
+}, app);
+
+
+server.listen(app.get('port'), config.host || "127.0.0.1", function () {
     debug('Server listening on port ' + server.address().port);
 });
+
 
 

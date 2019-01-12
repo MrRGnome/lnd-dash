@@ -148,6 +148,16 @@
             async: false
         });
 
+        $('#payment_request').select();
+        document.designMode = "on";
+        var copied = document.execCommand('copy');
+        window.getSelection().removeAllRanges();
+        document.designMode = "off";
+        if (copied) {
+            notify_handler('success', 'Payment request has been generated and copied to clipboard!');
+            return false;
+        }
+
         if (navigator.clipboard) {
             navigator.clipboard.writeText($('#payment_request').val())
                 .then(() => {
@@ -156,13 +166,6 @@
                 .catch(err => {
                     console.error('Failed to write clipboard contents: ', err);
                 });
-        } else {
-            $('#payment_request').select();
-            document.designMode = "on";
-            console.log(document.execCommand('copy'));
-            window.getSelection().removeAllRanges();
-            document.designMode = "off";
-            notify_handler('success', 'Payment request has been generated and copied to clipboard!');
         }
         
         return false;

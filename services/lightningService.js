@@ -2,11 +2,6 @@
 var config = require('../config.json');
 const lnd_daemon = config.lnd_daemon || '127.0.0.1:10009';
 var path = require('path');
-var networkMode = require('../services/networkMode');
-var dataDir = process.env.LOCALAPPDATA ? path.join(process.env.LOCALAPPDATA, "Lnd") : path.join(process.env.HOME, ".lnd");
-console.log(path.join(dataDir, "data", "chain", "bitcoin", networkMode, "admin.macaroon"));
-console.log(path.join(dataDir, "tls.cert"));
-console.log(path.join("services", "rpc.proto"));
 
 module.exports = {
 
@@ -18,7 +13,7 @@ module.exports = {
             var grpc = require('grpc');
             var fs = require('fs');
             
-            var dataDir = process.env.LOCALAPPDATA ? path.join(process.env.LOCALAPPDATA, "Lnd") : path.join(process.env.HOME, ".lnd");
+            var dataDir = require('../services/lnddir');
             
 
             var lndCert = fs.readFileSync(path.join(dataDir , "tls.cert"));

@@ -22,7 +22,7 @@ Unless specified LND Dashboard will run on testnet. To run on mainnet pass the a
 $ yarn start --mainnet
 ```
 
-You can further congifure LND Dashboard using the root config.json file though configurations are overwritten by command line options
+You can further configure LND Dashboard using the root config.json file though configurations are overwritten by command line options
 
 ```bash
 {
@@ -49,4 +49,4 @@ You can further congifure LND Dashboard using the root config.json file though c
 'lnd_daemon' is the location of your lightning nodes gRPC port
 
 
-:zap: Go to [`127.0.0.1:8888`](http://127.0.0.1:8888), and you're done! :zap:
+:zap: Go to [`https://127.0.0.1:8888`](https://127.0.0.1:8888), and you're done! :zap:

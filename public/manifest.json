@@ -1,0 +1,13 @@
+{
+  "name": "LND Dashboard",
+  "short_name": "lnd-dash",
+  "start_url": "/",
+  "display": "standalone",
+  "permissions": [
+    "audio-capture",
+    "video-capture",
+    "clipboard",
+    "clipboardRead",
+    "clipboardWrite"
+  ]
+}

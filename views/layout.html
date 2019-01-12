@@ -32,6 +32,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <link rel="stylesheet"
           href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
     <link rel="stylesheet" href="css/layout.css">
+    <link rel="manifest" href="/manifest.json">
     <!-- REQUIRED JS SCRIPTS -->
     <script src="bower_components/jquery/dist/jquery.min.js"></script>
     <!-- Bootstrap 3.3.7 -->
@@ -254,13 +255,21 @@ desired effect
             <section class="sidebar">
                 <!-- Sidebar user panel (optional) -->
                 <div class="user-panel">
-                    <div class="pull-left image">
-                        <img src="images/lightning.jpg" class="img-circle" alt="User Image">
+                    <div class="flex-row white">
+                        <div class="image">
+                            <img src="images/lightning.jpg" class="img-circle" alt="User Image">
+                        </div>
+                        <div class="info">
+                            <span class="network_mode">Network</span><br/>
+                            <!-- Status -->
+                            <a><i class="fa fa-circle text-success"></i> Online</a>
+                        </div>
+
                     </div>
-                    <div class="pull-left info">
-                        <p  class="network_mode">Network</p>
-                        <!-- Status -->
-                        <a><i class="fa fa-circle text-success"></i> Online</a>
+                    
+                    <div class="white">
+                        Time: <span class="lastblock"></span><br/>
+                        Height: <span class="blockheight"></span><br/>
                     </div>
                 </div>
                 
@@ -614,6 +623,8 @@ desired effect
                         $("#alias_header").html(jsonresult.data.alias)
                         $("#h3_connected_peers").html(jsonresult.data.num_peers);
                         $("#input_node_alias").val(jsonresult.data.alias);
+                        $(".lastblock").html(new Date(jsonresult.data.best_header_timestamp * 1000).toLocaleString());
+                        $(".blockheight").html(Number(jsonresult.data.block_height).toLocaleString())
                     }
                 });
             return false;
