@@ -164,3 +164,17 @@
     height:auto;
     margin-right:10px;
 }
+
+.mobile-header {
+    transition: width 0.3s ease-in-out;
+    color: #ffffff;
+    display: block;
+    float: left;
+    height: 50px;
+    font-size: 20px;
+    line-height: 50px;
+    text-align: center;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-weight: 300;
+    overflow: hidden;
+}
