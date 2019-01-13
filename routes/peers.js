@@ -6,7 +6,7 @@ var lightningService = require('../services/lightningService');
 router.get('/', async function (req, res) {
     var viewdata = {};
    
-    viewdata.listPeers = await lightningService.listPeers();
+    viewdata.listPeers = await lightningService.listPeers(res.locals.user);
     res.render('peers', { viewdata: viewdata });
 });
 

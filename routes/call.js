@@ -12,6 +12,7 @@ router.post('/', async function (req, res) {
                 args.push(req.body[key]);
             }
         }
+        args.push(res.locals.user);
         var result = await lightningService[req.body.method_name].apply(lightningService, args);
         res.status(200).json(result);
     } catch (err) {

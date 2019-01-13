@@ -6,7 +6,7 @@ var lightningService = require('../services/lightningService');
 router.get('/', async function (req, res) {
     var viewdata = {};
     
-    viewdata.listInvoices = await lightningService.listInvoices(true);
+    viewdata.listInvoices = await lightningService.listInvoices(true, res.locals.user);
     res.render('pendinginvoices', { viewdata: viewdata });
 });
 

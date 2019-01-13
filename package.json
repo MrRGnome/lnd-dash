@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "start": "node app",
-    "postinstall": "node install/lightning-uri-scheme"
+    "postinstall": "node install/setup"
   },
   "description": "A dashboard for lnd nodes",
   "contributors": [

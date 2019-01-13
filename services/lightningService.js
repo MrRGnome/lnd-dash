@@ -6,7 +6,7 @@ var path = require('path');
 module.exports = {
 
     //
-    getLightningClient: async function () {
+    getLightningClient: async function (user) {
         try {
             //process.env.GRPC_SSL_CIPHER_SUITES = 'ECDHE-RSA-AES128-GCM-SHA256:ECDHE-RSA-AES128-SHA256:ECDHE-RSA-AES256-SHA384:ECDHE-RSA-AES256-GCM-SHA384:ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES128-SHA256:ECDHE-ECDSA-AES256-SHA384:ECDHE-ECDSA-AES256-GCM-SHA384';
             process.env.GRPC_SSL_CIPHER_SUITES = 'HIGH+ECDSA';
@@ -28,7 +28,7 @@ module.exports = {
             var metadata = new grpc.Metadata();
             var networkMode = require('../services/networkMode');
             
-            var macaroonHex = fs.readFileSync(path.join(dataDir, "data", "chain", "bitcoin", networkMode, "admin.macaroon")).toString("hex");
+            var macaroonHex = fs.readFileSync(path.join(dataDir, "data", "chain", "bitcoin", networkMode, user.permission+".macaroon")).toString("hex");
             metadata.add('macaroon', macaroonHex);
 
             return { status: 'success', data: { client: lightning, metadata: metadata } };
@@ -70,8 +70,8 @@ module.exports = {
     //        }
     //    ]
     //}
-    getTransactions: async function () {
-        var client = await this.getLightningClient();
+    getTransactions: async function (user) {
+        var client = await this.getLightningClient(user);
         if (client.status == 'fail') return client;
         var timeout = new Date().setSeconds(new Date().getSeconds() + timeout_in_seconds);
 
@@ -101,8 +101,8 @@ module.exports = {
     //		"bitcoin"
     //	]
     //}
-    getInfo: async function () {
-        var client = await this.getLightningClient();
+    getInfo: async function (user) {
+        var client = await this.getLightningClient(user);
         if (client.status == 'fail') return client;
         var timeout = new Date().setSeconds(new Date().getSeconds() + timeout_in_seconds);
 
@@ -118,8 +118,8 @@ module.exports = {
         return await call;
     },
 
-    setAlias: async function (new_alias) {
-        var client = await this.getLightningClient();
+    setAlias: async function (new_alias, user) {
+        var client = await this.getLightningClient(user);
         if (client.status == 'fail') return client;
         var timeout = new Date().setSeconds(new Date().getSeconds() + timeout_in_seconds);
 
@@ -176,7 +176,7 @@ module.exports = {
     //	"funding_txid_str": "",
     //	"output_index": 0
     //}
-    openChannelSync: async function (addr_string, amount) {
+    openChannelSync: async function (addr_string, amount, user) {
         var remote_addr = await this.validateLightningAddress(addr_string);
         if (remote_addr.status == 'fail') return remote_addr;
 
@@ -184,7 +184,7 @@ module.exports = {
             return { status: 'fail', data: { error_message: 'Amount value is not valid.' } };
         }
 
-        var client = await this.getLightningClient();
+        var client = await this.getLightningClient(user);
         if (client.status == 'fail') return client;
 
         var connectToRemote = await this.connectPeer(addr_string, true);
@@ -222,7 +222,7 @@ module.exports = {
         return await call;
     },
 
-    openChannel: async function (addr_string, amount) {
+    openChannel: async function (addr_string, amount, user) {
         var remote_addr = await this.validateLightningAddress(addr_string);
         if (remote_addr.status == 'fail') return remote_addr;
 
@@ -230,7 +230,7 @@ module.exports = {
             return { status: 'fail', data: { error_message: 'Amount value is not valid.' } };
         }
 
-        var client = await this.getLightningClient();
+        var client = await this.getLightningClient(user);
         if (client.status == 'fail') return client;
 
         var connectToRemote = await this.connectPeer(addr_string, true);
@@ -276,7 +276,7 @@ module.exports = {
         return await call;
     },
 
-    tryOpenChannel: async function (client, options, callback) {
+    tryOpenChannel: async function (client, options, callbac, userk) {
         try {
             var call = client.data.client.openChannel(options, client.data.metadata);
 
@@ -306,8 +306,8 @@ module.exports = {
     },
 
 
-    closeChannel: async function (channel_point, force) {
-        var client = await this.getLightningClient();
+    closeChannel: async function (channel_point, force, user) {
+        var client = await this.getLightningClient(user);
         if (client.status == 'fail') return client;
         try {
             var call = new Promise((resolve) => {
@@ -335,7 +335,7 @@ module.exports = {
         }
     },
 
-    tryCloseChannel: function (client,channel_point, force,callback) {
+    tryCloseChannel: function (client, channel_point, force, callback, user) {
         
         force = (/true/i).test(force);
 
@@ -386,8 +386,8 @@ module.exports = {
 //	"confirmed_balance": "201590573",
 //	"unconfirmed_balance": "0"
 //}
-    walletBalance: async function () {
-        var client = await this.getLightningClient();
+    walletBalance: async function (user) {
+        var client = await this.getLightningClient(user);
         if (client.status == 'fail') return client;
         var timeout = new Date().setSeconds(new Date().getSeconds() + timeout_in_seconds);
 
@@ -404,8 +404,8 @@ module.exports = {
     },
 
     // {balance : "11031817"}
-    channelBalance: async function () {
-        var client = await this.getLightningClient();
+    channelBalance: async function (user) {
+        var client = await this.getLightningClient(user);
         if (client.status == 'fail') return client;
         var timeout = new Date().setSeconds(new Date().getSeconds() + timeout_in_seconds);
 
@@ -422,8 +422,8 @@ module.exports = {
     },
 
     //{"address":"2MvEa5RD7VSjGS3h1dHVsYP8vhgmfuFDWa2"}
-    newWitnessAddress: async function () {
-        var client = await this.getLightningClient();
+    newWitnessAddress: async function (user) {
+        var client = await this.getLightningClient(user);
         if (client.status == 'fail') return client;
         var timeout = new Date().setSeconds(new Date().getSeconds() + timeout_in_seconds);
 
@@ -440,8 +440,8 @@ module.exports = {
     },
 
 
-    newAddress: async function (type) {
-        var client = await this.getLightningClient();
+    newAddress: async function (type, user) {
+        var client = await this.getLightningClient(user);
         if (client.status == 'fail') return client;
         var timeout = new Date().setSeconds(new Date().getSeconds() + timeout_in_seconds);
 
@@ -456,7 +456,7 @@ module.exports = {
 
         return await call;
     },
-    validateLightningAddress: async function (addr_string) {
+    validateLightningAddress: async function (addr_string, user) {
         if (!addr_string || addr_string.trim().split('@').length != 2) {
             return { status: 'fail', data: { error_message: 'addr_string must be like pubkey@host:port' } };
         }
@@ -480,8 +480,8 @@ module.exports = {
     //	"fallback_addr": "",
     //	"cltv_expiry": "9"
     //}
-    decodePayReq: async function (pay_req) {
-        var client = await this.getLightningClient();
+    decodePayReq: async function (pay_req, user) {
+        var client = await this.getLightningClient(user);
         if (client.status == 'fail') return client;
         var timeout = new Date().setSeconds(new Date().getSeconds() + timeout_in_seconds);
 
@@ -558,11 +558,11 @@ module.exports = {
 //		]
 //	}
 //}
-    sendPaymentSync: async function (pay_req) {
-        var decodeReq = await this.decodePayReq(pay_req);
+    sendPaymentSync: async function (pay_req, user) {
+        var decodeReq = await this.decodePayReq(pay_req, user);
         if (decodeReq.status == 'fail') return decodeReq;
 
-        var client = await this.getLightningClient();
+        var client = await this.getLightningClient(user);
         if (client.status == 'fail') return client;
         
         var options = {};
@@ -634,11 +634,11 @@ module.exports = {
 //	},
 //	"payment_request": "lntb90600n1pdz75kapp55j47prkzya0p6ve9lcedudc7tx7k9ut094lnunscfpgzdqy67emsdq8w3jhxaqcqzysa5huujgyt0cxlxcn26rap2lt2cdzszx6gvu5wddlpl6smp87m9jj0rn886zutdgg688d5qvd74ws3akcxem0j72tu9h8yrldjheq0vcpsesnaa"
 //}
-    addInvoice: async function (amount, memo) {
+    addInvoice: async function (amount, memo, user) {
         if (!Number(amount) || Number(amount) < 1) {
             return { status: 'fail', data: { error_message: 'Amount value is not valid.' } };
         }
-        var client = await this.getLightningClient();
+        var client = await this.getLightningClient(user);
         if (client.status == 'fail') return client;
 
         var options = {};
@@ -660,11 +660,11 @@ module.exports = {
 
     //data will be like:
     // { "peer_id" : 0 }
-    connectPeer: async function (addr_string, perm) {
+    connectPeer: async function (addr_string, perm, user) {
         var remote_addr = await this.validateLightningAddress(addr_string);
         if (remote_addr.status == 'fail') return remote_addr;
 
-        var client = await this.getLightningClient();
+        var client = await this.getLightningClient(user);
         if (client.status == 'fail') return client;
 
         perm = (/true/i).test(perm);
@@ -686,11 +686,11 @@ module.exports = {
 
     //data will be like:
     // { "peer_id" : 0 }
-    disconnectPeer: async function (addr_string, perm) {
+    disconnectPeer: async function (addr_string, perm, user) {
         var remote_addr = await this.validateLightningAddress(addr_string);
         if (remote_addr.status == 'fail') return remote_addr;
 
-        var client = await this.getLightningClient();
+        var client = await this.getLightningClient(user);
         if (client.status == 'fail') return client;
         
         var timeout = new Date().setSeconds(new Date().getSeconds() + timeout_in_seconds);
@@ -736,8 +736,8 @@ module.exports = {
     //        }
     //    ]
     //}
-    listPeers: async function () {
-        var client = await this.getLightningClient();
+    listPeers: async function (user) {
+        var client = await this.getLightningClient(user);
         if (client.status == 'fail') return client;
         var timeout = new Date().setSeconds(new Date().getSeconds() + timeout_in_seconds);
 
@@ -752,8 +752,8 @@ module.exports = {
         return await call;
     },
 
-    listChannels: async function () {
-        var client = await this.getLightningClient();
+    listChannels: async function (user) {
+        var client = await this.getLightningClient(user);
         if (client.status == 'fail') return client;
         var timeout = new Date().setSeconds(new Date().getSeconds() + timeout_in_seconds);
 
@@ -768,8 +768,8 @@ module.exports = {
         return await call;
     },
 
-    pendingChannels: async function () {
-        var client = await this.getLightningClient();
+    pendingChannels: async function (user) {
+        var client = await this.getLightningClient(user);
         if (client.status == 'fail') return client;
         var timeout = new Date().setSeconds(new Date().getSeconds() + timeout_in_seconds);
 
@@ -784,8 +784,8 @@ module.exports = {
         return await call;
     },
 
-    listInvoices: async function (pending_only) {
-        var client = await this.getLightningClient();
+    listInvoices: async function (pending_only, user) {
+        var client = await this.getLightningClient(user);
         if (client.status == 'fail') return client;
         var timeout = new Date().setSeconds(new Date().getSeconds() + timeout_in_seconds);
 
@@ -802,8 +802,8 @@ module.exports = {
         return await call;
     },
 
-    listPayments: async function () {
-        var client = await this.getLightningClient();
+    listPayments: async function (user) {
+        var client = await this.getLightningClient(user);
         if (client.status == 'fail') return client;
         var timeout = new Date().setSeconds(new Date().getSeconds() + timeout_in_seconds);
 

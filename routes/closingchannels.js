@@ -6,7 +6,7 @@ var lightningService = require('../services/lightningService');
 router.get('/', async function (req, res) {
     var viewdata = {};
     
-    viewdata.pendingChannels = await lightningService.pendingChannels();
+    viewdata.pendingChannels = await lightningService.pendingChannels(res.locals.user);
     res.render('closingchannels', { viewdata: viewdata });
 });
 

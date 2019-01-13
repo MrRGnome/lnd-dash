@@ -12,10 +12,10 @@ router.get('/', async function (req, res) {
 
 router.post('/', async function (req, res) {
     if (req.body.only_connect== 'true') {
-        var result = await lightningService.connectPeer(req.body.addr_string, true);
+        var result = await lightningService.connectPeer(req.body.addr_string, true, res.locals.user);
         res.status(200).json(result);
     } else {
-        var result = await lightningService.openChannel(req.body.addr_string, req.body.amount);
+        var result = await lightningService.openChannel(req.body.addr_string, req.body.amount, res.locals.user);
         res.status(200).json(result);
     }
 });

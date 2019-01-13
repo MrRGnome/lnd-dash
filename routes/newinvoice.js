@@ -11,12 +11,12 @@ router.get('/', async function (req, res) {
 
 
 router.post('/', async function (req, res) {
-    var result = await lightningService.addInvoice(req.body.amount, req.body.memo);
+    var result = await lightningService.addInvoice(req.body.amount, req.body.memo, res.locals.user);
     res.status(200).json(result);
 });
 
 router.get('/newaddress', async function (req, res) {
-    var result = await lightningService.newAddress(1);
+    var result = await lightningService.newAddress(1, res.locals.user);
     res.status(200).json(result);
 });
 

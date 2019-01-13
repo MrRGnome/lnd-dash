@@ -23,6 +23,7 @@ var limiter = new RateLimit({
 });
 
 var app = express();
+app.use(cookieParser(config.cookieSecret));
 app.use(limiter);
 app.disable('x-powered-by');
 app.use(compression());
@@ -40,7 +41,7 @@ app.use(expressLayouts);
 app.use(logger('short'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
-app.use(cookieParser("whynowork"));
+
 
 app.use(express.static(path.join(__dirname, 'public')));
 
