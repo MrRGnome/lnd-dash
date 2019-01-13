@@ -29,6 +29,7 @@ router.post('/', async function (req, res) {
             maxAge: 1000 * 60 * 15, // would expire after 15 minutes
             signed: true
         }
+        //sessions = sessions.filter(sessUser => user.username != sessUser.username);
         sessions.push(user);
         res.header("Location", "/");
         res.cookie('lndauth', user.session, options);

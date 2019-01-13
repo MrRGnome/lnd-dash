@@ -3,3 +3,4 @@ obj
 node_modules
 /.vs
 /npm-debug.log
+/config.json

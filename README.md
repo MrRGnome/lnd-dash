@@ -54,7 +54,7 @@ You can also edit the root config.json file directly after it is generated. You 
 }
 ```
 
-'host' is the IP to listen to (leave blank to listen to all - unrecommended and potential security issue)
+'host' is the IP to listen to (set 0.0.0.0 to listen to all ipv4 - unrecommended and potential security issue)
 
 'network' is the desired network to run on and implied location to look for macroons (non default macroon paths not yet supported)
 
