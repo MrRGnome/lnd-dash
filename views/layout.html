@@ -761,7 +761,7 @@ desired effect
                         for (var i = 0; i < jsonresult.data.waiting_close_channels.length; i++) {
                             closingIn += Number(jsonresult.data.waiting_close_channels[i].channel.remote_balance);
                             closingOut += Number(jsonresult.data.waiting_close_channels[i].channel.local_balance);
-                            pendingTotal += Number(jsonresult.data.waiting_close_channels[i].channel.local_balance);
+                            //pendingTotal += Number(jsonresult.data.waiting_close_channels[i].channel.local_balance);
                         }
 
                         $("#closing_incoming_cap").html(Number(closingIn).toLocaleString());

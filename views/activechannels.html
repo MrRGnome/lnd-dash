@@ -80,7 +80,7 @@
                         Sent: <%= Number(channel.total_satoshis_sent).toLocaleString() %> <br />
                         Received: <%= Number(channel.total_satoshis_received).toLocaleString() %> <br />
                         Unsettled: <%= Number(channel.unsettled_balance).toLocaleString() %> <br />
-                        <a href="javascript: ask_for_Close('<%= channel.channel_point %>', '<%= channel.chan_id %>', <%= channel.active %>, <%= (Number(channel.csv_delay) * 10 / 60).toFixed(2) %>)">Force Close</a>: <%= (Number(channel.csv_delay) * 10 / 60).toFixed(2) %>h/<%= channel.csv_delay %> bl
+                        <a href="javascript: ask_for_Close('<%= channel.channel_point %>', '<%= channel.chan_id %>', <%= channel.active %>, <%= (Number(channel.csv_delay) * 10 / 60).toFixed(2) %>, <%= Number(channel.commit_fee).toLocaleString() %>)">Force Close</a>: <%= (Number(channel.csv_delay) * 10 / 60).toFixed(2) %>h/<%= channel.csv_delay %> bl
                     </div>
                 </div>
                 <div class="icon">
@@ -172,14 +172,14 @@
                 confirmBox.show();
             }
 
-            function ask_for_Close(channel_point, cid, isOnline, csvHours) {
+            function ask_for_Close(channel_point, cid, isOnline, csvHours, fees) {
                 //e.preventDefault();
                 if (isOnline) {
                     $("#confirmBox").find(".yes").show();
                 } else {
                     $("#confirmBox").find(".yes").hide();
                 }
-                doConfirm("Are you sure you want to close this channel [" + cid + "] ? If you force it closed it will take ~" + csvHours + " hours to have your coins returned on-chain", function yes() {
+                doConfirm("Are you sure you want to close this channel [" + cid + "] ? If you force it closed it will take ~" + csvHours + " hours to have your coins returned on-chain and will cost " + fees + " sats (fees spent will appear as pending on chain until close clears).", function yes() {
                     closeChannel(channel_point, cid, false);
                 }, function force() {
                     closeChannel(channel_point, cid, true);

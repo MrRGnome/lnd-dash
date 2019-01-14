@@ -177,7 +177,7 @@ module.exports = {
     //	"output_index": 0
     //}
     openChannelSync: async function (addr_string, amount, user) {
-        var remote_addr = await this.validateLightningAddress(addr_string);
+        var remote_addr = await this.validateLightningAddress(addr_string, user);
         if (remote_addr.status == 'fail') return remote_addr;
 
         if (!Number(amount) || Number(amount) < 1000) {
@@ -187,10 +187,10 @@ module.exports = {
         var client = await this.getLightningClient(user);
         if (client.status == 'fail') return client;
 
-        var connectToRemote = await this.connectPeer(addr_string, true);
+        var connectToRemote = await this.connectPeer(addr_string, true, user);
         //if (connectToRemote.status == 'fail') return connectToRemote;  //no need to this line. maybe already exist a connection with remote peer.
 
-        var listpeers = await this.listPeers();
+        var listpeers = await this.listPeers(user);
         var target_peer_id = 0;
         for (var i = 0; i < listpeers.data.peers.length; i++) {
             if (listpeers.data.peers[i].pub_key == remote_addr.data.pubkey) {
@@ -223,7 +223,7 @@ module.exports = {
     },
 
     openChannel: async function (addr_string, amount, user) {
-        var remote_addr = await this.validateLightningAddress(addr_string);
+        var remote_addr = await this.validateLightningAddress(addr_string, user);
         if (remote_addr.status == 'fail') return remote_addr;
 
         if (!Number(amount) || Number(amount) < 1000) {
@@ -233,10 +233,10 @@ module.exports = {
         var client = await this.getLightningClient(user);
         if (client.status == 'fail') return client;
 
-        var connectToRemote = await this.connectPeer(addr_string, true);
+        var connectToRemote = await this.connectPeer(addr_string, true, user);
         //if (connectToRemote.status == 'fail') return connectToRemote;  //no need to this line. maybe already exist a connection with remote peer.
 
-        var listpeers = await this.listPeers();
+        var listpeers = await this.listPeers(user);
         var target_peer_id = 0;
         for (var i = 0; i < listpeers.data.peers.length; i++) {
             if (listpeers.data.peers[i].pub_key == remote_addr.data.pubkey) {
@@ -270,13 +270,13 @@ module.exports = {
                         return resolve({ status: 'fail', data: { error_message: 'no response from server.' } });                        
                     }
                 }
-            });
+            }, user);
         });
 
         return await call;
     },
 
-    tryOpenChannel: async function (client, options, callbac, userk) {
+    tryOpenChannel: async function (client, options, callback, user) {
         try {
             var call = client.data.client.openChannel(options, client.data.metadata);
 
@@ -336,7 +336,7 @@ module.exports = {
     },
 
     tryCloseChannel: function (client, channel_point, force, callback, user) {
-        
+        //wtf is this why why why
         force = (/true/i).test(force);
 
         
@@ -661,7 +661,7 @@ module.exports = {
     //data will be like:
     // { "peer_id" : 0 }
     connectPeer: async function (addr_string, perm, user) {
-        var remote_addr = await this.validateLightningAddress(addr_string);
+        var remote_addr = await this.validateLightningAddress(addr_string, user);
         if (remote_addr.status == 'fail') return remote_addr;
 
         var client = await this.getLightningClient(user);
@@ -687,7 +687,7 @@ module.exports = {
     //data will be like:
     // { "peer_id" : 0 }
     disconnectPeer: async function (addr_string, perm, user) {
-        var remote_addr = await this.validateLightningAddress(addr_string);
+        var remote_addr = await this.validateLightningAddress(addr_string, user);
         if (remote_addr.status == 'fail') return remote_addr;
 
         var client = await this.getLightningClient(user);
