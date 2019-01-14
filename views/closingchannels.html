@@ -23,7 +23,7 @@
 
                 <div class="info-box-content">
                     <span class="info-box-text" style="text-align:right">
-                        Clears in <%= (Number(item.blocks_til_maturity) * 10 / 60).toFixed(2); %>h/<%= Number(item.blocks_til_maturity).toLocaleString("en")  %> blocks
+                        Clears in <%= (Number(item.blocks_til_maturity) * 10 / 60).toFixed(2); %>h/<%= Number(item.blocks_til_maturity).toLocaleString()  %> blocks
                     </span>
                     <span class="info-box-number">My Balance: <%= Number(item.channel.local_balance).toLocaleString() %> SAT <span style="font-size:12px;">(<%= local_percent %> %)</span> </span>
 
@@ -60,7 +60,7 @@
 
                 <div class="info-box-content">
                     <span class="info-box-text" style="text-align:right">
-                        Clears in <%= (Number(item.blocks_til_maturity) * 10 / 60).toFixed(2); %>h/<%= Number(item.blocks_til_maturity).toLocaleString("en")  %> blocks
+                        Clears in <%= (Number(item.blocks_til_maturity) * 10 / 60).toFixed(2); %>h/<%= Number(item.blocks_til_maturity).toLocaleString()  %> blocks
                     </span>
                     <span class="info-box-number">My Balance: <%= Number(item.channel.local_balance).toLocaleString() %> SAT <span style="font-size:12px;">(<%= local_percent %> %)</span> </span>
 

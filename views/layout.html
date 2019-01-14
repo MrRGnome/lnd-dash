@@ -278,7 +278,7 @@ desired effect
                 <!-- Sidebar Menu -->
                 <ul class="sidebar-menu" data-widget="tree">
                     <!-- Optionally, you can add icons to the links -->
-                    <li class="active"><a href="/"><i class="fa fa-dashboard"></i> <span>Dashboard</span></a></li>    
+                    <li class="active"><a href="/"><i class="fa fa-dashboard"></i> <span>Dashboard</span></a></li>
                     <li><a href="pay"><i class="ion ion-paper-airplane"></i> <span>Pay</span></a></li>
                     <li class="treeview">
                         <a href="#">
@@ -293,7 +293,7 @@ desired effect
                             <li><a href="pendingchannels"><i class="ion ion-ios-timer-outline"></i> Pending Channels</a></li>
                             <li><a href="closingchannels"><i class="ion ion-ios-close-outline"></i> Closing Channels</a></li>
                         </ul>
-                    </li>                    
+                    </li>
                     <li class="treeview">
                         <a href="#">
                             <i class="ion ion-bag"></i> <span>Invoices</span>
@@ -324,7 +324,7 @@ desired effect
                         <a>
                             <i class="ion ion-social-bitcoin"></i> <span>On Chain</span>
                             <span class="pull-right-container">
-                                <small class="label pull-right bg-blue"><span  style="font-size:12px;" id="span_wallet_balance">0</span> (SAT)</small>                                
+                                <small class="label pull-right bg-aqua"><span style="font-size:12px;" id="span_wallet_balance">0</span> (SAT)</small>
                             </span>
                         </a>
                     </li>
@@ -333,6 +333,14 @@ desired effect
                             <i class="ion ion-flash"></i> <span>Channels</span>
                             <span class="pull-right-container">
                                 <small class="label pull-right bg-green"><span style="font-size:12px;" id="span_channel_balance">0</span> (SAT)</small>
+                            </span>
+                        </a>
+                    </li>
+                    <li>
+                        <a>
+                            <i class="ion ion-flash"></i> <span>Total Funds</span>
+                            <span class="pull-right-container">
+                                <small class="label pull-right bg-blue"><span style="font-size:12px;" class="total_sats">0</span> (SAT)</small>
                             </span>
                         </a>
                     </li>
@@ -554,6 +562,7 @@ desired effect
     <script>
 
         var interval;
+        var totalSats = 0;
         $(document).ready(function () {
             /*navigator.registerProtocolHandler("lightning",
                 "https://"+window.location.host+"/pay?invoice=%s",
@@ -569,16 +578,21 @@ desired effect
         });
 
         function update() {
+            totalSats = 0;
             getInfo();
             walletBalance();
             channelBalance();
+            listChannels();
+            pendingChannels();
             if (window.location.pathname == '/') {
                 listPayments();
-                listChannels();
-                pendingChannels();
                 listInvoices();
                 pendingInvoices();
             }
+            //the ugliest hack
+            setTimeout(() => {
+                $(".total_sats").html(Number(totalSats).toLocaleString());
+            }, 2000)
         };
 
         /*function promptPass() {
@@ -644,6 +658,8 @@ desired effect
                         $("#span_wallet_balance").html(Number(jsonresult.data.confirmed_balance).toLocaleString());
                         $("#span_confirmed_balance").html(Number(jsonresult.data.confirmed_balance).toLocaleString());
                         $("#span_unconfirmed_balance").html(Number(jsonresult.data.unconfirmed_balance).toLocaleString());
+                        totalSats += Number(jsonresult.data.unconfirmed_balance) + Number(jsonresult.data.confirmed_balance);
+                        
                     }
                 });
             return false;
@@ -681,9 +697,11 @@ desired effect
                         var activeChannels = 0;
                         var activeIn = 0;
                         var activeOut = 0;
+                        var out = 0;
                         var commitFees = 0;
                         for (var i = 0; i < jsonresult.data.channels.length; i++) {
                             commitFees += Number(jsonresult.data.channels[i].commit_fee);
+                            out += Number(jsonresult.data.channels[i].local_balance);
                             if (jsonresult.data.channels[i].active) {
                                 activeChannels++;
                                 activeOut += Number(jsonresult.data.channels[i].local_balance);
@@ -695,6 +713,7 @@ desired effect
                         $("#active_outgoing_cap").html(Number(activeOut).toLocaleString());
                         $("#active_commit_fee").html(Number(commitFees).toLocaleString());
                         $("#h3_channels_box").html(result);
+                        totalSats += Number(out) + Number(commitFees);
                     }
                 });
             return false;
@@ -715,34 +734,41 @@ desired effect
                         var closingOut = 0;
                         var commitFees = 0;
 
+                        var pendingTotal = 0;
                         for (var i = 0; i < jsonresult.data.pending_open_channels.length; i++) {
                             openingIn += Number(jsonresult.data.pending_open_channels[i].channel.remote_balance);
                             openingOut += Number(jsonresult.data.pending_open_channels[i].channel.local_balance);
                             commitFees += Number(jsonresult.data.pending_open_channels[i].commit_fee);
+                            pendingTotal += Number(jsonresult.data.pending_open_channels[i].channel.local_balance) + Number(jsonresult.data.pending_open_channels[i].commit_fee);
                         }
                        
-                        $("#opening_incoming_cap").html(Number(openingIn).toLocaleString("en"));
-                        $("#opening_outgoing_cap").html(Number(openingOut).toLocaleString("en"));
+                        $("#opening_incoming_cap").html(Number(openingIn).toLocaleString());
+                        $("#opening_outgoing_cap").html(Number(openingOut).toLocaleString());
                         $("#opening_commit_fee").html(Number(commitFees).toLocaleString());
 
                         for (var i = 0; i < jsonresult.data.pending_closing_channels.length; i++) {
                             closingIn += Number(jsonresult.data.pending_closing_channels[i].channel.remote_balance);
                             closingOut += Number(jsonresult.data.pending_closing_channels[i].channel.local_balance);
+                            pendingTotal += Number(jsonresult.data.pending_closing_channels[i].channel.local_balance);
                         }
 
                         for (var i = 0; i < jsonresult.data.pending_force_closing_channels.length; i++) {
                             closingIn += Number(jsonresult.data.pending_force_closing_channels[i].channel.remote_balance);
                             closingOut += Number(jsonresult.data.pending_force_closing_channels[i].channel.local_balance);
+                            pendingTotal += Number(jsonresult.data.pending_force_closing_channels[i].channel.local_balance);
                         }
 
                         for (var i = 0; i < jsonresult.data.waiting_close_channels.length; i++) {
                             closingIn += Number(jsonresult.data.waiting_close_channels[i].channel.remote_balance);
                             closingOut += Number(jsonresult.data.waiting_close_channels[i].channel.local_balance);
+                            pendingTotal += Number(jsonresult.data.waiting_close_channels[i].channel.local_balance);
                         }
 
-                        $("#closing_incoming_cap").html(Number(closingIn).toLocaleString("en"));
-                        $("#closing_outgoing_cap").html(Number(closingOut).toLocaleString("en"));
-                        $("#pending_channels_balance").html(Number(jsonresult.data.total_limbo_balance).toLocaleString("en"));
+                        $("#closing_incoming_cap").html(Number(closingIn).toLocaleString());
+                        $("#closing_outgoing_cap").html(Number(closingOut).toLocaleString());
+                        $("#pending_channels_balance").html(Number(pendingTotal).toLocaleString());
+
+                        totalSats += Number(pendingTotal);
                     }
                 });
             return false;
