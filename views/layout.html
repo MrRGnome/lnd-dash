@@ -320,6 +320,7 @@ desired effect
                         </ul>
                     </li>
                     <li><a href="peers"><i class="ion ion-network"></i> <span>Peers</span></a></li>
+                    <li><a href="javascript: logout()"><i class="ion ion-log-out"></i> <span>Logout</span></a></li>
                     <li>
                         <a>
                             <i class="ion ion-social-bitcoin"></i> <span>On Chain</span>
@@ -611,6 +612,11 @@ desired effect
                 }
             });
         }*/
+
+        function logout() {
+            document.cookie = "lndauth=; expires=" + new Date(0).toUTCString() + "; path=/;";
+            window.location.href = "/";
+        }
 
         function getAbsolutePath() {
             var loc = window.location;
