@@ -186,3 +186,8 @@
 .sidebar-collapse .wrapper .main-sidebar .sidebar .user-panel .chaindata {
     display:none;
 }
+
+.callout {
+    position:fixed;
+    z-index:1000;
+}
