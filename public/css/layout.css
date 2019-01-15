@@ -188,6 +188,9 @@
 }
 
 .callout {
-    position:fixed;
-    z-index:1000;
+    position: fixed;
+    z-index: 1000;
+    overflow-wrap: break-word;
+    top: 40px;
+    max-width:90%;
 }

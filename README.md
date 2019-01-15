@@ -10,7 +10,7 @@ Please submit PR's for these issues as you come across them. At the moment this 
 
 ## Getting started
 
-This assumes you have a running `lnd` node on the Bitcoin testnet, using default macaroon authentication. It also requires you have yarn installed, you can find it at https://yarnpkg.com/lang/en/docs/install/
+This assumes you have a running `lnd` node on the Bitcoin testnet, using default macaroon authentication. It also requires you have yarn and nodejs installed, you can find nodejs at https://nodejs.org/en/download/ and yarn at https://yarnpkg.com/lang/en/docs/install/
 
 ```bash
 $ yarn install
