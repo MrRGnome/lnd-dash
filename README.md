@@ -6,7 +6,36 @@ This is a dashboard for interacting with and inspecting your `lnd` node.
 
 This project was originally adopted from http://lnd.fun. You may find some bugs.
 
-LND-Dash is in its infancy. It is not recommended you run it on miannet unless you are #reckless. Please help get this project to maturity by opening a pull request or issue!
+LND-Dash is in its infancy. It is not recommended you run it on mainnet unless you are #reckless. Please help get this project to maturity by opening a pull request or issue!
+
+## Features
+
++ https web service, can be configured to listen to local addresses or public addresses making your lnd dashboard securely available to other devices
++ user management including macaroon permission management
++ detailed dashboard
++ channel management including commit_fee accounting only for your own opened channels (fixes dynamic balance display issues in other wallets)
++ send payment with automatic invoice decoding and pasting if detected on the clipboard and permissions given
++ create invoice with automatic clipboard loading on invoice generation
++ notifications web API integration
++ websocket streaming of lnd events like invoice paid
++ peer management
++ cross platform (needs testing on *nix please)
++ PWA compatability, can be installed on mobile devices
+
+## TODO
+
++ testing
++ more websocket routes fewer instances of polling
++ refactor reused code
++ better UX for most pages
++ channel value rating based on throughput, channel graph comparing existing routes, and fwding history
++ channel management suggestions and automation
++ lnd node state management - starting, stopping, editing config
++ bitcoind node state management - starting, stopping, editing config
++ lightning protocol handlers registration on local devices
++ lightning protocol handlers registration on PWA devices (is this possible?)
++ public readonly example website
++ WHATEVER FEATURES YOU WANT! PULL REQUESTS ACCEPTED!
 
 ## Getting started
 
