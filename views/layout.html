@@ -341,7 +341,7 @@ desired effect
                     </li>
                     <li>
                         <a>
-                            <i class="ion ion-flash"></i> <span>Total Funds</span>
+                            <i class="ion ion-key"></i> <span>Total</span>
                             <span class="pull-right-container">
                                 <small class="label pull-right bg-blue"><span style="font-size:12px;" class="total_sats">0</span> (SAT)</small>
                             </span>
@@ -817,9 +817,8 @@ desired effect
                 window.location.href = "/";
         });
 
-        if ("Notification" in window && Notification.permission !== "denied") 
-            Notification.requestPermission().then(function (permission) {
-            });
+        if ("Notification" in window && Notification.permission !== "denied")
+            Notification.requestPermission();
 
         function notify(msg, title) {
             if (!("Notification" in window))

@@ -117,9 +117,10 @@
             $.post("/call",
                 "method_name=connectPeer&addr_string=" + $("#add_peer").val() + "&perm=false",
                 function (jsonresult) {
-                    if (jsonresult.status == 'success') {
+                    if (jsonresult.status == 'success') 
                         window.location.reload();
-                    }
+                    else
+                        notify_handler("error", "Failed to add peer, error: " + jsonresult.data.error_message)
                 });
         }
 
@@ -127,9 +128,10 @@
             $.post("/call",
                 "method_name=disconnectPeer&addr_string=" +address,
                 function (jsonresult) {
-                    if (jsonresult.status == 'success') {
+                    if (jsonresult.status == 'success') 
                         window.location.reload();
-                    }
+                    else
+                        notify_handler("error", "Failed to add peer, error: " + jsonresult.data.error_message)
                 });
         }
     </script>
