@@ -10,7 +10,7 @@ function auth(req, res, next) {
 
     //allow passthrough to login
     var passthrough = false;
-    if (req.url == "/" && req.method == "POST")
+    if ((req.url == "/" && req.method == "POST" ) || req.url == "/manifest.json")
         passthrough = true;
 
     var cookieAuthed = false;

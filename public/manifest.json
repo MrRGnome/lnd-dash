@@ -3,18 +3,27 @@
   "short_name": "lnd-dash",
   "start_url": "/",
   "display": "standalone",
+  "icons": [
+    {
+      "src": "/images/lightning.png",
+      "type": "image/png",
+      "sizes": "256x256"
+    }
+  ],
   "permissions": [
     "audio-capture",
     "video-capture",
     "clipboard",
     "clipboardRead",
-    "clipboardWrite"
+    "clipboardWrite",
+    "cookies",
+    "notifications"
   ],
-  "protocol_handlers": {
+  "protocol_handlers": [
     {
       "protocol": "lightning",
       "name": "Bitcoin Lightning",
       "uriTemplate": "https://127.0.0.1:8888/pay?invoice=%s"
     }
-  }
+  ]
 }

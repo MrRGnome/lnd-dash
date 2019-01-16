@@ -818,4 +818,11 @@ module.exports = {
         return await call;
     },
 
+    subscribeInvoices: async function () {
+        var client = await this.getLightningClient({'permission': 'readonly'});
+        if (client.status == 'fail') return client;
+        var call = await client.data.client.subscribeInvoices({}, client.data.metadata);
+        return await call;
+    },
+
 }

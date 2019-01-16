@@ -12,9 +12,11 @@ var compression = require('compression');
 var expressLayouts = require('express-ejs-layouts');
 var session = require('express-session');
 var RateLimit = require('express-rate-limit'); ///https://github.com/nfriedly/express-rate-limit
+var ws = require('ws');
 var config = require('./config.json');
 var auth = require('./services/auth');
 var dataDir = require('./services/lnddir');
+var sock = require('./sockroutes/wss');
 
 var limiter = new RateLimit({
     windowMs: 60 * 1000, // 1 minutes
@@ -51,10 +53,9 @@ app.use(function (req, res, next) {
         header_small: '',
         pub_key: '',
     };
-    
+
     next();
 });
-
 
 addRoutes('', 'routes');
 
@@ -99,9 +100,16 @@ var server = https.createServer({
 }, app);
 
 
+//start websocket server
+var wss = sock(server);
+
+
 server.listen(app.get('port'), config.host || "127.0.0.1", function () {
     debug('Server listening on port ' + server.address().port);
 });
+
+
+
 
 
 

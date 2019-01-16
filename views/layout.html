@@ -46,6 +46,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <script src="bower_components/fastclick/lib/fastclick.js"></script>
     <!-- AdminLTE App -->
     <script src="dist/js/adminlte.min.js"></script>
+    <!-- Websockets for notifications and state data -->
+    <script src="js/websockets.js"></script>
     <!-- AdminLTE for demo purposes -->
     <script src="dist/js/demo.js"></script>
     <script src="dist/js/jquery.inputmask.bundle.js"></script>
@@ -515,6 +517,7 @@ desired effect
     <script>       
 
         function notify_handler(type, message) {
+            
             $('#notify_danger').css('display', 'none');
             $('#notify_info').css('display', 'none');
             $('#notify_warning').css('display', 'none');
@@ -812,6 +815,20 @@ desired effect
             if (xhr.status == 401)
                 window.location.href = "/";
         });
+
+        if ("Notification" in window && Notification.permission !== "denied") 
+            Notification.requestPermission().then(function (permission) {
+            });
+
+        function notify(msg, title) {
+            if (!("Notification" in window))
+                return false;
+
+            if (Notification.permission === "granted") {
+                var notification = new Notification(title, { body: msg, badge: 'images/lightning.jpg', icon: 'images/lightning.jpg'});
+                return true;
+            }
+        }
 
     </script>
 
