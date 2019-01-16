@@ -4,9 +4,9 @@ This is a dashboard for interacting with and inspecting your `lnd` node.
 
 ## Disclaimer
 
-This project was a bit of a mess when I originally adopted it from http://lnd.fun. You may find some bugs.
+This project was originally adopted from http://lnd.fun. You may find some bugs.
 
-Please submit PR's for these issues as you come across them. At the moment this is only tested on a Windows 10/lnd/bitcoind stack but the code to enable POSIX support has been added and just needs testing.
+LND-Dash is in its infancy. It is not recommended you run it on miannet unless you are #reckless. Please help get this project to maturity by opening a pull request or issue!
 
 ## Getting started
 

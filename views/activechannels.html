@@ -43,7 +43,11 @@
                         ID: <a href="https://1ml.com/channel/<%= channel.chan_id %>"><%= channel.chan_id %></a><br />
                         Peer: <a href="https://1ml.com/node/<%= channel.remote_pubkey %>">Node Details</a><br />
                         Capactiy: <%= Number(channel.capacity).toLocaleString() %><br />
-                        Commit Fee: <%= Number(channel.commit_fee).toLocaleString() %><br />
+                        Commit Fee: <% if (Number(channel.total_satoshis_sent) - Number(channel.total_satoshis_received) > 0 ||
+                        (Number(channel.total_satoshis_sent) == 0 && Number(channel.total_satoshis_received) == 0 && Number(channel.local_balance) > 0)) { %>
+                        <%= Number(channel.commit_fee).toLocaleString() %>
+                        <% } else { %>
+                        <%= Number(0) %> <% } %><br />
                     </div>
                 </div>
                 <div class="icon">
@@ -80,7 +84,7 @@
                         Sent: <%= Number(channel.total_satoshis_sent).toLocaleString() %> <br />
                         Received: <%= Number(channel.total_satoshis_received).toLocaleString() %> <br />
                         Unsettled: <%= Number(channel.unsettled_balance).toLocaleString() %> <br />
-                        <a href="javascript: ask_for_Close('<%= channel.channel_point %>', '<%= channel.chan_id %>', <%= channel.active %>, <%= (Number(channel.csv_delay) * 10 / 60).toFixed(2) %>, <%= Number(channel.commit_fee).toLocaleString() %>)">Force Close</a>: <%= (Number(channel.csv_delay) * 10 / 60).toFixed(2) %>h/<%= channel.csv_delay %> bl
+                        <a href="javascript: ask_for_Close('<%= channel.channel_point %>', '<%= channel.chan_id %>', <%= channel.active %>, <%= (Number(channel.csv_delay) * 10 / 60).toFixed(2) %>, <%= channel.commit_fee %>)">Force Close</a>: <%= (Number(channel.csv_delay) * 10 / 60).toFixed(2) %>h/<%= channel.csv_delay %> bl
                     </div>
                 </div>
                 <div class="icon">
@@ -179,7 +183,7 @@
                 } else {
                     $("#confirmBox").find(".yes").hide();
                 }
-                doConfirm("Are you sure you want to close this channel [" + cid + "] ? If you force it closed it will take ~" + csvHours + " hours to have your coins returned on-chain and will cost " + fees + " sats (fees spent will appear as pending on chain until close clears).", function yes() {
+                doConfirm("Are you sure you want to close this channel [" + cid + "] ? If you force it closed it will take ~" + csvHours + " hours to have your coins returned on-chain and will cost " + fees + " sats.", function yes() {
                     closeChannel(channel_point, cid, false);
                 }, function force() {
                     closeChannel(channel_point, cid, true);

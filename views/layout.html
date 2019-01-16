@@ -709,7 +709,8 @@ desired effect
                         var out = 0;
                         var commitFees = 0;
                         for (var i = 0; i < jsonresult.data.channels.length; i++) {
-                            commitFees += Number(jsonresult.data.channels[i].commit_fee);
+                            if (Number(jsonresult.data.channels[i].total_satoshis_sent) - Number(jsonresult.data.channels[i].total_satoshis_received) > 0 || (Number(jsonresult.data.channels[i].total_satoshis_sent) == 0 && Number(jsonresult.data.channels[i].total_satoshis_received) == 0 && Number(jsonresult.data.channels[i].local_balance) > 0))
+                                commitFees += Number(jsonresult.data.channels[i].commit_fee);
                             out += Number(jsonresult.data.channels[i].local_balance);
                             if (jsonresult.data.channels[i].active) {
                                 activeChannels++;

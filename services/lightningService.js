@@ -686,7 +686,7 @@ module.exports = {
 
     //data will be like:
     // { "peer_id" : 0 }
-    disconnectPeer: async function (addr_string, perm, user) {
+    disconnectPeer: async function (addr_string, user) {
         var remote_addr = await this.validateLightningAddress(addr_string, user);
         if (remote_addr.status == 'fail') return remote_addr;
 
