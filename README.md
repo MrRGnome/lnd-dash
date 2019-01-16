@@ -30,11 +30,18 @@ LND-Dash is in its infancy. It is not recommended you run it on mainnet unless y
 + better UX for most pages
 + channel value rating based on throughput, channel graph comparing existing routes, and fwding history
 + channel management suggestions and automation
++ explorable channel graph
++ lnd explorer search bar - get details on node, channel, etc
++ bitcoind explorer search bar - get details on node, address, txid, etc
 + lnd node state management - starting, stopping, editing config
 + bitcoind node state management - starting, stopping, editing config
 + lightning protocol handlers registration on local devices
 + lightning protocol handlers registration on PWA devices (is this possible?)
 + public readonly example website
++ lnd log reading
++ bitcoind log reading
++ sphinx transaction sending (no invoice required payments)
++ watchtower support and management
 + WHATEVER FEATURES YOU WANT! PULL REQUESTS ACCEPTED!
 
 ## Getting started
