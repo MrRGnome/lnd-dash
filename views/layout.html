@@ -327,7 +327,7 @@ desired effect
                         <a>
                             <i class="ion ion-social-bitcoin"></i> <span>On Chain</span>
                             <span class="pull-right-container">
-                                <small class="label pull-right bg-aqua"><span style="font-size:12px;" id="span_wallet_balance">0</span> (SAT)</small>
+                                <small class="label pull-right bg-aqua"><span style="font-size:12px;" id="span_wallet_balance" class="btc">0</span> (<span class="unit-label">SAT</span>)</small>
                             </span>
                         </a>
                     </li>
@@ -335,7 +335,7 @@ desired effect
                         <a>
                             <i class="ion ion-flash"></i> <span>Channels</span>
                             <span class="pull-right-container">
-                                <small class="label pull-right bg-green"><span style="font-size:12px;" id="span_channel_balance">0</span> (SAT)</small>
+                                <small class="label pull-right bg-green"><span style="font-size:12px;" id="span_channel_balance" class="btc">0</span> (<span class="unit-label">SAT</span>)</small>
                             </span>
                         </a>
                     </li>
@@ -343,7 +343,7 @@ desired effect
                         <a>
                             <i class="ion ion-key"></i> <span>Total</span>
                             <span class="pull-right-container">
-                                <small class="label pull-right bg-blue"><span style="font-size:12px;" class="total_sats">0</span> (SAT)</small>
+                                <small class="label pull-right bg-blue"><span style="font-size:12px;" class="total_sats btc">0</span> (<span class="unit-label">SAT</span>)</small>
                             </span>
                         </a>
                     </li>
@@ -595,7 +595,7 @@ desired effect
             }
             //the ugliest hack
             setTimeout(() => {
-                $(".total_sats").html(Number(totalSats).toLocaleString());
+                updateSats("total_sats", totalSats);
             }, 6000)
         };
 
@@ -649,7 +649,7 @@ desired effect
                         $("#input_node_pubkey").val(jsonresult.data.identity_pubkey);
                         $("#input_node_address").val(jsonresult.data.uris[0]);
                         $(".network_mode").html(jsonresult.data.testnet ? "TESTNET" : "MAINNET")
-                        $("#alias_header").html(jsonresult.data.alias)
+                        $("#alias_header").html(jsonresult.data.alias);
                         $("#h3_connected_peers").html(jsonresult.data.num_peers);
                         $("#input_node_alias").val(jsonresult.data.alias);
                         $(".lastblock").html(new Date(jsonresult.data.best_header_timestamp * 1000).toLocaleString());
@@ -664,9 +664,9 @@ desired effect
                 "method_name=walletBalance",
                 function (jsonresult) {
                     if (jsonresult.status == 'success') {
-                        $("#span_wallet_balance").html(Number(jsonresult.data.confirmed_balance).toLocaleString());
-                        $("#span_confirmed_balance").html(Number(jsonresult.data.confirmed_balance).toLocaleString());
-                        $("#span_unconfirmed_balance").html(Number(jsonresult.data.unconfirmed_balance).toLocaleString());
+                        updateSats("span_wallet_balance", jsonresult.data.confirmed_balance);
+                        updateSats("span_confirmed_balance", jsonresult.data.confirmed_balance);
+                        updateSats("span_unconfirmed_balance", jsonresult.data.unconfirmed_balance);
                         totalSats += Number(jsonresult.data.unconfirmed_balance) + Number(jsonresult.data.confirmed_balance);
                         
                     }
@@ -679,8 +679,8 @@ desired effect
                 "method_name=channelBalance",
                 function (jsonresult) {
                     if (jsonresult.status == 'success') {
-                        $("#span_channel_balance").html(Number(jsonresult.data.balance).toLocaleString());
-                        $("#span_channel_balance_index").html(Number(jsonresult.data.balance).toLocaleString());
+                        updateSats("span_channel_balance", jsonresult.data.balance);
+                        updateSats("span_channel_balance_index", jsonresult.data.balance);
                     }
                 });
             return false;
@@ -719,10 +719,11 @@ desired effect
                             }
                         }
                         var result = activeChannels + " <sup style='font-size: 20px'>of " + totalchannels + "</sup>";
-                        $("#active_incoming_cap").html(Number(activeIn).toLocaleString());
-                        $("#active_outgoing_cap").html(Number(activeOut).toLocaleString());
-                        $("#active_commit_fee").html(Number(commitFees).toLocaleString());
                         $("#h3_channels_box").html(result);
+                        updateSats("active_outgoing_cap", activeOut);
+                        updateSats("active_incoming_cap", activeIn);
+                        updateSats("active_commit_fee", commitFees);
+
                         totalSats += Number(out) + Number(commitFees);
                     }
                 });
@@ -751,10 +752,9 @@ desired effect
                             commitFees += Number(jsonresult.data.pending_open_channels[i].commit_fee);
                             pendingTotal += Number(jsonresult.data.pending_open_channels[i].channel.local_balance) + Number(jsonresult.data.pending_open_channels[i].commit_fee);
                         }
-                       
-                        $("#opening_incoming_cap").html(Number(openingIn).toLocaleString());
-                        $("#opening_outgoing_cap").html(Number(openingOut).toLocaleString());
-                        $("#opening_commit_fee").html(Number(commitFees).toLocaleString());
+                        updateSats("opening_incoming_cap", openingIn);
+                        updateSats("opening_outgoing_cap", openingOut);
+                        updateSats("opening_commit_fee", commitFees);
 
                         for (var i = 0; i < jsonresult.data.pending_closing_channels.length; i++) {
                             closingIn += Number(jsonresult.data.pending_closing_channels[i].channel.remote_balance);
@@ -773,10 +773,10 @@ desired effect
                             closingOut += Number(jsonresult.data.waiting_close_channels[i].channel.local_balance);
                             //pendingTotal += Number(jsonresult.data.waiting_close_channels[i].channel.local_balance);
                         }
-
-                        $("#closing_incoming_cap").html(Number(closingIn).toLocaleString());
-                        $("#closing_outgoing_cap").html(Number(closingOut).toLocaleString());
-                        $("#pending_channels_balance").html(Number(pendingTotal).toLocaleString());
+                        
+                        updateSats("closing_incoming_cap", closingIn);
+                        updateSats("closing_outgoing_cap", closingOut);
+                        updateSats("pending_channels_balance", pendingTotal);
 
                         totalSats += Number(pendingTotal);
                     }
@@ -827,6 +827,58 @@ desired effect
             if (Notification.permission === "granted") {
                 var notification = new Notification(title, { body: msg, badge: 'images/lightning.jpg', icon: 'images/lightning.jpg'});
                 return true;
+            }
+        }
+
+        //currencies supported
+        var currencies = {};
+        currencies.SAT = (sats, currency) => {
+            return Number(sats);
+        };
+        currencies.BTC = (sats, currency) => {
+            return Number(sats) / Number(100000000);
+        }
+        currencies.fiat = async (sats, currency) => {
+            var response = await $.get({ url: "https://api.coindesk.com/v1/bpi/currentprice/" + currency + ".json", async: false });
+            var rate = JSON.parse(response).bpi[currency].rate_float;
+            var res = (Number(sats) / Number(100000000) * rate).toFixed(2);
+            return res;
+        }
+
+        var order = ["SAT", "BTC", "USD", "EUR", "CAD"];
+
+        $(".btc").on("click", function(e) {
+            var currentUnit = $(".unit-label").html();
+            var orderIndex = order.indexOf(currentUnit) == order.length - 1 ? 0 : order.indexOf(currentUnit) + 1;
+            var newUnit = order[orderIndex];
+            $(".btc").each(async function() {
+                var sats = $(this).attr('data-sats');
+
+                if (newUnit == "BTC" || newUnit == "SAT") {
+                    var res = await currencies[newUnit](sats, newUnit);
+                    $(this).html(res.toLocaleString());
+                }
+                else {
+                    var res = await currencies.fiat(sats, newUnit);
+                    $(this).html(res.toLocaleString());
+                }
+            });
+            $(".unit-label").html(newUnit);
+        });
+
+        async function updateSats(id, sats) {
+            var currentUnit = $(".unit-label").html();
+            var currency = currentUnit == "BTC" || currentUnit == "SAT" ? currentUnit : "fiat";
+            if ($("#" + id)) {
+                $("#" + id).attr("data-sats", sats);
+                var res = await currencies[currency](sats, currentUnit);
+                $("#" + id).html(res.toLocaleString());
+            }
+
+            if ($("." + id)) {
+                $("." + id).attr("data-sats", sats);
+                var res = await currencies[currency](sats, currentUnit);
+                $("." + id).html(res.toLocaleString());
             }
         }
 

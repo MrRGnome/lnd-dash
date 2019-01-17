@@ -37,12 +37,12 @@
                         <h3 id="h3_channels_box">0 <sup style="font-size: 20px">of 0</sup></h3>
 
 
-                        <p>Active Channels <span id="active_channels_details"></span></p>
+                        <p>Active Channels (<span class="unit-label">SAT</span>)</p>
                     </div>
                     <div class="text-right dash-widget-details">
-                        Incoming Cap. <span id="active_incoming_cap">0</span><br />
-                        Outgoing Cap. <span id="active_outgoing_cap">0</span><br />
-                        Commit Fees <span id="active_commit_fee">0</span>
+                        Incoming Cap. <span id="active_incoming_cap" class="btc">0</span><br />
+                        Outgoing Cap. <span id="active_outgoing_cap" class="btc">0</span><br />
+                        Commit Fees <span id="active_commit_fee" class="btc">0</span>
                     </div>
                 </div>
                 <div class="icon">
@@ -60,12 +60,12 @@
                     <div>
                         <h3><span id="channels_opening">0</span></h3>
 
-                        <p>Opening Channels</p>
+                        <p>Opening Channels (<span class="unit-label">SAT</span>)</p>
                     </div>
                     <div class="text-right dash-widget-details">
-                        Incoming Cap. <span id="opening_incoming_cap">0</span><br />
-                        Outgoing Cap. <span id="opening_outgoing_cap">0</span><br />
-                        Commit Fees <span id="opening_commit_fee">0</span>
+                        Incoming Cap. <span id="opening_incoming_cap" class="btc">0</span><br />
+                        Outgoing Cap. <span id="opening_outgoing_cap" class="btc">0</span><br />
+                        Commit Fees <span id="opening_commit_fee" class="btc">0</span>
                     </div>
                 </div>
                 <div class="icon">
@@ -82,11 +82,11 @@
                     <div>
                         <h3><span id="channels_closing">0</span></h3>
 
-                        <p>Closing Channels</p>
+                        <p>Closing Channels (<span class="unit-label">SAT</span>)</p>
                     </div>
                     <div class="text-right dash-widget-details">
-                        Incoming Cap. <span id="closing_incoming_cap">0</span><br />
-                        Outgoing Cap. <span id="closing_outgoing_cap">0</span>
+                        Incoming Cap. <span id="closing_incoming_cap" class="btc">0</span><br />
+                        Outgoing Cap. <span id="closing_outgoing_cap" class="btc">0</span>
                     </div>
                 </div>
                 <div class="icon">
@@ -152,8 +152,8 @@
 
                 <div class="info-box-content">
                     <span class="info-box-text">Total Funds</span>
-                    <span class="info-box-number total_sats" id="total_sats">0</span>
-                    <span class="info-box-text">SAT</span>
+                    <span class="info-box-number total_sats btc" id="total_sats">0</span>
+                    <span class="info-box-text unit-label">SAT</span>
                 </div>
                 <!-- /.info-box-content -->
             </div>
@@ -173,8 +173,8 @@
                     channelbalance = Number(viewdata.channelBalance.data.balance);
                     }
                     %>
-                    <span class="info-box-number" id="span_channel_balance_index">0</span>
-                    <span class="info-box-text">SAT</span>
+                    <span class="info-box-number btc" id="span_channel_balance_index">0</span>
+                    <span class="info-box-text unit-label">SAT</span>
                 </div>
                 <!-- /.info-box-content -->
             </div>
@@ -194,8 +194,8 @@
                     walletbalance = Number(viewdata.walletBalance.data.confirmed_balance);
                     }
                     %>
-                    <span class="info-box-number" id="span_confirmed_balance">0</span>
-                    <span class="info-box-text">SAT</span>
+                    <span class="info-box-number btc" id="span_confirmed_balance">0</span>
+                    <span class="info-box-text unit-label">SAT</span>
                 </div>
                 <!-- /.info-box-content -->
             </div>
@@ -208,8 +208,8 @@
 
                 <div class="info-box-content">
                     <span class="info-box-text">Pending In Channels</span>
-                    <span class="info-box-number" id="pending_channels_balance">0</span>
-                    <span class="info-box-text">SAT</span>
+                    <span class="info-box-number btc" id="pending_channels_balance">0</span>
+                    <span class="info-box-text unit-label">SAT</span>
                 </div>
                 <!-- /.info-box-content -->
             </div>
@@ -229,8 +229,8 @@
                     unconfirmed_balance = Number(viewdata.walletBalance.data.unconfirmed_balance);
                     }
                     %>
-                    <span class="info-box-number" id="span_unconfirmed_balance">0</span>
-                    <span class="info-box-text">SAT</span>
+                    <span class="info-box-number btc" id="span_unconfirmed_balance">0</span>
+                    <span class="info-box-text unit-label">SAT</span>
                 </div>
                 <!-- /.info-box-content -->
             </div>

@@ -28,11 +28,13 @@ LND-Dash is in its infancy. It is not recommended you run it on mainnet unless y
 + more websocket routes fewer instances of polling
 + refactor reused code
 + better UX for most pages
++ monitor and rank node/channel reliability
 + channel value rating based on throughput, channel graph comparing existing routes, and fwding history
 + channel management suggestions and automation
 + explorable channel graph
 + lnd explorer search bar - get details on node, channel, etc
 + bitcoind explorer search bar - get details on node, address, txid, etc
++ bitcoind mempool graph
 + lnd node state management - starting, stopping, editing config
 + bitcoind node state management - starting, stopping, editing config
 + lightning protocol handlers registration on local devices
