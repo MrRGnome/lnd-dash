@@ -792,7 +792,7 @@ module.exports = {
         pending_only = (/true/i).test(pending_only);
 
         var call = new Promise((resolve) => {
-            client.data.client.listInvoices({ pending_only: pending_only }, client.data.metadata, {deadline:timeout}, function (err, response) {
+            client.data.client.listInvoices({ pending_only: pending_only, num_max_invoices: 100000 }, client.data.metadata, {deadline:timeout}, function (err, response) {
                 if (err)
                     return resolve({ status: 'fail', data: { error_message: err.message } });
                 else
