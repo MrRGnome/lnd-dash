@@ -125,7 +125,7 @@ if (config.enableHttpRedirect && config.httpRedirectPort) {
     var redirectServer = http.createServer(newapp);
     
     // have it listen on 80
-    http.listen(config.httpRedirectPort);
+    redirectServer.listen(config.httpRedirectPort);
 
 }
 
