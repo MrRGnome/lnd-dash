@@ -1,6 +1,6 @@
 ﻿# LND Dashboard
 
-This is a dashboard for interacting with and inspecting your `lnd` node.
+This is a dashboard for interacting with and inspecting your `lnd` node. You can play with a public testnet example at https://lnddash.com
 
 ## Disclaimer
 
