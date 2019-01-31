@@ -107,12 +107,25 @@ var server = https.createServer(tls, app);
 //start websocket server
 var wss = sock(server);
 
-
 server.listen(app.get('port'), config.host || "127.0.0.1", function () {
     debug('Server listening on port ' + server.address().port);
 });
 
+if (config.enableHttpRedirect && config.httpRedirectPort) {
+    var http = require('http');
 
+    // set up plain http server
+    var redirectServer = http.createServer();
+
+    // set up a route to redirect http to https
+    redirectServer.get('*', function (req, res) {
+        res.redirect('https://' + req.headers.host + req.url);
+    })
+
+    // have it listen on 8080
+    http.listen(config.httpRedirectPort);
+
+}
 
 
 
