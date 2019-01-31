@@ -116,15 +116,15 @@ if (config.enableHttpRedirect && config.httpRedirectPort) {
 
     var newapp = express();
 
-    // set up plain http server
-    var redirectServer = http.createServer(newapp);
-
     // set up a route to redirect http to https
-    redirectServer.get('*', function (req, res) {
+    newapp.get('*', function (req, res) {
         res.redirect('https://' + req.headers.host + req.url);
     })
 
-    // have it listen on 8080
+    // set up plain http server
+    var redirectServer = http.createServer(newapp);
+    
+    // have it listen on 80
     http.listen(config.httpRedirectPort);
 
 }
