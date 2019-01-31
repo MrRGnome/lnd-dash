@@ -93,10 +93,15 @@ app.use(function (err, req, res, next) {
 
 app.set('port', process.env.PORT || config.guiport || 8888);
 
-var server = https.createServer({
+var tls = {
     key: fs.readFileSync(config.tlsKey ? config.tlsKey : path.join(dataDir, "tls.key")),
     cert: fs.readFileSync(config.tlsCert ? config.tlsCert : path.join(dataDir, "tls.cert"))
-}, app);
+};
+
+if (config.tlsCA)
+    tls.ca = config.tlsCA
+
+var server = https.createServer(tls, app);
 
 
 //start websocket server
