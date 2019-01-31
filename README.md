@@ -19,7 +19,7 @@ LND-Dash is in its infancy. It is not recommended you run it on mainnet unless y
 + notifications web API integration
 + websocket streaming of lnd events like invoice paid
 + peer management
-+ cross platform (needs testing on *nix please)
++ cross platform (windows 10 and ubuntu tested)
 + PWA compatability, can be installed on mobile devices
 
 ## TODO
@@ -39,7 +39,6 @@ LND-Dash is in its infancy. It is not recommended you run it on mainnet unless y
 + bitcoind node state management - starting, stopping, editing config
 + lightning protocol handlers registration on local devices
 + lightning protocol handlers registration on PWA devices (is this possible?)
-+ public readonly example website
 + lnd log reading
 + bitcoind log reading
 + sphinx transaction sending (no invoice required payments)
