@@ -93,10 +93,9 @@ app.use(function (err, req, res, next) {
 
 app.set('port', process.env.PORT || config.guiport || 8888);
 
-
 var server = https.createServer({
-    key: fs.readFileSync(path.join(dataDir, "tls.key")),
-    cert: fs.readFileSync(path.join(dataDir, "tls.cert"))
+    key: fs.readFileSync(config.tlsKey ? config.tlsKey : path.join(dataDir, "tls.key")),
+    cert: fs.readFileSync(config.tlsCert ? config.tlsCert : path.join(dataDir, "tls.cert"))
 }, app);
 
 
