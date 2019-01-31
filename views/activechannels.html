@@ -25,6 +25,8 @@
         local_percent = ((Number(channel.local_balance) * 100) / Number(capacity)).toFixed(2);
         remote_percent = ((Number(channel.remote_balance) * 100) / Number(capacity)).toFixed(2);
 
+
+
         %>
 
 
@@ -40,8 +42,8 @@
 
                     </div>
                     <div class="text-right dash-widget-details">
-                        ID: <a href="https://1ml.com/channel/<%= channel.chan_id %>"><%= channel.chan_id %></a><br />
-                        Peer: <a href="https://1ml.com/node/<%= channel.remote_pubkey %>">Node Details</a><br />
+                        ID: <a href="https://1ml.com/<%= viewdata.networkMode %>channel/<%= channel.chan_id %>"><%= channel.chan_id %></a><br />
+                        Peer: <a href="https://1ml.com/<%= viewdata.networkMode %>node/<%= channel.remote_pubkey %>">Node Details</a><br />
                         Capactiy: <%= Number(channel.capacity).toLocaleString() %><br />
                         Commit Fee: <% if (Number(channel.total_satoshis_sent) - Number(channel.total_satoshis_received) > 0 ||
                         (Number(channel.total_satoshis_sent) == 0 && Number(channel.total_satoshis_received) == 0 && Number(channel.local_balance) > 0)) { %>

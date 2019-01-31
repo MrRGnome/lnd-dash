@@ -2,10 +2,13 @@
 var express = require('express');
 var router = express.Router();
 var lightningService = require('../services/lightningService');
+var networkMode = require('../services/networkMode');
+
 
 router.get('/', async function (req, res) {
     var viewdata = {};
     viewdata.listChannels = await lightningService.listChannels(res.locals.user);
+    viewdata.networkMode = networkMode == "testnet" ? networkMode + "/" : "";
     res.render('activechannels', { viewdata: viewdata });
 });
 
