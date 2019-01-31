@@ -32,10 +32,10 @@ function auth(req, res, next) {
         }
     }
 
-    if (!whitelistVerified)
+    if (!config.disableWhitelist && !whitelistVerified)
         return res.status(401).send();
 
-    if ((config.disableWhitelist || whitelistVerified) && (passthrough || cookieAuthed))
+    if (passthrough || cookieAuthed)
         next();
     else {
         console.log("unauthorized access from " + req.ip);
