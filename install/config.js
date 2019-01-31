@@ -60,12 +60,17 @@ async function createConfig() {
         config.network = "testnet";
 
     //Get whitelist
+    var exit = false;
     do {
-        var ip = await cliPrompt("What IP address would you like to whitelist? Already whitelisted are " + config.whitelist.join(", ") + eol);
-        if (ip != "")
+        var ip = await cliPrompt("What IP address would you like to whitelist? Already whitelisted are " + config.whitelist.join(", ") + ". Type 'disable' to disable whitelist security (VERY DANGEROUS ON MAINNET)" + eol);
+        if (ip == 'disable') {
+            delete config.whitelist;
+            exit = true;
+        }
+        else if (ip != "")
             config.whitelist.push(ip);
     }
-    while ((await cliPrompt("Would you like to add another address to the whitelist? (y or n)" + eol)).toLowerCase() == "y");
+    while (!exit && (await cliPrompt("Would you like to add another address to the whitelist? (y or n)" + eol)).toLowerCase() == "y");
 
 
     //Generate cookie secret
