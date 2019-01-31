@@ -31,6 +31,7 @@ var config = {
     "lnd_daemon": "127.0.0.1:10009",
     "users": [
     ],
+    "disableWhitelist": true,
     "cookieSecret": "changeme",
     "salt": "changeme"
 }
@@ -60,19 +61,17 @@ async function createConfig() {
         config.network = "testnet";
 
     //Get whitelist
-    var exit = false;
     do {
         var ip = await cliPrompt("What IP address would you like to whitelist? Already whitelisted are " + config.whitelist.join(", ") + ". Type 'disable' to disable whitelist security (VERY DANGEROUS ON MAINNET)" + eol);
         if (ip == 'disable') {
             delete config.whitelist;
-            exit = true;
+            config.disableWhitelist = true;
         }
         else if (ip != "")
             config.whitelist.push(ip);
     }
-    while (!exit && (await cliPrompt("Would you like to add another address to the whitelist? (y or n)" + eol)).toLowerCase() == "y");
-
-
+    while (!config.disableWhitelist && (await cliPrompt("Would you like to add another address to the whitelist? (y or n)" + eol)).toLowerCase() == "y");
+    
     //Generate cookie secret
     config.cookieSecret = randHex(32);
 
@@ -82,6 +81,7 @@ async function createConfig() {
     //Get users
     var tryagain = false;
     var cont = 'y';
+    
     do {
         tryagain = false;
         var user = {};

@@ -10,8 +10,12 @@ function auth(req, res, next) {
 
     //allow passthrough to login
     var passthrough = false;
-    if ((req.url == "/" && req.method == "POST" ) || req.url == "/manifest.json")
+    if ((req.url == "/" && req.method == "POST" ) || req.url == "/manifest.json" || config.enableUnauthorizedAccess)
         passthrough = true;
+
+    if (config.enableUnauthorizedAccess) {
+        res.locals.user = { permission: config.unauthorizedAccessPermission};
+    }
 
     var cookieAuthed = false;
     if (req.signedCookies && req.signedCookies.lndauth) {
@@ -31,7 +35,7 @@ function auth(req, res, next) {
     if (!whitelistVerified)
         return res.status(401).send();
 
-    if (whitelistVerified && (passthrough || cookieAuthed))
+    if ((config.disableWhitelist || whitelistVerified) && (passthrough || cookieAuthed))
         next();
     else {
         console.log("unauthorized access from " + req.ip);
