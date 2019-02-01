@@ -74,28 +74,28 @@ You can also edit the root config.json file directly after it is generated. You 
 
 ```bash
 {
-	"host": "127.0.0.1",
-	"network": "testnet",
-	"whitelist": [
-		"127.0.0.1",
-		"::1",
-		"localhost"
-	],
-	"disableWhitelist": false,
-	"guiport": 8888,
-	"lnd_daemon": "127.0.0.1:10009",
-	"users": [
-		{"usename": "user", "password": "donotmanuallyinputpasswords,theyarehashes", "permission":"admin"}
+    "host": "127.0.0.1",
+    "network": "testnet",
+    "whitelist": [
+        "127.0.0.1",
+        "::1",
+        "localhost"
     ],
-	"enableUnauthorizedAccess": false,
-	"unauthorizedAccessPermission": readonly,
+    "disableWhitelist": false,
+    "guiport": 8888,
+    "lnd_daemon": "127.0.0.1:10009",
+    "users": [
+        {"usename": "user", "password": "donotmanuallyinputpasswords,theyarehashes", "permission":"admin"}
+    ],
+    "enableUnauthorizedAccess": false,
+    "unauthorizedAccessPermission": readonly,
     "cookieSecret": "dontmanuallyinput",
     "salt": "dontmanuallyinput",
-	"tlsCert": undefined,
-	"tlsKey": undefined,
-	"tlsCA": undefined,
-	"enableHttpRedirect": false,
-	"httpRedirectPort": 80
+    "tlsCert": undefined,
+    "tlsKey": undefined,
+    "tlsCA": undefined,
+    "enableHttpRedirect": false,
+    "httpRedirectPort": 80
 }
 ```
 
