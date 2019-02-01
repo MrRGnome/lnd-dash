@@ -64,7 +64,7 @@ Unless specified in the configuration file config.json or during the install pro
 ```bash
 $ yarn start --mainnet
 ```
-To reconfigure your node you can run the following at anytime to regenerate yoru config.json file
+To reconfigure your node you can run the following at anytime to regenerate your config.json file
 
 ```bash
 $ node install/setup
@@ -90,7 +90,7 @@ You can also edit the root config.json file directly after it is generated. You 
 	"enableUnauthorizedAccess": false,
 	"unauthorizedAccessPermission": readonly,
     "cookieSecret": "dontmanuallyinput",
-    "salt": "dontmanuallyinput"
+    "salt": "dontmanuallyinput",
 	"tlsCert": undefined,
 	"tlsKey": undefined,
 	"tlsCA": undefined,
