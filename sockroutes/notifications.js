@@ -8,19 +8,25 @@ var notifications = new notificationEmitter();
 
 //subscribe to lnd invoices
 subInvoices();
-async function subInvoices() {
-	var invoices = await lightningService.subscribeInvoices();
-
-	invoices.on('data', (invoice) => {
-		console.log("got invoice data:");
-		console.log("date: " + invoice)
-		if(invoice.settled)
-			notifications.emit('notification', 'invoicePaid', invoice);
-	});
+function subInvoices() {
+    lightningService.subscribeInvoices().then((invoices) => {
+        invoices.on('data', (invoice) => {
+            if (invoice.settled)
+                notifications.emit('notification', 'invoicePaid', invoice);
+        });
+    });
 };
 
 
-//subscribe to lnd trasnactions
+//subscribe to lnd transactions
+subTransactions();
+function subTransactions() {
+    lightningService.subscribeInvoices().then((transactions) => {
+        transactions.on('data', (transaction) => {
+            notifications.emit('notification', 'newTransaction', transaction);
+        });
+    });
+};
 
 
 //subscribe to lnd channel graph

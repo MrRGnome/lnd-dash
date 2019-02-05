@@ -111,22 +111,17 @@ server.listen(app.get('port'), config.host || "127.0.0.1", function () {
     debug('Server listening on port ' + server.address().port);
 });
 
+// set up a route and server to redirect http to https
 if (config.enableHttpRedirect && config.httpRedirectPort) {
     var http = require('http');
 
     var newapp = express();
-
-    // set up a route to redirect http to https
     newapp.get('*', function (req, res) {
         res.redirect('https://' + req.headers.host + req.url);
     })
 
-    // set up plain http server
     var redirectServer = http.createServer(newapp);
-    
-    // have it listen on 80
     redirectServer.listen(config.httpRedirectPort);
-
 }
 
 

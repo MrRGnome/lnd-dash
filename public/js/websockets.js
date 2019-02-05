@@ -5,12 +5,17 @@ ws.onmessage = (msg) => {
 }
 
 function parseMsg(msg) {
-    var data = JSON.parse(msg.data);
-    switch (data.event) {
+    var notification = JSON.parse(msg.data);
+    switch (notification.event) {
         case "invoicePaid":
-            var message = "Recieved payment for " + Number(data.data.value).toLocaleString() + " sats, memo: " + data.data.memo;
+            var message = "Recieved payment for " + Number(notification.data.value).toLocaleString() + " sats, memo: " + data.data.memo;
             notify_handler("success", message);
-            notify(message, "Recieved " + Number(data.data.value).toLocaleString() + " Sats");
+            notify(message, "Recieved " + Number(notification.data.value).toLocaleString() + " Sats");
+            break;
+        case "newTransaction":
+            var message = "New on chain payment received for " + Number(notification.data.amount).toLocaleString() + " sats";
+            notify_handler("success", message);
+            notify(message, "Recieved " + Number(notification.data.amount).toLocaleString() + " Sats");
             break;
         default:
             console.log(data);
