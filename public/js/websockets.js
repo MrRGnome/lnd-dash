@@ -6,9 +6,10 @@ ws.onmessage = (msg) => {
 
 function parseMsg(msg) {
     var notification = JSON.parse(msg.data);
+    console.log(notification);
     switch (notification.event) {
         case "invoicePaid":
-            var message = "Recieved payment for " + Number(notification.data.value).toLocaleString() + " sats, memo: " + data.data.memo;
+            var message = "Recieved payment for " + Number(notification.data.value).toLocaleString() + " sats, memo: " + notification.data.memo;
             notify_handler("success", message);
             notify(message, "Recieved " + Number(notification.data.value).toLocaleString() + " Sats");
             break;
@@ -18,7 +19,7 @@ function parseMsg(msg) {
             notify(message, "Recieved " + Number(notification.data.amount).toLocaleString() + " Sats");
             break;
         default:
-            console.log(data);
+            console.log(notification);
             break;
     }
 }

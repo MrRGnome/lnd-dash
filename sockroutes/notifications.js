@@ -21,7 +21,7 @@ function subInvoices() {
 //subscribe to lnd transactions
 subTransactions();
 function subTransactions() {
-    lightningService.subscribeInvoices().then((transactions) => {
+    lightningService.subscribeTransactions().then((transactions) => {
         transactions.on('data', (transaction) => {
             notifications.emit('notification', 'newTransaction', transaction);
         });
