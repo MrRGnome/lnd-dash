@@ -72,7 +72,7 @@ function pollLnd() {
             }
 
             if (updated) {
-                update = false;
+                updated = false;
                 updateLndState();
             }
         });
