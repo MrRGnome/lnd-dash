@@ -71,8 +71,10 @@ function pollLnd() {
                 }
             }
 
-            if (updated)
+            if (updated) {
+                update = false;
                 updateLndState();
+            }
         });
 }
 
