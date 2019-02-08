@@ -46,8 +46,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <script src="bower_components/fastclick/lib/fastclick.js"></script>
     <!-- AdminLTE App -->
     <script src="dist/js/adminlte.min.js"></script>
-    <!-- Websockets for notifications and state data -->
-    <script src="js/websockets.js"></script>
+    
     <!-- AdminLTE for demo purposes -->
     <script src="dist/js/demo.js"></script>
     <script src="dist/js/jquery.inputmask.bundle.js"></script>
@@ -121,29 +120,29 @@ desired effect
                                     </form>
                                 </li>
                                 <!-- Menu Body
-                    <li class="user-body">
-                        <div class="row">
-                            <div class="col-xs-4 text-center">
-                                <a href="#">Followers</a>
-                            </div>
-                            <div class="col-xs-4 text-center">
-                                <a href="#">Sales</a>
-                            </div>
-                            <div class="col-xs-4 text-center">
-                                <a href="#">Friends</a>
-                            </div>
-                        </div>
-                        <!-- /.row
-                    </li>
-                    <!-- Menu Footer
-                    <li class="user-footer">
-                        <div class="pull-left">
-                            <a href="#" class="btn btn-default btn-flat">Profile</a>
-                        </div>
-                        <div class="pull-right">
-                            <a href="#" class="btn btn-default btn-flat">Sign out</a>
-                        </div>
-                    </li>-->
+                                <li class="user-body">
+                                    <div class="row">
+                                        <div class="col-xs-4 text-center">
+                                            <a href="#">Followers</a>
+                                        </div>
+                                        <div class="col-xs-4 text-center">
+                                            <a href="#">Sales</a>
+                                        </div>
+                                        <div class="col-xs-4 text-center">
+                                            <a href="#">Friends</a>
+                                        </div>
+                                    </div>
+                                    <!-- /.row
+                                </li>
+                                <!-- Menu Footer
+                                <li class="user-footer">
+                                    <div class="pull-left">
+                                        <a href="#" class="btn btn-default btn-flat">Profile</a>
+                                    </div>
+                                    <div class="pull-right">
+                                        <a href="#" class="btn btn-default btn-flat">Sign out</a>
+                                    </div>
+                                </li>-->
                             </ul>
                         </li>
                         <!-- Control Sidebar Toggle Button -->
@@ -165,19 +164,19 @@ desired effect
                             <img src="images/lightning.jpg" class="img-circle" alt="User Image">
                         </div>
                         <div class="info chaindata">
-                            <span class="network_mode">Network</span><br/>
+                            <span class="network_mode">Network</span><br />
                             <!-- Status -->
                             <a><i class="fa fa-circle text-success"></i> Online</a>
                         </div>
 
                     </div>
-                    
+
                     <div class="white chaindata">
-                        Time: <span class="lastblock"></span><br/>
-                        Height: <span class="blockheight"></span><br/>
+                        Time: <span class="lastblock"></span><br />
+                        Height: <span class="blockheight"></span><br />
                     </div>
                 </div>
-                
+
                 <!-- /.search form -->
                 <!-- Sidebar Menu -->
                 <ul class="sidebar-menu" data-widget="tree">
@@ -270,31 +269,31 @@ desired effect
             <!-- Main content -->
             <section class="content container-fluid">
 
-                
-                    <div class="callout callout-danger" id="notify_danger" style="display:none;">
-                        <h4 id="notify_danger_title"><i class="icon fa fa-ban"></i> Error<button type="button" class="btn btn-box-tool pull-right" data-widget="remove" style="padding:0px; color: #FFF;" onclick="$('#notify_danger').css('display', 'none');"><i class="fa fa-times"></i></button></h4>
 
-                        <p id="notify_danger_message">
-                            There is a problem that we need to fix. A wonderful serenity has taken possession of my entire soul,
-                            like these sweet mornings of spring which I enjoy with my whole heart.
-                        </p>
-                    </div>
-                    <div class="callout callout-info" id="notify_info" style="display:none;">
-                        <h4 id="notify_info_title"><i class="icon fa fa-info"></i> Info<button type="button" class="btn btn-box-tool pull-right" data-widget="remove" style="padding:0px; color: #FFF;" onclick="$('#notify_info').css('display', 'none');"><i class="fa fa-times"></i></button></h4>
+                <div class="callout callout-danger" id="notify_danger" style="display:none;">
+                    <h4 id="notify_danger_title"><i class="icon fa fa-ban"></i> Error<button type="button" class="btn btn-box-tool pull-right" data-widget="remove" style="padding:0px; color: #FFF;" onclick="$('#notify_danger').css('display', 'none');"><i class="fa fa-times"></i></button></h4>
 
-                        <p id="notify_info_message">Follow the steps to continue to payment.</p>
-                    </div>
-                    <div class="callout callout-warning" id="notify_warning" style="display:none;">
-                        <h4 id="notify_warning_title"><i class="icon fa fa-warning"></i> Alert<button type="button" class="btn btn-box-tool pull-right" data-widget="remove" style="padding:0px; color: #FFF;" onclick="$('#notify_warning').css('display', 'none');"><i class="fa fa-times"></i></button></h4>
+                    <p id="notify_danger_message">
+                        There is a problem that we need to fix. A wonderful serenity has taken possession of my entire soul,
+                        like these sweet mornings of spring which I enjoy with my whole heart.
+                    </p>
+                </div>
+                <div class="callout callout-info" id="notify_info" style="display:none;">
+                    <h4 id="notify_info_title"><i class="icon fa fa-info"></i> Info<button type="button" class="btn btn-box-tool pull-right" data-widget="remove" style="padding:0px; color: #FFF;" onclick="$('#notify_info').css('display', 'none');"><i class="fa fa-times"></i></button></h4>
 
-                        <p id="notify_warning_message">This is a yellow callout.</p>
-                    </div>
-                    <div class="callout callout-success" id="notify_success" style="display:none;">
-                        <h4 id="notify_success_title"><i class="icon fa fa-check"></i> Success<button type="button" class="btn btn-box-tool pull-right" data-widget="remove" style="padding:0px; color: #FFF;" onclick="$('#notify_success').css('display', 'none');"><i class="fa fa-times"></i></button></h4>
+                    <p id="notify_info_message">Follow the steps to continue to payment.</p>
+                </div>
+                <div class="callout callout-warning" id="notify_warning" style="display:none;">
+                    <h4 id="notify_warning_title"><i class="icon fa fa-warning"></i> Alert<button type="button" class="btn btn-box-tool pull-right" data-widget="remove" style="padding:0px; color: #FFF;" onclick="$('#notify_warning').css('display', 'none');"><i class="fa fa-times"></i></button></h4>
 
-                        <p id="notify_success_message">This is a green callout.</p>
-                    </div>
-                
+                    <p id="notify_warning_message">This is a yellow callout.</p>
+                </div>
+                <div class="callout callout-success" id="notify_success" style="display:none;">
+                    <h4 id="notify_success_title"><i class="icon fa fa-check"></i> Success<button type="button" class="btn btn-box-tool pull-right" data-widget="remove" style="padding:0px; color: #FFF;" onclick="$('#notify_success').css('display', 'none');"><i class="fa fa-times"></i></button></h4>
+
+                    <p id="notify_success_message">This is a green callout.</p>
+                </div>
+
 
                 <%- body %>
                 <!--------------------------
@@ -324,35 +323,35 @@ desired effect
             <div class="tab-content">
                 <!-- Home tab content -->
                 <div class="tab-pane active" id="control-sidebar-home-tab">
-              <!--      <h3 class="control-sidebar-heading">Recent Activity</h3>
-                    <ul class="control-sidebar-menu">
-                        <li>
-                            <a href="javascript:;">
-                                <i class="menu-icon fa fa-birthday-cake bg-red"></i>
-                                <div class="menu-info">
-                                    <h4 class="control-sidebar-subheading">Langdon's Birthday</h4>
-                                    <p>Will be 23 on April 24th</p>
-                                </div>
-                            </a>
-                        </li>
-                    </ul> -->
+                    <!--      <h3 class="control-sidebar-heading">Recent Activity</h3>
+                          <ul class="control-sidebar-menu">
+                              <li>
+                                  <a href="javascript:;">
+                                      <i class="menu-icon fa fa-birthday-cake bg-red"></i>
+                                      <div class="menu-info">
+                                          <h4 class="control-sidebar-subheading">Langdon's Birthday</h4>
+                                          <p>Will be 23 on April 24th</p>
+                                      </div>
+                                  </a>
+                              </li>
+                          </ul> -->
                     <!-- /.control-sidebar-menu -->
-                <!--    <h3 class="control-sidebar-heading">Tasks Progress</h3>
-                    <ul class="control-sidebar-menu">
-                        <li>
-                            <a href="javascript:;">
-                                <h4 class="control-sidebar-subheading">
-                                    Custom Template Design
-                                    <span class="pull-right-container">
-                                        <span class="label label-danger pull-right">70%</span>
-                                    </span>
-                                </h4>
-                                <div class="progress progress-xxs">
-                                    <div class="progress-bar progress-bar-danger" style="width: 70%"></div>
-                                </div>
-                            </a>
-                        </li>
-                    </ul> -->
+                    <!--    <h3 class="control-sidebar-heading">Tasks Progress</h3>
+                        <ul class="control-sidebar-menu">
+                            <li>
+                                <a href="javascript:;">
+                                    <h4 class="control-sidebar-subheading">
+                                        Custom Template Design
+                                        <span class="pull-right-container">
+                                            <span class="label label-danger pull-right">70%</span>
+                                        </span>
+                                    </h4>
+                                    <div class="progress progress-xxs">
+                                        <div class="progress-bar progress-bar-danger" style="width: 70%"></div>
+                                    </div>
+                                </a>
+                            </li>
+                        </ul> -->
                     <!-- /.control-sidebar-menu -->
                 </div>
                 <!-- /.tab-pane -->
@@ -365,7 +364,7 @@ desired effect
                         <h3 class="control-sidebar-heading">Node Settings</h3>
                         <div class="form-group">
                             <label class="control-sidebar-subheading">
-                                <button type="button" class="btn btn-info btn-flat" id="start_lnd" >Start LND</button>
+                                <button type="button" class="btn btn-info btn-flat" id="start_lnd">Start LND</button>
                                 <button type="button" class="btn btn-info btn-flat" id="stop_lnd">Stop LND</button>
                             </label>
                             <p>
@@ -414,12 +413,12 @@ desired effect
         <div class="control-sidebar-bg"></div>
     </div>
     <!-- ./wrapper -->
-   
 
-    <script>       
+
+    <script>
 
         function notify_handler(type, message) {
-            
+
             $('#notify_danger').css('display', 'none');
             $('#notify_info').css('display', 'none');
             $('#notify_warning').css('display', 'none');
@@ -503,7 +502,7 @@ desired effect
                 return false;
 
             if (Notification.permission === "granted") {
-                var notification = new Notification(title, { body: msg, badge: 'images/lightning.jpg', icon: 'images/lightning.jpg'});
+                var notification = new Notification(title, { body: msg, badge: 'images/lightning.jpg', icon: 'images/lightning.jpg' });
                 return true;
             }
         }
@@ -525,11 +524,11 @@ desired effect
 
         var order = ["SAT", "BTC", "USD", "EUR", "CAD"];
 
-        $(".btc").on("click", function(e) {
+        $(".btc").on("click", function (e) {
             var currentUnit = $(".unit-label").html();
             var orderIndex = order.indexOf(currentUnit) == order.length - 1 ? 0 : order.indexOf(currentUnit) + 1;
             var newUnit = order[orderIndex];
-            $(".btc").each(async function() {
+            $(".btc").each(async function () {
                 var sats = $(this).attr('data-sats');
 
                 if (newUnit == "BTC" || newUnit == "SAT") {
@@ -561,6 +560,7 @@ desired effect
         }
 
     </script>
-
+    <!-- Websockets for notifications and state data -->
+    <script src="js/websockets.js"></script>
 </body>
 </html>

@@ -65,7 +65,10 @@ function pollLnd() {
         .then((res) => {
             for (var i = 0; i < Object.keys(lastCall).length; i++) {
 
-                if (lastCall[Object.keys(lastCall)[i]] != res[i]) {
+                if (JSON.stringify(lastCall[Object.keys(lastCall)[i]]) != JSON.stringify(res[i])) {
+                    console.log("updated call " + JSON.stringify(Object.keys(lastCall)[i]));
+                    console.log("old call " + JSON.stringify(lastCall[Object.keys(lastCall)[i]]));
+                    console.log("new call " + JSON.stringify(res[i]));
                     lastCall[Object.keys(lastCall)[i]] = res[i];
                     updated = true;
                 }
