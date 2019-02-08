@@ -784,15 +784,13 @@ module.exports = {
         return await call;
     },
 
-    listInvoices: async function (pending_only, user) {
+    listInvoices: async function (user) {
         var client = await this.getLightningClient(user);
         if (client.status == 'fail') return client;
         var timeout = new Date().setSeconds(new Date().getSeconds() + timeout_in_seconds);
 
-        pending_only = (/true/i).test(pending_only);
-
         var call = new Promise((resolve) => {
-            client.data.client.listInvoices({ pending_only: pending_only, num_max_invoices: 100000 }, client.data.metadata, {deadline:timeout}, function (err, response) {
+            client.data.client.listInvoices({ pending_only: false, num_max_invoices: 100000 }, client.data.metadata, {deadline:timeout}, function (err, response) {
                 if (err)
                     return resolve({ status: 'fail', data: { error_message: err.message } });
                 else

@@ -17,7 +17,7 @@ LND-Dash is in its infancy. It is not recommended you run it on mainnet unless y
 + send payment with automatic invoice decoding and pasting if detected on the clipboard and permissions given
 + create invoice with automatic clipboard loading on invoice generation
 + notifications web API integration
-+ websocket streaming of lnd events like invoice paid
++ websocket streaming of lnd events and state
 + peer management
 + cross platform (windows 10 and ubuntu tested)
 + PWA compatability, can be installed on mobile devices
@@ -25,7 +25,6 @@ LND-Dash is in its infancy. It is not recommended you run it on mainnet unless y
 ## TODO
 
 + testing
-+ more websocket routes fewer instances of polling
 + refactor reused code
 + better UX for most pages
 + monitor and rank node/channel reliability
@@ -64,6 +63,8 @@ Unless specified in the configuration file config.json or during the install pro
 ```bash
 $ yarn start --mainnet
 ```
+:zap: Go to [`https://127.0.0.1:8888`](https://127.0.0.1:8888), and you're done! :zap:
+
 To reconfigure your node you can run the following at anytime to regenerate your config.json file
 
 ```bash
@@ -131,4 +132,3 @@ You can also edit the root config.json file directly after it is generated. You 
 
 'httpRedirectPort' is the port to listen for http connections on. Only necessary if enabling http to https redirects.
 
-:zap: Go to [`https://127.0.0.1:8888`](https://127.0.0.1:8888), and you're done! :zap:

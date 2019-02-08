@@ -1,6 +1,6 @@
 'use strict';
-var lndState = require('./lndstate');
 var notifications = require('./notifications');
+var lndState = require('./lndstate');
 var WebSocket = require('ws'); 
 
 
@@ -10,20 +10,17 @@ module.exports = (server) => {
 
     wss.on('connection', (ws) => {
 
-        //dashboard updates
-        /*ws.on('dash', () => {
-            ws.emit('dash', lndState.dash);
-        });
-
-        //layout updates
-        ws.on('layout', () => {
-            ws.emit('layout', lndState.layout);
-        });*/
+        ws.send(JSON.stringify({ "event": "lndState", "data": lndState.lndState }));
 
         notifications.on('notification', (event, data) => {
             //ws.emit(event, data);
             if (ws.readyState == ws.OPEN) {
-                console.log("got notification sending ws data");
+                ws.send(JSON.stringify({ "event": event, "data": data }));
+            }
+        });
+
+        lndState.notifications.on('notification', (event, data) => {
+            if (ws.readyState == ws.OPEN) {
                 ws.send(JSON.stringify({ "event": event, "data": data }));
             }
         });

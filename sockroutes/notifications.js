@@ -1,7 +1,7 @@
 'use strict';
 var EventEmitter = require('events');
 var lightningService = require('../services/lightningService');
-class notificationEmitter extends EventEmitter { }
+class notificationEmitter extends EventEmitter { };
 
 
 var notifications = new notificationEmitter();
@@ -27,7 +27,6 @@ function subTransactions() {
         });
     });
 };
-
 
 //subscribe to lnd channel graph
 
