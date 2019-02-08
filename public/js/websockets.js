@@ -32,8 +32,8 @@ function parseMsg(msg) {
             updateSats("span_wallet_balance", notification.data.onChainFunds);
             updateSats("span_confirmed_balance", notification.data.onChainFunds);
             updateSats("span_unconfirmed_balance", notification.data.pendingOnChain);
-            updateSats("span_channel_balance", notification.data.activeInCap);
-            updateSats("span_channel_balance_index", notification.data.activeInCap);
+            updateSats("span_channel_balance", notification.data.inChannelFunds);
+            updateSats("span_channel_balance_index", notification.data.inChannelFunds);
             $("#span_list_payments").html(Number(notification.data.outPayments).toLocaleString());
             $(".active_channels").html(notification.data.activeChannels);
             $(".total_channels").html(notification.data.activeAndInactiveChannels);
