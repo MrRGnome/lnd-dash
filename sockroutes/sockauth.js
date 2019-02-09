@@ -6,6 +6,9 @@ var fs = require('fs');
 var cookieParser = require('cookie-parser');
 
 function sockAuth(ws, req) {
+    if (ws.readyState != ws.OPEN)
+        return;
+
     if (!ws.locals)
         ws.locals = {};
 
@@ -43,7 +46,7 @@ function sockAuth(ws, req) {
     if (passthrough || cookieAuthed)
         return;
     else {
-        console.log("unauthorized access from " + req.connection.remoteAddress);
+        console.log("unauthorized ws access attempt from " + req.connection.remoteAddress);
         if (ws.readyState == ws.OPEN)
             return ws.close();
         else

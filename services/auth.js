@@ -38,7 +38,7 @@ function auth(req, res, next) {
     if (passthrough || cookieAuthed)
         next();
     else {
-        console.log("unauthorized access from " + req.ip);
+        console.log("unauthorized access attempt from " + req.ip);
         res.status(401).send(fs.readFileSync('./views/login.html').toString());
     }
 }
