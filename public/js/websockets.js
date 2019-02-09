@@ -1,7 +1,11 @@
 var ws = new WebSocket("wss://" + window.location.host);
 ws.onmessage = (msg) => {
-    console.log("ws message " + JSON.stringify(msg));
+    //console.log("ws message " + JSON.stringify(msg));
     parseMsg(msg);
+}
+
+ws.onclose = () => {
+    window.location.href = "/";
 }
 
 function parseMsg(msg) {

@@ -19,7 +19,7 @@ function auth(req, res, next) {
 
     var cookieAuthed = false;
     if (req.signedCookies && req.signedCookies.lndauth) {
-        res.locals.user = sessions.find(session => { return session.session == cookieParser.signedCookie(req.signedCookies.lndauth, config.cookieSecret) });
+        res.locals.user = sessions.find(session => { return session.session == cookieParser.signedCookie(req.signedCookies.lndauth, config.cookieSecret) && session.expires > new Date() });
         if (res.locals.user != undefined)
             cookieAuthed = true;
     }

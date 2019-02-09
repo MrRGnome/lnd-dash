@@ -29,6 +29,7 @@ router.post('/', async function (req, res) {
             maxAge: 1000 * 60 * 15, // will expire after 15 minutes
             signed: true
         }
+        user.expires = new Date(new Date().getTime() + 15 * 60 * 1000);
         //sessions = sessions.filter(sessUser => user.username != sessUser.username);
         sessions.push(user);
         res.header("Location", "/");
