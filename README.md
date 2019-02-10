@@ -102,7 +102,7 @@ You can also edit the root config.json file directly after it is generated. You 
 
 'host' is the IP to listen to (set 0.0.0.0 to listen to all ipv4 - unrecommended and potential security issue)
 
-'network' is the desired network to run on and implied location to look for macroons (non default macroon paths not yet supported)
+'network' is the desired network to run on and implied location to look for macaroons (non default macaroon paths not yet supported)
 
 'whitelist' is the requesting IP addresses allowed to interact with the wallet and dashboard, by default only local addresses.
 
