@@ -38,8 +38,10 @@ function sockAuth(ws, req) {
     }
     
     if (!config.disableWhitelist && !whitelistVerified)
-        if (ws.readyState == ws.OPEN)
+        if (ws.readyState == ws.OPEN) {
+            ws.send(JSON.stringify({"event": "unauthorized"}));
             return ws.close();
+        }
         else
             return;
 
@@ -47,8 +49,10 @@ function sockAuth(ws, req) {
         return;
     else {
         console.log("unauthorized ws access attempt from " + req.connection.remoteAddress);
-        if (ws.readyState == ws.OPEN)
+        if (ws.readyState == ws.OPEN) {
+            ws.send(JSON.stringify({ "event": "unauthorized" }));
             return ws.close();
+        }
         else
             return;
     }

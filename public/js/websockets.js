@@ -4,14 +4,13 @@ ws.onmessage = (msg) => {
     parseMsg(msg);
 }
 
-ws.onclose = () => {
-    window.location.href = "/";
-}
-
 function parseMsg(msg) {
     var notification = JSON.parse(msg.data);
     console.log(notification);
     switch (notification.event) {
+        case "unauthorized":
+            window.location.href = "/";
+            break;
         case "invoicePaid":
             var message = "Recieved payment for " + Number(notification.data.value).toLocaleString() + " sats, memo: " + notification.data.memo;
             notify_handler("success", message);
