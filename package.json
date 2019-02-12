@@ -1,6 +1,6 @@
 {
   "name": "lnd-dashboard",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "private": true,
   "scripts": {
     "start": "node app",
@@ -30,5 +30,9 @@
     "serve-favicon": "^2.3.0",
     "websocket": "^1.0.25",
     "ws": "^5.1.1"
+  },
+  "pkg": {
+    "assets": [ "public/**/*", "views/**/*", "routes/**/*" ],
+    "scripts": "install/**/*"
   }
 }
