@@ -310,7 +310,7 @@ desired effect
                 The revolution will not ฿e centralized !
             </div>
             <!-- Default to the left -->
-            <strong>Copyright &copy; 2018 <a href="https://github.com/lightningnetwork/lnd" target="_blank">LND</a>.</strong> All rights reserved.
+            <strong>Copyright &copy; 2019 <a href="https://github.com/lightningnetwork/lnd" target="_blank">LND</a>.</strong> All rights reserved.
         </footer>
         <!-- Control Sidebar -->
         <aside class="control-sidebar control-sidebar-dark">
@@ -562,5 +562,10 @@ desired effect
     </script>
     <!-- Websockets for notifications and state data -->
     <script src="js/websockets.js"></script>
+    <script>
+        window.addEventListener('beforeinstallprompt', (e) => {
+            e.prompt();
+            });
+    </script>
 </body>
 </html>

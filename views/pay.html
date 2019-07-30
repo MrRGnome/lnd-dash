@@ -1,18 +1,80 @@
 ﻿<% applocals.header='Pay'%>
 <% applocals.header_small='Make A Payment'%>
 
+<script type="text/javascript" src="js/jsqrcode/src/grid.js"></script>
+<script type="text/javascript" src="js/jsqrcode/src/version.js"></script>
+<script type="text/javascript" src="js/jsqrcode/src/detector.js"></script>
+<script type="text/javascript" src="js/jsqrcode/src/formatinf.js"></script>
+<script type="text/javascript" src="js/jsqrcode/src/errorlevel.js"></script>
+<script type="text/javascript" src="js/jsqrcode/src/bitmat.js"></script>
+<script type="text/javascript" src="js/jsqrcode/src/datablock.js"></script>
+<script type="text/javascript" src="js/jsqrcode/src/bmparser.js"></script>
+<script type="text/javascript" src="js/jsqrcode/src/datamask.js"></script>
+<script type="text/javascript" src="js/jsqrcode/src/rsdecoder.js"></script>
+<script type="text/javascript" src="js/jsqrcode/src/gf256poly.js"></script>
+<script type="text/javascript" src="js/jsqrcode/src/gf256.js"></script>
+<script type="text/javascript" src="js/jsqrcode/src/decoder.js"></script>
+<script type="text/javascript" src="js/jsqrcode/src/qrcode.js"></script>
+<script type="text/javascript" src="js/jsqrcode/src/findpat.js"></script>
+<script type="text/javascript" src="js/jsqrcode/src/alignpat.js"></script>
+<script type="text/javascript" src="js/jsqrcode/src/databr.js"></script>
+
 <section class="content">
     <div class="row">
         <div class="col-md-6">
             <!-- Horizontal Form -->
             <div class="box box-info">
                 <div class="box-header with-border">
-                    <h3 class="box-title">Payment Form</h3>
+                    <h3 class="box-title">Pay With Lightning</h3>
                 </div>
                 <!-- /.box-header -->
                 <!-- form start -->
                 <div class="form-horizontal">
                     <div class="box-body">
+                        <div id="qr-scan" class="hide">
+                            <video id="video" style="width: 100%;" autoplay playsinline controls="true"></video>
+                            <canvas id="image-canvas" class=""></canvas>
+                            <script>
+                                var currentStream;
+                                var currentDeviceId;
+                                var videoDevices;
+
+                            </script>
+
+                            <script>
+
+
+                                qrcode.callback = function (data) {
+                                    var data;
+                                    //console.log(data);
+                                    if (data && data[0] == 'l' && data[1] == 'n') {
+                                        $('#payment_request').val(data);
+                                        decode_request();
+                                        console.log("Scanned QR: " + data);
+                                        $("#qr-scan").addClass("hide");
+                                    }
+                                    
+                                };
+
+                                function decode() {
+                                    var v = document.getElementById("video");
+                                    var c = document.getElementById("image-canvas");
+                                    var ctx = c.getContext("2d");
+                                    ctx.imageSmoothingEnabled = false;
+                                    c.width = v.offsetWidth;
+                                    c.height = v.offsetHeight;
+                                    ctx.drawImage(v, 0, 0, v.offsetWidth, v.offsetHeight);
+                                    qrcode.decode(c.toDataURL());
+                                    // flip context horizontally
+
+                                    ctx.translate(c.width / 2, c.height / 2);
+                                    ctx.scale(-1, 1);
+                                    qrcode.decode(c.toDataURL());
+                                }
+
+                            </script>
+                        </div>
+
                         <div class="form-group">
                             <label for="payment_request" class="col-sm-2 control-label">Payment Request</label>
 
@@ -40,15 +102,16 @@
                     </div>
                     <!-- /.box-body -->
                     <div class="box-footer">
-                        <button type="submit" class="btn btn-default" onclick="decode_request();">Decode</button>
-                        <button type="submit" class="btn btn-default" onclick="reset_form();">Reset</button>
+                        <button class="btn btn-default" onclick="scan_QR();">Scan QR</button>
+                        <button class="btn btn-default" onclick="decode_request();">Decode</button>
+                        <button class="btn btn-default" onclick="reset_form();">Reset</button>
                         <button type="submit" id="send" class="btn btn-info pull-right" onclick="send_payment($('#payment_request').val());">Send Payment</button>
                     </div>
                     <!-- /.box-footer -->
                 </div>
             </div>
             <!-- /.box -->
-           
+
         </div>
     </div>
 </section>
@@ -100,19 +163,19 @@
             });
         return false;
     }
-    
+
     function paste() {
         if ($('#payment_request').val() != "")
             return;
-        
+
         $('#payment_request').select();
         document.designMode = "on";
-        var pasted =document.execCommand('paste');
+        var pasted = document.execCommand('paste');
         window.getSelection().removeAllRanges();
         document.designMode = "off";
         if (pasted)
             decode_request(true);
-        
+
         if (navigator.clipboard && !pasted) {
             navigator.clipboard.readText()
                 .then(text => {
@@ -124,11 +187,76 @@
                     console.error('Failed to read clipboard contents: ', err);
                 });
         }
-        
+
     }
 
     paste();
-    
-    
 
+    function scan_QR() {
+        getPermission();
+    }
+
+    function getPermission() {
+        var loadedVideo = false;
+        navigator.mediaDevices.getUserMedia({ video: { facingMode: "environment" }, audio: false }).then(stream => {
+            navigator.mediaDevices.enumerateDevices().then(devices => {
+                videoDevices = devices.filter(device => (device.kind == "videoinput" || device.kind == "video"));
+                if (videoDevices.length == 0) {
+                    notify_handler('error', 'No media devices found');
+                    return;
+                }
+                $("#qr-scan").removeClass("hide");
+                if (videoDevices.length == 1)
+                    loadVideo(videoDevices[0].id);
+                else {
+                    //alert(videoDevices.length);
+                    for (i = 0; i < videoDevices.length; i++) {
+                        var device = videoDevices[i];
+                        //alert("index: " + i + " facing: " + device.facing + " label: " + device.label.toLowerCase() + " id: " + device.id + " back? " + device.label.toLowerCase().includes("back"));
+                        if (device.facing == "environment" || device.label.toLowerCase().includes("back")) {
+                            //alert("found back camera");
+                            i = videoDevices.length;
+                            loadedVideo = true;
+                            loadVideo(device.id);
+                            return;
+                        }
+
+                    };
+                    if (!loadedVideo) {
+                        loadedVideo = false;
+                        var video = document.getElementById("video");
+                        video.pause();
+                        video.srcObject = stream;
+                        video.play();
+                        if (currentStream == undefined)
+                            document.getElementById("video").addEventListener('timeupdate', decode, false);
+                        currentStream = stream;
+                    }
+                }
+            });
+        });
+    };
+
+    function loadVideo(id) {
+        var constraints = {};
+        constraints.video = {};
+        constraints.video.deviceId = { 'exact': id };
+        if (currentStream != undefined) {
+            currentStream.getTracks().forEach(track => {
+                track.stop();
+            });
+        }
+        navigator.mediaDevices.getUserMedia(constraints).then((stream) => {
+            var video = document.getElementById("video");
+            video.pause();
+            video.srcObject = stream;
+            video.play();
+            if (currentStream == undefined)
+                //document.getElementById("video").addEventListener('timeupdate', decode, false);
+                setInterval(decode, 10);
+            currentStream = stream;
+            currentDeviceId = id;
+        });
+
+    };
 </script>
