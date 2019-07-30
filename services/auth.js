@@ -1,5 +1,5 @@
 'use strict';
-var config = require('../config.json');
+var config = require(require('path').join(process.cwd(), 'config.json'));
 var sessions = require('../services/sessions');
 var crypto = require('crypto');
 var fs = require('fs');
@@ -32,8 +32,10 @@ function auth(req, res, next) {
         }
     }
 
-    if (!config.disableWhitelist && !whitelistVerified)
+    if (!config.disableWhitelist && !whitelistVerified) {
+        console.log("non-whitelisted access attempt " + req.ip);
         return res.status(401).send();
+    }
 
     if (passthrough || cookieAuthed)
         next();

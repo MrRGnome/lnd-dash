@@ -1,7 +1,7 @@
 ﻿'use strict';
 var express = require('express');
 var router = express.Router();
-var config = require('../config.json');
+var config = require(require('path').join(process.cwd(), 'config.json'));
 var crypto = require('crypto');
 var lightningService = require('../services/lightningService');
 var sessions = require('../services/sessions');

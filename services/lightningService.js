@@ -1,7 +1,8 @@
 ﻿const timeout_in_seconds = 60;
-var config = require('../config.json');
-const lnd_daemon = config.lnd_daemon || '127.0.0.1:10009';
 var path = require('path');
+var config = require(require('path').join(process.cwd(), 'config.json'));
+const lnd_daemon = config.lnd_daemon || '127.0.0.1:10009';
+
 
 module.exports = {
 

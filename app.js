@@ -1,22 +1,24 @@
 ﻿'use strict';
+var fs = require('fs');
+var path = require('path');
 var debug = require('debug');
 var express = require('express');
 var https = require('https');
-var path = require('path');
 var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
-var fs = require('fs');
 var compression = require('compression');
 var expressLayouts = require('express-ejs-layouts');
 var session = require('express-session');
 var RateLimit = require('express-rate-limit'); ///https://github.com/nfriedly/express-rate-limit
 var ws = require('ws');
-var config = require('./config.json');
+var config = require(require('path').join(process.cwd(), 'config.json'));
 var auth = require('./services/auth');
 var dataDir = require('./services/lnddir');
 var sock = require('./sockroutes/wss');
+
+
 
 var limiter = new RateLimit({
     windowMs: 60 * 1000, // 1 minutes
@@ -57,13 +59,13 @@ app.use(function (req, res, next) {
     next();
 });
 
-addRoutes('', 'routes');
+addRoutes('', (path.join(__dirname, 'routes')));
 
 function addRoutes(routepath, dirpath) {
     var files = fs.readdirSync(dirpath);
     files.forEach(function (file) {
         if (file.indexOf('.') == -1) { 
-            addRoutes(routepath + '/' + file, dirpath + '/' + file);
+            addRoutes(path.join(routepath, file), path.join(dirpath, file));
         }
         else {
             var filename = file.replace('.js', '');
@@ -71,7 +73,7 @@ function addRoutes(routepath, dirpath) {
             if (filename != 'index') {
                 route = route + filename;
             }
-            app.use(route, require('./' + dirpath + '/' + filename));
+            app.use(route, require(path.join(dirpath, filename)));
         }
     });
 }
@@ -118,7 +120,7 @@ if (config.enableHttpRedirect && config.httpRedirectPort) {
     var newapp = express();
     newapp.get('*', function (req, res) {
         res.redirect('https://' + req.headers.host + req.url);
-    })
+    });
 
     var redirectServer = http.createServer(newapp);
     redirectServer.listen(config.httpRedirectPort);
