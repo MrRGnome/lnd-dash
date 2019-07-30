@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "start": "node app",
+    "start": "node start",
     "postinstall": "node install/setup"
   },
   "description": "A dashboard for lnd nodes",
@@ -32,7 +32,14 @@
     "ws": "^5.1.1"
   },
   "pkg": {
-    "assets": [ "public/**/*", "views/**/*", "routes/**/*" ],
-    "scripts": "install/**/*"
-  }
+    "assets": [
+      "public/**/*",
+      "views/**/*",
+      "routes/**/*"
+    ],
+    "scripts": [
+      "install/**/*.js"
+    ]
+  },
+  "bin": "start.js"
 }

@@ -1,6 +1,6 @@
 'use strict'
 var network = "testnet";
-var config = require("../config.json");
+var config = require(require('path').join(process.cwd(), 'config.json'));
 
 //Set network string to be used for looking up authentication macroons and other network mode requiring functions
 if (JSON.stringify(process.argv).search("--mainnet") != -1)

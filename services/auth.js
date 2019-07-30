@@ -32,8 +32,10 @@ function auth(req, res, next) {
         }
     }
 
-    if (!config.disableWhitelist && !whitelistVerified)
+    if (!config.disableWhitelist && !whitelistVerified) {
+        console.log("non-whitelisted access attempt " + req.ip);
         return res.status(401).send();
+    }
 
     if (passthrough || cookieAuthed)
         next();

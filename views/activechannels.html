@@ -71,7 +71,7 @@
                         <<
                     </div>
                 </div>
-                <a href="javascript:$('#<%= channel.chan_id %>').addClass('hide'); $('#<%= channel.chan_id %>_details').removeClass('hide');" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+                <a href="javascript:void(0)" onclick="$('#<%= channel.chan_id %>').addClass('hide'); $('#<%= channel.chan_id %>_details').removeClass('hide'); return false;" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
             </div>
 
             <div id="<%= channel.chan_id %>_details" class="small-box <%= channel_color %> dash-widget-parent-md hide">
@@ -86,7 +86,7 @@
                         Sent: <%= Number(channel.total_satoshis_sent).toLocaleString() %> <br />
                         Received: <%= Number(channel.total_satoshis_received).toLocaleString() %> <br />
                         Unsettled: <%= Number(channel.unsettled_balance).toLocaleString() %> <br />
-                        <a href="javascript: ask_for_Close('<%= channel.channel_point %>', '<%= channel.chan_id %>', <%= channel.active %>, <%= (Number(channel.csv_delay) * 10 / 60).toFixed(2) %>, <%= channel.commit_fee %>)">Force Close</a>: <%= (Number(channel.csv_delay) * 10 / 60).toFixed(2) %>h/<%= channel.csv_delay %> bl
+                        <a href="javascript:void(0);" onclick="ask_for_Close('<%= channel.channel_point %>', '<%= channel.chan_id %>', <%= channel.active %>, <%=(Number(channel.csv_delay) * 10 / 60).toFixed(2) %>, <%= channel.commit_fee %>); return false;">Force Close</a>: <%= (Number(channel.csv_delay) * 10 / 60).toFixed(2) %>h/<%= channel.csv_delay %> bl
                     </div>
                 </div>
                 <div class="icon">
@@ -108,7 +108,7 @@
                         <<
                     </div>
                 </div>
-                <a href="javascript:$('#<%= channel.chan_id %>_details').addClass('hide'); $('#<%= channel.chan_id %>').removeClass('hide');" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+                <a href="javascript:void(0);" onclick="$('#<%= channel.chan_id %>_details').addClass('hide'); $('#<%= channel.chan_id %>').removeClass('hide'); return false;" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
             </div>
         </div>
 
