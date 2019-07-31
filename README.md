@@ -9,7 +9,7 @@ This project was originally adopted from http://lnd.fun. You may find some bugs.
 LND-Dash is in its infancy. It is not recommended you run it on mainnet unless you are #reckless. Please help get this project to maturity by opening a pull request or issue!
 
 ## Features
-
++ basic lnd management, peer management, wallet management, lightning payments
 + https web service, can be configured to listen to local addresses or public addresses making your lnd dashboard securely available to other devices
 + user management including macaroon permission management
 + detailed dashboard
