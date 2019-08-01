@@ -13,7 +13,6 @@ LND-Dash is in its infancy. It is not recommended you run it on mainnet unless y
 + https web service, can be configured to listen to local addresses or public addresses making your lnd dashboard securely available to other devices
 + user management including macaroon permission management
 + detailed dashboard
-+ channel management including commit_fee accounting only for your own opened channels (fixes dynamic balance display issues in other wallets)
 + send payment with automatic invoice decoding and pasting if detected on the clipboard and permissions given
 + create invoice with automatic clipboard loading on invoice generation
 + notifications web API integration
@@ -23,7 +22,7 @@ LND-Dash is in its infancy. It is not recommended you run it on mainnet unless y
 + PWA compatability, can be installed on mobile devices
 
 ## TODO
-
++ update lnd api calls for lnd 7.1
 + testing
 + refactor reused code
 + better UX for most pages
