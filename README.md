@@ -22,7 +22,7 @@ LND-Dash is in its infancy. It is not recommended you run it on mainnet unless y
 + PWA compatability, can be installed on mobile devices
 
 ## TODO
-+ update lnd api calls for lnd 7.1
++ update lnd api calls for lnd 0.7.1
 + testing
 + refactor reused code
 + better UX for most pages
