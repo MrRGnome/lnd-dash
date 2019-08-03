@@ -175,9 +175,7 @@
 
 <script>
     function reset_form() {
-        $('#amount').val('');
-        $('#memo').val('');
-        $('#payment_request').val('');
+        $('input').val('');
         return false;
     }
 
@@ -224,16 +222,8 @@
     function paste() {
         if ($('#payment_request').val() != "")
             return;
-
-        $('#payment_request').select();
-        document.designMode = "on";
-        var pasted = document.execCommand('paste');
-        window.getSelection().removeAllRanges();
-        document.designMode = "off";
-        if (pasted)
-            decode_request(true);
-
-        if (navigator.clipboard && !pasted) {
+        
+        if (navigator.clipboard) {
             navigator.clipboard.readText()
                 .then(text => {
                     if (text.length > 150 && text.slice(0, 2) == "ln") {
@@ -246,7 +236,13 @@
                     }
                 })
                 .catch(err => {
-                    console.error('Failed to read clipboard contents: ', err);
+                    $('#payment_request').select();
+                    document.designMode = "on";
+                    var pasted = document.execCommand('paste');
+                    window.getSelection().removeAllRanges();
+                    document.designMode = "off";
+                    if (pasted)
+                        decode_request(true);
                 });
         }
 
@@ -345,7 +341,7 @@
     }
 
     function pasteBtcAddress(data) {
-        if (!data)
+        if (typeof data != "string")
             return;
         switch ($($(".network_mode")[0]).html()) {
             case "MAINNET":
@@ -364,9 +360,12 @@
                 console.log("unknown network mode: " + $($(".network_mode")[0]).html());
                 break;
         }
+        console.log("Scanned QR: " + data);
     }
 
     function pasteLNInvoice(data) {
+        if (typeof data != "string")
+            return;
         if (data.slice(0, 1) == "ln") {
             $('#payment_request').val(data);
             decode_request();
