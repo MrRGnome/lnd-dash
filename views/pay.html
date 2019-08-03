@@ -20,7 +20,6 @@
 <script type="text/javascript" src="js/jsqrcode/src/databr.js"></script>
 
 <section class="content">
-    <form>
     <div class="row">
         <div class="col-md-8">
             <!-- Horizontal Form -->
@@ -90,8 +89,6 @@
 
         </div>
     </div>
-    </form>
-    <form id="btc_send_form">
     <div class="row">
         <div class="col-md-8">
             <!-- Horizontal Form -->
@@ -165,7 +162,7 @@
                     <div class="box-footer">
                         <button class="btn btn-default" onclick="scan_QR_BTC();">Scan QR</button>
                         <button class="btn btn-default" onclick="reset_form();">Reset</button>
-                        <button type="submit" id="send_btc" class="btn btn-info pull-right" onclick="parseBtcPayment($('#btc_send_form'));">Send BTC Payment</button>
+                        <button type="submit" id="send_btc" class="btn btn-info pull-right" onclick="parseBtcPayment();">Send BTC Payment</button>
                     </div>
                     <!-- /.box-footer -->
                 </div>
@@ -174,7 +171,6 @@
 
         </div>
     </div>
-    </form>
 </section>
 
 <script>
