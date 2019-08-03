@@ -831,4 +831,19 @@ module.exports = {
         return await call;
     },
 
+    sendCoins: async function (transaction, user) {
+        var client = await this.getLightningClient(user);
+        if (client.status == 'fail') return client;
+        var timeout = new Date().setSeconds(new Date().getSeconds() + timeout_in_seconds);
+
+        var call = new Promise((resolve) => {
+            client.data.client.sendCoins(transaction, client.data.metadata, { deadline: timeout }, function (err, response) {
+                if (err)
+                    return resolve({ status: 'fail', data: { error_message: err.message } });
+                else
+                    return resolve({ status: 'success', data: response });
+            });
+        });
+        return await call;
+    },
 }

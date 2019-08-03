@@ -81,7 +81,7 @@
                         <button class="btn btn-default" onclick="scan_QR();">Scan QR</button>
                         <button class="btn btn-default" onclick="decode_request();">Decode</button>
                         <button class="btn btn-default" onclick="reset_form();">Reset</button>
-                        <button type="submit" id="send" class="btn btn-info pull-right" onclick="send_payment($('#payment_request').val());">Send Payment</button>
+                        <button type="submit" id="send" class="btn btn-info pull-right" onclick="send_payment($('#payment_request').val());">Send Lightning Payment</button>
                     </div>
                     <!-- /.box-footer -->
                 </div>
@@ -91,7 +91,7 @@
         </div>
     </div>
     </form>
-    <form>
+    <form id="btc_send_form">
     <div class="row">
         <div class="col-md-8">
             <!-- Horizontal Form -->
@@ -125,19 +125,39 @@
 
                             <div class="col-sm-10">
                                 <input type="hidden" id="sweep_all" value="false" />
-                                <span class="input-group-addon box-info"><button class="btn btn-info" onclick="$('#btc_amount').removeAttr('readonly'); $('#btc_amount').val('0'); $('#sweep_all').val('false');">NO</button></span>
-                                <span class="input-group-addon box-warning"><button class="btn btn-warning" onclick="$('#btc_amount').attr('readonly', 'true'); $('#btc_amount').val(lndState.onChainFunds); $('#sweep_all').val('true');">YES</button></span>
+                                <span class="input-group-addon box-info"><button class="btn btn-info" onclick="$('#btc_amount').removeAttr('readonly'); $('#btc_amount').val('0'); $('#sweep_all').val('false'); return false;">NO</button></span>
+                                <span class="input-group-addon box-warning"><button class="btn btn-warning" onclick="$('#btc_amount').attr('readonly', 'true'); $('#btc_amount').val(lndState.onChainFunds); $('#sweep_all').val('true'); return false;">YES</button></span>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="memo" class="col-sm-2 control-label">Fees/Confirmation Target</label>
+                            <label for="fees" class="col-sm-2 control-label">Fees/Confirmation Target</label>
 
                             <div class="col-sm-10">
-                                <select>
-                                    <option selected>Confirm in 3 blocks</option>
-                                    <option>Confirm in X blocks</option>
-                                    <option>Set SAT/Byte</option>
+                                <select id="fees" onchange="feesChanged();">
+                                    <option value="3blocks" selected>Confirm in 3 blocks</option>
+                                    <option value="xblocks">Confirm in X blocks</option>
+                                    <option value="satbyte">Set SAT/Byte</option>
                                 </select>
+                            </div>
+                        </div>
+                        <div id="xblocks-div" class="form-group hide">
+                            <label for="xblocks" class="col-sm-2 control-label">Confirm in #X Blocks</label>
+
+                            <div class="col-sm-10">
+                                <div class="input-group">
+                                    <input class="form-control" type="text" id="xblocks" placeholder="#">
+                                    <span class="input-group-addon">Blocks</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="satbyte-div" class="form-group hide">
+                            <label for="satbyte" class="col-sm-2 control-label">Set SAT/Byte Fee</label>
+
+                            <div class="col-sm-10">
+                                <div class="input-group">
+                                    <input class="form-control" type="text" id="satbyte" placeholder="#">
+                                    <span class="input-group-addon">sat/byte</span>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -145,7 +165,7 @@
                     <div class="box-footer">
                         <button class="btn btn-default" onclick="scan_QR_BTC();">Scan QR</button>
                         <button class="btn btn-default" onclick="reset_form();">Reset</button>
-                        <button type="submit" id="send" class="btn btn-info pull-right" onclick="send_btc_payment($('#payment_request').val());">Send Payment</button>
+                        <button type="submit" id="send_btc" class="btn btn-info pull-right" onclick="parseBtcPayment($('#btc_send_form'));">Send BTC Payment</button>
                     </div>
                     <!-- /.box-footer -->
                 </div>
@@ -354,6 +374,69 @@
             decode_request();
             console.log("Scanned QR: " + data);
             $("#qr-scan").addClass("hide");
+        }
+    }
+
+
+    function parseBtcPayment() {
+        var transaction = {};
+        transaction.addr = $("#btc_address").val();
+        transaction.amount = $("#btc_amount").val();
+        switch ($("#fees").val()) {
+            case "3blocks":
+                break;
+            case "xblocks":
+                transaction.target_conf = $("#xblocks").val();
+                break;
+            case "satbyte":
+                transaction.sat_per_byte = $("#satbytes").val();
+                break;
+        }
+        if ($("#sweep_all").val() == "true")
+            transaction.send_all = true;
+
+        sendBTCPayment(transaction);
+    }
+
+    /*
+     *{
+    addr: <string>,
+    amount: <int64>,
+    target_conf: <int32>,
+    sat_per_byte: <int64>,
+    send_all: <bool>,
+  }
+     */
+    function sendBTCPayment(transaction) {
+        notify_handler('info', 'Wait , sending payment ...');
+        $("#send_btc").attr("disabled", true);
+        $.post("/pay/btc",
+            transaction,
+            function (htmlResult) {
+                if (htmlResult.status == 'fail') {
+                    notify_handler('error', htmlResult.data.error_message);
+                } else {
+                    notify_handler('success', 'Payment has been sent. Transaction ID: ' + htmlResult.data.txid);
+                }
+                $("#send_btc").attr("disabled", false);
+            });
+        return false;
+    }
+
+    function feesChanged() {
+        switch ($("#fees").val()) {
+            case "3blocks":
+                $("#xblocks-div").addClass("hide");
+                $("#satbyte-div").addClass("hide");
+                break;
+            case "xblocks":
+                $("#satbyte-div").addClass("hide");
+                $("#xblocks-div").removeClass("hide");
+                break;
+            case "satbyte":
+                $("#satbyte-div").removeClass("hide");
+                $("#xblocks-div").addClass("hide");
+                break;
         }
     }
 </script>
