@@ -23,6 +23,7 @@ function parseMsg(msg) {
             break;
         case "lndState":
             //update gui with new state
+            window.lndState = notification.data;
             $("#div_peer_pubkey").html('PubKey: ' + notification.data.pubkey);
             $("#input_node_pubkey").val(notification.data.pubkey);
             $("#input_node_address").val(notification.data.nodeAddress);

@@ -20,8 +20,9 @@
 <script type="text/javascript" src="js/jsqrcode/src/databr.js"></script>
 
 <section class="content">
+    <form>
     <div class="row">
-        <div class="col-md-6">
+        <div class="col-md-8">
             <!-- Horizontal Form -->
             <div class="box box-info">
                 <div class="box-header with-border">
@@ -44,33 +45,8 @@
                             <script>
 
 
-                                qrcode.callback = function (data) {
-                                    var data;
-                                    //console.log(data);
-                                    if (data && data[0] == 'l' && data[1] == 'n') {
-                                        $('#payment_request').val(data);
-                                        decode_request();
-                                        console.log("Scanned QR: " + data);
-                                        $("#qr-scan").addClass("hide");
-                                    }
-                                    
-                                };
-
-                                function decode() {
-                                    var v = document.getElementById("video");
-                                    var c = document.getElementById("image-canvas");
-                                    var ctx = c.getContext("2d");
-                                    ctx.imageSmoothingEnabled = false;
-                                    c.width = v.offsetWidth;
-                                    c.height = v.offsetHeight;
-                                    ctx.drawImage(v, 0, 0, v.offsetWidth, v.offsetHeight);
-                                    qrcode.decode(c.toDataURL());
-                                    // flip context horizontally
-
-                                    ctx.translate(c.width / 2, c.height / 2);
-                                    ctx.scale(-1, 1);
-                                    qrcode.decode(c.toDataURL());
-                                }
+                              
+                                
 
                             </script>
                         </div>
@@ -114,6 +90,71 @@
 
         </div>
     </div>
+    </form>
+    <form>
+    <div class="row">
+        <div class="col-md-8">
+            <!-- Horizontal Form -->
+            <div class="box box-info">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Pay With Bitcoin</h3>
+                </div>
+                <!-- /.box-header -->
+                <!-- form start -->
+                <div class="form-horizontal">
+                    <div class="box-body">
+                        <div class="form-group">
+                            <label for="btc_address" class="col-sm-2 control-label">Send to BTC Address</label>
+
+                            <div class="col-sm-10">
+                                <input class="form-control" placeholder="Bitcoin Address" id="btc_address" oninput="" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="amount" class="col-sm-2 control-label">Amount</label>
+
+                            <div class="col-sm-10">
+                                <div class="input-group">
+                                    <input class="form-control" type="text" id="btc_amount" placeholder="Amount ...">
+                                    <span class="input-group-addon">SAT</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="sweep_all" class="col-sm-2 control-label">Sweep all onchain funds</label>
+
+                            <div class="col-sm-10">
+                                <input type="hidden" id="sweep_all" value="false" />
+                                <span class="input-group-addon box-info"><button class="btn btn-info" onclick="$('#btc_amount').removeAttr('readonly'); $('#btc_amount').val('0'); $('#sweep_all').val('false');">NO</button></span>
+                                <span class="input-group-addon box-warning"><button class="btn btn-warning" onclick="$('#btc_amount').attr('readonly', 'true'); $('#btc_amount').val(lndState.onChainFunds); $('#sweep_all').val('true');">YES</button></span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="memo" class="col-sm-2 control-label">Fees/Confirmation Target</label>
+
+                            <div class="col-sm-10">
+                                <select>
+                                    <option selected>Confirm in 3 blocks</option>
+                                    <option>Confirm in X blocks</option>
+                                    <option>Set SAT/Byte</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /.box-body -->
+                    <div class="box-footer">
+                        <button class="btn btn-default" onclick="scan_QR_BTC();">Scan QR</button>
+                        <button class="btn btn-default" onclick="reset_form();">Reset</button>
+                        <button type="submit" id="send" class="btn btn-info pull-right" onclick="send_btc_payment($('#payment_request').val());">Send Payment</button>
+                    </div>
+                    <!-- /.box-footer -->
+                </div>
+            </div>
+            <!-- /.box -->
+
+        </div>
+    </div>
+    </form>
 </section>
 
 <script>
@@ -179,9 +220,14 @@
         if (navigator.clipboard && !pasted) {
             navigator.clipboard.readText()
                 .then(text => {
-                    if (text.length > 150 && text.slice(0, 2) == "ln")
+                    if (text.length > 150 && text.slice(0, 2) == "ln") {
                         $('#payment_request').val(text);
-                    decode_request(true)
+                        decode_request(true);
+                    }
+                    else {
+
+
+                    }
                 })
                 .catch(err => {
                     console.error('Failed to read clipboard contents: ', err);
@@ -193,6 +239,12 @@
     paste();
 
     function scan_QR() {
+        qrcode.callback = pasteLNInvoice;
+        getPermission();
+    }
+
+    function scan_QR_BTC() {
+        qrcode.callback = pasteBtcAddress;
         getPermission();
     }
 
@@ -259,4 +311,49 @@
         });
 
     };
+
+    function decode() {
+        var v = document.getElementById("video");
+        var c = document.getElementById("image-canvas");
+        var ctx = c.getContext("2d");
+        ctx.imageSmoothingEnabled = false;
+        c.width = v.offsetWidth;
+        c.height = v.offsetHeight;
+        ctx.drawImage(v, 0, 0, v.offsetWidth, v.offsetHeight);
+        qrcode.decode(c.toDataURL());
+        // flip context horizontally
+
+        ctx.translate(c.width / 2, c.height / 2);
+        ctx.scale(-1, 1);
+        qrcode.decode(c.toDataURL());
+    }
+
+    function pasteBtcAddress(data) {
+        switch ($($(".network_mode")[0]).html()) {
+            case "MAINNET":
+                if (data && data[0] == '1' || data[0] == '3' || data[0] == 'b' || data.slice(0, 2) == "bc1") {
+                    $('#btc_address').val(data);
+                    $("#qr-scan").addClass("hide");
+                }
+                break;
+            case "TESTNET":
+                if (data && data[0] == 'm' || data[0] == 'n3' || data[0] == '2' || data.slice(0, 2) == "tb1") {
+                    $('#btc_address').val(data);
+                    $("#qr-scan").addClass("hide");
+                }
+                break;
+            default:
+                console.log("unknown network mode: " + $($(".network_mode")[0]).html());
+                break;
+        }
+    }
+
+    function pasteLNInvoice(data) {
+        if (data.slice(0, 1) == "ln") {
+            $('#payment_request').val(data);
+            decode_request();
+            console.log("Scanned QR: " + data);
+            $("#qr-scan").addClass("hide");
+        }
+    }
 </script>
