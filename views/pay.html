@@ -122,8 +122,8 @@
 
                             <div class="col-sm-10">
                                 <input type="hidden" id="sweep_all" value="false" />
-                                <span class="input-group-addon box-info"><button class="btn btn-info" onclick="$('#btc_amount').removeAttr('readonly'); $('#btc_amount').val('0'); $('#sweep_all').val('false'); return false;">NO</button></span>
-                                <span class="input-group-addon box-warning"><button class="btn btn-warning" onclick="$('#btc_amount').attr('readonly', 'true'); $('#btc_amount').val(lndState.onChainFunds); $('#sweep_all').val('true'); return false;">YES</button></span>
+                                <span class="input-group-addon box-info active"><button class="btn btn-info width100" onclick="sweepAll(false)">NO</button></span>
+                                <span class="input-group-addon box-warning"><button class="btn btn-warning width100" onclick="sweepAll(true)">YES</button></span>
                             </div>
                         </div>
                         <div class="form-group">
@@ -345,6 +345,8 @@
     }
 
     function pasteBtcAddress(data) {
+        if (!data)
+            return;
         switch ($($(".network_mode")[0]).html()) {
             case "MAINNET":
                 if (data && data[0] == '1' || data[0] == '3' || data[0] == 'b' || data.slice(0, 2) == "bc1") {
@@ -433,6 +435,23 @@
                 $("#satbyte-div").removeClass("hide");
                 $("#xblocks-div").addClass("hide");
                 break;
+        }
+    }
+
+    function sweepAll(state) {
+        if (state) {
+            $('#btc_amount').attr('readonly', 'true');
+            $('#btc_amount').val(lndState.onChainFunds);
+            $('#sweep_all').val('true');
+            $("#sweep_yes").addClass('active');
+            $("#sweep_no").removeClass('active');
+        }
+        else {
+            $('#btc_amount').removeAttr('readonly');
+            $('#btc_amount').val('0');
+            $('#sweep_all').val('false');
+            $("#sweep_no").addClass('active');
+            $("#sweep_yes").removeClass('active');
         }
     }
 </script>
