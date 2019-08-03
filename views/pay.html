@@ -408,7 +408,7 @@
         notify_handler('info', 'Wait , sending payment ...');
         $("#send_btc").attr("disabled", true);
         $.post("/pay/btc",
-            { transaction: transaction },
+            transaction,
             function (htmlResult) {
                 if (htmlResult.status == 'fail') {
                     notify_handler('error', htmlResult.data.error_message);
