@@ -25,10 +25,16 @@ router.post('/', async function (req, res) {
 });
 
 router.post('/btc', async function (req, res) {
-    if (!req.body.addr || !req.body.amount)
+    if (!req.body.transaction || !req.body.transaction.address || !req.body.transaction.amount)
         res.status(200).json({ status: "fail", data: { error_message: "No transaction data" } });
-    var result = await lightningService.sendCoins(req.body, res.locals.user);
-    res.status(200).json(result);
+    console.log(transaction);
+    try {
+        var result = await lightningService.sendCoins(req.body.transaction, res.locals.user);
+        res.status(200).json(result);
+    }
+    catch(err) {
+        res.status(200).json({ status: "fail", data: { error_message: JSON.stringify(err) } });
+    }
 });
 
 module.exports = router;
