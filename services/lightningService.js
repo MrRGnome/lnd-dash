@@ -837,9 +837,9 @@ module.exports = {
         var timeout = new Date().setSeconds(new Date().getSeconds() + timeout_in_seconds);
 
         var call = new Promise((resolve) => {
-            client.data.client.sendCoins(transaction, client.data.metadata, { deadline: timeout }, function (err, response) {
+            client.data.client.sendCoins(transaction, function (err, response) {
                 if (err)
-                    return resolve({ status: 'fail', data: { error_message: err.message } });
+                    return resolve({ status: 'fail', data: { error_message: JSON.stringify(err) } });
                 else
                     return resolve({ status: 'success', data: response });
             });
