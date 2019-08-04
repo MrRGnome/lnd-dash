@@ -840,7 +840,7 @@ module.exports = {
         var timeout = new Date().setSeconds(new Date().getSeconds() + timeout_in_seconds);
 
         var call = new Promise((resolve) => {
-            client.data.client.sendCoins({ addr: transaction.addr, amount: parseInt(transaction.amount), target_conf: transaction.target_conf ? parseInt(transaction.target_conf) : undefined, sat_per_byte: transaction.sat_per_byte ? parseInt(sat_per_byte) : undefined, send_all: transaction.send_all == 'true' ? true : undefined }, function (err, response) {
+            client.data.client.sendCoins({ addr: transaction.addr, amount: parseInt(transaction.amount), target_conf: transaction.target_conf ? parseInt(transaction.target_conf) : undefined, sat_per_byte: transaction.sat_per_byte ? parseInt(sat_per_byte) : undefined, send_all: transaction.send_all == 'true' ? true : undefined }, client.data.metadata, { deadline: timeout }, function (err, response) {
                 console.log("postcall");
                 console.log(err);
                 console.log(response);
