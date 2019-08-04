@@ -86,6 +86,13 @@
                 <div class="form-horizontal">
                     <div class="box-body">
                         <div class="form-group">
+                            <label for="qr_code_btc" class="col-sm-2 control-label">QR Code</label>
+
+                            <div class="col-sm-10">
+                                <img id="qr_code_btc" />
+                            </div>
+                        </div>
+                        <div class="form-group">
                             <div class="col-sm-12">
                                 <div class="input-group">
                                     <span class="input-group-btn">
@@ -101,7 +108,7 @@
                         <div class="form-group">
                             <div class="col-sm-10">
                                 <div class="input-group">
-                                    
+
                                     <span style="color:red;">
                                         Warning: this is an address in <span class="network_mode"></span>. don't send any other coin to this address.
                                     </span>
@@ -182,6 +189,7 @@
                     notify_handler('error', htmlResult.data.error_message);
                 } else {
                     $('#segwitaddress').val(htmlResult.data.address)
+                    $('#qr_code_btc').attr('src', "https://chart.apis.google.com/chart?cht=qr&chld=Q|2&chs=370&chl=bitcoin:" + htmlResult.data.address);
                     notify_handler('success', 'New address has been created!');
                 }
             });

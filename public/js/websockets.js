@@ -17,9 +17,13 @@ function parseMsg(msg) {
             notify(message, "Recieved " + Number(notification.data.value).toLocaleString() + " Sats");
             break;
         case "newTransaction":
-            var message = "New on chain payment received for " + Number(notification.data.amount).toLocaleString() + " sats";
+            var message = "";
+            if (Number(notification.data.amount) > 0)
+                message = "New on chain payment received for " + Number(notification.data.amount).toLocaleString() + " sats";
+            else
+                message = "New on chain payment sent for " + (Number(notification.data.amount) * -1).toLocaleString() + " sats";
             notify_handler("success", message);
-            notify(message, "Recieved " + Number(notification.data.amount).toLocaleString() + " Sats");
+            notify(message, "Sent " + (Number(notification.data.amount) * -1).toLocaleString() + " Sats");
             break;
         case "lndState":
             //update gui with new state
