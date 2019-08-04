@@ -533,11 +533,11 @@ desired effect
 
                 if (newUnit == "BTC" || newUnit == "SAT") {
                     var res = await currencies[newUnit](sats, newUnit);
-                    $(this).html(res.toLocaleString());
+                    $(this).html(res.toLocaleString(undefined, { maximumFractionDigits: 8 }));
                 }
                 else {
                     var res = await currencies.fiat(sats, newUnit);
-                    $(this).html(res.toLocaleString());
+                    $(this).html(res.toLocaleString(undefined, { maximumFractionDigits: 8 }));
                 }
             });
             $(".unit-label").html(newUnit);
@@ -549,13 +549,13 @@ desired effect
             if ($("#" + id)) {
                 $("#" + id).attr("data-sats", sats);
                 var res = await currencies[currency](sats, currentUnit);
-                $("#" + id).html(res.toLocaleString());
+                $("#" + id).html(res.toLocaleString(undefined, { maximumFractionDigits: 8 }));
             }
 
             if ($("." + id)) {
                 $("." + id).attr("data-sats", sats);
                 var res = await currencies[currency](sats, currentUnit);
-                $("." + id).html(res.toLocaleString());
+                $("." + id).html(res.toLocaleString(undefined, { maximumFractionDigits: 8 }));
             }
         }
 
