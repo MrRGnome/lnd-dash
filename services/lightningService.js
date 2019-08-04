@@ -4,6 +4,8 @@ var config = require(require('path').join(process.cwd(), 'config.json'));
 const lnd_daemon = config.lnd_daemon || '127.0.0.1:10009';
 
 
+
+
 module.exports = {
 
     //
@@ -12,6 +14,14 @@ module.exports = {
             //process.env.GRPC_SSL_CIPHER_SUITES = 'ECDHE-RSA-AES128-GCM-SHA256:ECDHE-RSA-AES128-SHA256:ECDHE-RSA-AES256-SHA384:ECDHE-RSA-AES256-GCM-SHA384:ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES128-SHA256:ECDHE-ECDSA-AES256-SHA384:ECDHE-ECDSA-AES256-GCM-SHA384';
             process.env.GRPC_SSL_CIPHER_SUITES = 'HIGH+ECDSA';
             var grpc = require('grpc');
+            const { loadSync } = require('@grpc/proto-loader');
+            const grpcOptions = {
+                defaults: true,
+                enums: String,
+                keepCase: true,
+                longs: String,
+                oneofs: true,
+            };
             var fs = require('fs');
             
             var dataDir = require('../services/lnddir');
@@ -22,7 +32,7 @@ module.exports = {
                 lndCert = Buffer.from(lndCert);
             }
             var credentials = grpc.credentials.createSsl(lndCert);
-            var lnrpcDescriptor = grpc.load(path.join("services", "rpc.proto"));
+            var lnrpcDescriptor = grpc.loadPackageDefinition(loadSync(path.join("services", "protos", "rpc.proto"), grpcOptions));
             var lnrpc = lnrpcDescriptor.lnrpc;
             var lightning = new lnrpc.Lightning(lnd_daemon, credentials);
 

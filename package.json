@@ -16,6 +16,7 @@
   "license": "SEE LICENSE IN LICENSE",
   "repository": "github:MrRGnome/lnd-fun",
   "dependencies": {
+    "@grpc/proto-loader": "^0.5.1",
     "body-parser": "^1.15.0",
     "compression": "^1.7.1",
     "cookie-parser": "^1.4.0",
