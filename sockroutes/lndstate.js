@@ -107,7 +107,7 @@ function updateLndState() {
     var out = 0;
     lndState.activeCommitFees = 0;
     for (var i = 0; i < lastCall.listChannels.data.channels.length; i++) {
-        if (Number(lastCall.listChannels.data.channels[i].total_satoshis_sent) - Number(lastCall.listChannels.data.channels[i].total_satoshis_received) > 0 || (Number(lastCall.listChannels.data.channels[i].total_satoshis_sent) == 0 && Number(lastCall.listChannels.data.channels[i].total_satoshis_received) == 0 && Number(lastCall.listChannels.data.channels[i].local_balance) > 0))
+        if (Number(lastCall.listChannels.data.channels[i].initiator))
             lndState.activeCommitFees += Number(lastCall.listChannels.data.channels[i].commit_fee);
         out += Number(lastCall.listChannels.data.channels[i].local_balance);
         if (lastCall.listChannels.data.channels[i].active) {
