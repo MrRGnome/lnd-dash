@@ -1,4 +1,7 @@
 var ws = new WebSocket("wss://" + window.location.host);
+
+var alreadyNotified = {};
+
 ws.onmessage = (msg) => {
     //console.log("ws message " + JSON.stringify(msg));
     parseMsg(msg);
@@ -17,13 +20,21 @@ function parseMsg(msg) {
             notify(message, "Recieved " + Number(notification.data.value).toLocaleString() + " Sats");
             break;
         case "newTransaction":
+            if (alreadyNotified[notification.data.tx_hash])
+                return;
             var message = "";
-            if (Number(notification.data.amount) > 0)
+            var header = "";
+            if (Number(notification.data.amount) > 0) {
+                header = "Received  " + (Number(notification.data.amount)).toLocaleString() + " Sats";
                 message = "New on chain payment received for " + Number(notification.data.amount).toLocaleString() + " sats";
-            else
+            }
+            else {
+                header = "Sent " + (Number(notification.data.amount) * -1).toLocaleString() + " Sats";
                 message = "New on chain payment sent for " + (Number(notification.data.amount) * -1).toLocaleString() + " sats";
+            }
+            alreadyNotified[notification.data.tx_hash] = true;
             notify_handler("success", message);
-            notify(message, "Sent " + (Number(notification.data.amount) * -1).toLocaleString() + " Sats");
+            notify(message, header);
             break;
         case "lndState":
             //update gui with new state
