@@ -1,7 +1,5 @@
 var ws = new WebSocket("wss://" + window.location.host);
 
-var alreadyNotified = {};
-
 ws.onmessage = (msg) => {
     //console.log("ws message " + JSON.stringify(msg));
     parseMsg(msg);
@@ -20,8 +18,11 @@ function parseMsg(msg) {
             notify(message, "Recieved " + Number(notification.data.value).toLocaleString() + " Sats");
             break;
         case "newTransaction":
-            if (alreadyNotified[notification.data.tx_hash])
-                return;
+            if (notification.data.num_confirmations == 1) {
+                notify_handler("success", notification.data.tx_hash + " just confirmed for " + Number(notification.data.amount).toLocaleString());
+                notify(notification.data.tx_hash + " just confirmed for " + Number(notification.data.amount).toLocaleString(), notification.data.tx_hash + "confirmed");
+                break;
+            }
             var message = "";
             var header = "";
             if (Number(notification.data.amount) > 0) {
