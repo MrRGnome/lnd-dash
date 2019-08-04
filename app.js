@@ -110,7 +110,7 @@ var server = https.createServer(tls, app);
 var wss = sock(server);
 
 server.listen(app.get('port'), config.host || "127.0.0.1", function () {
-    debug('Server listening on port ' + server.address().port);
+    console.log('lnd-dash running at https://' + (config.host+":" || "127.0.0.1:") + app.get('port'));
 });
 
 // set up a route and server to redirect http to https
