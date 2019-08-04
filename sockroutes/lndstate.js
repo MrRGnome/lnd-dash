@@ -107,7 +107,6 @@ function updateLndState() {
     var out = 0;
     lndState.activeCommitFees = 0;
     for (var i = 0; i < lastCall.listChannels.data.channels.length; i++) {
-        console.log(lastCall.listChannels.data.channels[i]);
         if (lastCall.listChannels.data.channels[i].initiator)
             lndState.activeCommitFees += Number(lastCall.listChannels.data.channels[i].commit_fee);
         out += Number(lastCall.listChannels.data.channels[i].local_balance);
