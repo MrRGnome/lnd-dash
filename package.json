@@ -3,8 +3,7 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "start": "node start",
-    "postinstall": "node install/setup"
+    "start": "node start"
   },
   "description": "A dashboard for lnd nodes",
   "contributors": [
