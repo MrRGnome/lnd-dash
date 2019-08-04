@@ -833,6 +833,8 @@ module.exports = {
 
     sendCoins: async function (transaction, user) {
         console.log("starting");
+        console.log(user);
+        console.log(transaction);
         var client = await this.getLightningClient(user);
         if (client.status == 'fail') return client;
         var timeout = new Date().setSeconds(new Date().getSeconds() + timeout_in_seconds);
