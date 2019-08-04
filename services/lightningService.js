@@ -832,18 +832,23 @@ module.exports = {
     },
 
     sendCoins: async function (transaction, user) {
+        console.log("starting");
         var client = await this.getLightningClient(user);
         if (client.status == 'fail') return client;
         var timeout = new Date().setSeconds(new Date().getSeconds() + timeout_in_seconds);
 
         var call = new Promise((resolve) => {
             client.data.client.sendCoins(transaction, function (err, response) {
+                console.log("postcall");
+                console.log(err);
+                console.log(response);
                 if (err)
                     return resolve({ status: 'fail', data: { error_message: JSON.stringify(err) } });
                 else
                     return resolve({ status: 'success', data: response });
             });
         });
+        console.log("precall");
         return await call;
     },
 }
