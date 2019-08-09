@@ -21,14 +21,14 @@ function sockAuth(ws, req) {
 
     var cookieAuthed = false;
     if (req.headers.cookie) {
-        var sessionId = cookieParser.signedCookie(decodeURIComponent(req.headers.cookie.substring(req.headers.cookie.indexOf('=') + 1, req.headers.cookie.length)), config.cookieSecret);
+        var sessionId = cookieParser.signedCookie(decodeURIComponent(/.*lndauth=([^;]*)/.exec(req.headers.cookie)[1]), config.cookieSecret);
         if (sessionId) {
             ws.locals.user = sessions.find(session => { return session.session == sessionId && session.expires > new Date() });
         }
         if (ws.locals.user != undefined)
             cookieAuthed = true;
     }
-
+    
     var whitelistVerified = false;
     if (config.whitelist) {
         for (var i = 0; i < config.whitelist.length; i++) {
@@ -48,7 +48,6 @@ function sockAuth(ws, req) {
     if (passthrough || cookieAuthed)
         return;
     else {
-        console.log("unauthorized ws access attempt from " + req.connection.remoteAddress);
         if (ws.readyState == ws.OPEN) {
             ws.send(JSON.stringify({ "event": "unauthorized" }));
             return ws.close();
