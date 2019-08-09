@@ -33,7 +33,6 @@ function parseMsg(msg) {
                 header = "Sent " + (Number(notification.data.amount) * -1).toLocaleString() + " Sats";
                 message = "New on chain payment sent for " + (Number(notification.data.amount) * -1).toLocaleString() + " sats";
             }
-            alreadyNotified[notification.data.tx_hash] = true;
             notify_handler("success", message);
             notify(message, header);
             break;
