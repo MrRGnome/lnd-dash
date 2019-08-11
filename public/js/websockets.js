@@ -20,7 +20,7 @@ function parseMsg(msg) {
         case "newTransaction":
             if (notification.data.num_confirmations == 1) {
                 notify_handler("success", notification.data.tx_hash + " just confirmed for " + Number(notification.data.amount).toLocaleString());
-                notify(notification.data.tx_hash + " just confirmed for " + Number(notification.data.amount).toLocaleString(), notification.data.tx_hash + "confirmed");
+                notify("Transaction confirmed for " + Number(notification.data.amount).toLocaleString(), Number(notification.data.amount).toLocaleString() + " Sat confirmed");
                 break;
             }
             var message = "";
